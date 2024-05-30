@@ -7,10 +7,10 @@ This is a desktop application built with Electron, Vite, TypeScript, React.js, B
 Clone the repository:
 
    ```bash
-   git clone https://anilvarey@bitbucket.org/anilvarey/omrstudio.git
+   git clone https://sadiyarizvi123@bitbucket.org/sadiyarizvi123/omr.git
    ```
 
-Navigate to the project directory:
+<!-- Navigate to the project directory:
 
    ```bash
    cd omrstudio
@@ -34,4 +34,4 @@ To build the application for production (Windows), run:
 
 ```bash
 npm run build:win
-```
+``` -->
