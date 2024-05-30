@@ -1,0 +1,17 @@
+@import './base.css';
+
+@layer utilities {
+  .h-screen {
+    height: calc(100vh - 31px);
+  }
+  .w-screen {
+    width: calc(100vw - 290px);
+  }
+  .h-screen-student-table {
+    height: calc(100vh - 290px);
+  }
+
+  .h-screen-import-info {
+    height: calc(100vh - 270px);
+  }
+}

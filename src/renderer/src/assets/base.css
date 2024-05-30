@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  user-select: none;
+  overflow: hidden;
+  cursor: default;
+}
+
+a,
+button {
+  cursor: default;
+  -webkit-user-drag: none;
+}
+
+.cet-container {
+  overflow: hidden !important;
+}
+
+/* For webkit-based browsers (Chrome, Safari) */
+html.dark ::-webkit-scrollbar {
+  width: 12px; /* width of the scrollbar */
+}
+
+/* Track */
+html.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff07; /* color of the track */
+  
+}
+
+/* Handle */
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  position: relative;
+  left: -50px;
+  visibility: hidden;
+  background: #ffffff15; /* color of the scrollbar handle */
+}
+html.dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+/* Handle on hover */
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ffffff23; /* color of the scrollbar handle on hover */
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- react devtool setup -->
+    <script src="http://localhost:8097"></script>
+    <!-- end react devtool setup -->
+    <meta charset="UTF-8" />
+    <title>ORM STUDIO</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+    /> -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+
+</head>
+
+<body class="dark:text-stone-300 dark:bg-gray-900 text-stone-700">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
