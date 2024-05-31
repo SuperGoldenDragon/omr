@@ -7,12 +7,16 @@ const PromptDialog = ({
   show,
   title,
   onClose,
+  onSave,
   okText,
-  cancelText
+  cancelText,
+  label
 }: {
   show: boolean
   title: string
+  label: string
   onClose: any
+  onSave: any
   okText: string
   cancelText: string
 }) => {
@@ -20,13 +24,16 @@ const PromptDialog = ({
 
   const handleSave = () => {
     if (!value) return
+    setValue('')
+    onSave(value)
+    onClose()
   }
 
   return (
     <Modal theme={ModalTheme} show={show} onClose={onClose} size="sm">
       <Modal.Header className="py-3">{title}</Modal.Header>
       <Modal.Body>
-        <Label value={title} />
+        <Label value={label} />
         <TextInput value={value} onChange={(e: any) => setValue(e.target.value)} />
       </Modal.Body>
       <Modal.Footer className="justify-end py-3 px-4">
@@ -49,6 +56,7 @@ PromptDialog.defaultProps = {
   okText: FM('save'),
   cancelText: FM('cancel'),
   title: '',
+  label: '',
   onSave: () => {
     return
   }

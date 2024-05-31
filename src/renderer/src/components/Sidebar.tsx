@@ -68,7 +68,7 @@ const LayoutWithSidebar = ({ children }: { children: JSX.Element }) => {
           </div>
         </div>
       )}
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 bg-gray-100 dark:bg-gray-800 h-screen">{children}</div>
     </div>
   )
 }

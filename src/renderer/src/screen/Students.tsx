@@ -21,7 +21,11 @@ import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
 import { PiSortAscendingBold, PiSortDescendingBold, PiStudentBold } from 'react-icons/pi'
 import { GrNotes } from 'react-icons/gr'
 import PromptDialog from '@renderer/components/PromptDialog'
-
+import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
+import ImportStudentIcon from '@renderer/assets/icons/import-student.svg'
+import EditIcon from '@renderer/assets/icons/edit.svg'
+import CancelIcon from '@renderer/assets/icons/cancel.svg'
+import ArrowLeftIcon from '@renderer/assets/icons/arrow-left.svg'
 
 type CreateStudentProps = {
   id?: number
@@ -66,6 +70,12 @@ const Students = () => {
 
   // field of new student
   const [createField, setCreateField] = useState<string>('')
+  const [createTitle, setCreateTitle] = useState<string>('')
+  const [createLabel, setCreateLabel] = useState<string>('')
+  const [newFieldValues, setNewFieldValues] = useState<any>({})
+
+  const [isCreateStudent, setIsCreateStudent] = useState<boolean>(false)
+
 
   useEffect(() => {
     ipc.on('import-students', (_event, { event }) => {
@@ -80,6 +90,20 @@ const Students = () => {
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (!createField) return
+    if (createField === 'studentSchoolName') {
+      setCreateTitle(FM('create-new-school'))
+      setCreateLabel(getFieldLabel('studentSchoolName'))
+    } else if (createField === 'studentClass') {
+      setCreateTitle(FM('create-new-grade'))
+      setCreateLabel(getFieldLabel('studentClass'))
+    } else if (createField === 'studentSection') {
+      setCreateTitle(FM('create-new-section'))
+      setCreateLabel(getFieldLabel('studentSection'))
+    }
+  }, [createField])
 
   // render tabs
   const renderTabs = (isSearched: boolean) => {
@@ -327,10 +351,18 @@ const Students = () => {
       .then((data) => {
         console.log('data', data)
         reloadData()
-
-        // send data to main process
-        setOpenModal(false)
-
+        // remove new values after create a new student
+        setNewFieldValues({
+          studentSchoolName: newFieldValues.studentSchoolName?.filter(
+            (value: any) => value != studentData.studentSchoolName
+          ),
+          studentClass: newFieldValues.studentClass?.filter(
+            (value: any) => value != studentData.studentClass
+          ),
+          studentSection: newFieldValues.studentSection?.filter(
+            (value: any) => value != studentData.studentSection
+          )
+        })
         setStudentData({
           studentName: '',
           studentID: 0,
@@ -442,114 +474,6 @@ const Students = () => {
       studentSection: data.studentSection,
       id: data.id
     })
-  }
-
-  // render create modal
-  const renderCreateModal = () => {
-    const fields = Object.keys(studentData).filter((field) => {
-      return field !== 'id'
-    })
-
-    return (
-      <Modal
-        theme={ModalTheme}
-        show={openModal}
-        onClose={() => {
-          setOpenModal(false)
-          setStudentData({
-            studentName: '',
-            studentID: 0,
-            studentSchoolName: '',
-            studentClass: '',
-            studentSection: ''
-          })
-          setErrors({})
-        }}
-      >
-        <Modal.Header className="py-3">{FM('create-more-students')}</Modal.Header>
-        <Modal.Body>
-          <div className="grid grid-cols-6 gap-5 ">
-            {fields?.map((field) => {
-              return (
-                <div
-                  key={field}
-                  className={
-                    field === 'studentName' || field === 'studentID' ? 'col-span-3' : 'col-span-2'
-                  }
-                >
-                  <div className="mb-1 block">
-                    <Label htmlFor={field} value={getFieldLabel(field)} />
-                  </div>
-                  {['studentSchoolName', 'studentClass', 'studentSection'].includes(field) ? (
-                    <Select
-                      value={studentData[field]}
-                      id={field}
-                      className={`${errors[field] && 'ring-1 ring-red-500 rounded-lg'}`}
-                      onChange={(e) => {
-                        // get value of select school
-                        const value = e.target.value
-                        // if select create new school open enter new school dialog
-                        if (value === 'create-new-school') {
-                          setCreateField('studentSchool')
-                          return
-                        }
-                        setStudentData({ ...studentData, [field]: value })
-                        setErrors({ ...errors, [field]: false })
-                      }}
-                    >
-                      <option value="">{FM('select')}</option>
-                      <option value="create-new-school">{FM('create-new-school')}</option>
-                      {renderSelectOptions(field)}
-                    </Select>
-                  ) : (
-                    <TextInput
-                      value={studentData[field]}
-                      onChange={(e) => {
-                        setStudentData({ ...studentData, [field]: e.target.value })
-                        setErrors({ ...errors, [field]: false })
-                      }}
-                      className={`${errors[field] && 'ring-1 ring-red-500 rounded-lg'}`}
-                      id={field}
-                      type={field === 'studentID' ? 'number' : 'text'}
-                      min={field === 'studentID' ? 0 : undefined}
-                      placeholder=""
-                    />
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </Modal.Body>
-        <Modal.Footer className="justify-end py-3 px-4">
-          {studentData.id ? (
-            <Button className="rtl:ml-2" onClick={editStudent}>
-              {FM('edit')}
-            </Button>
-          ) : (
-            <Button className="rtl:ml-2" onClick={saveStudent}>
-              {FM('save')}
-            </Button>
-          )}
-          <Button
-            color="gray"
-            className=""
-            onClick={() => {
-              setOpenModal(false)
-              setStudentData({
-                studentName: '',
-                studentID: 0,
-                studentSchoolName: '',
-                studentClass: '',
-                studentSection: ''
-              })
-              setErrors({})
-            }}
-          >
-            {FM('cancel')}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    )
   }
 
   // handle search
@@ -759,124 +683,250 @@ const Students = () => {
       return searchedBy[field]
     }).length > 0
 
+  // event handler to create new values for school, class, section
+  const onCreateNewFieldValue = (value: string) => {
+    if (!value) return
+    if (!newFieldValues[createField]) {
+      setNewFieldValues({ ...newFieldValues, [createField]: [value] })
+    } else {
+      setNewFieldValues({
+        ...newFieldValues,
+        [createField]: newFieldValues[createField].concat(value)
+      })
+    }
+    setStudentData({ ...studentData, [createField]: value })
+  }
+
   return (
-    <div>
-      {renderCreateModal()}
+    <div className="px-2">
       {renderSearchModal()}
       {renderDeleteModal()}
-      <p className="text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800">
-        <div className="text-base flex">
-          {!isSearched && (
-            <>
-              {FM('students')} ({studentGroups?.totalStudents || 0})
-            </>
-          )}{' '}
-          {renderSearchedBy()}
-        </div>
-
-        <Button.Group theme={buttonGroupTheme} className="ml-2">
-          <Button
-            color="gray"
-            className="p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0"
-            size={'sm'}
-            onClick={() => {
-              deleteAllStudents()
-            }}
-          >
-            {FM('delete-all-students')}
-          </Button>
-          <Button
-            disabled={open}
-            color="gray"
-            className={
-              'p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0' +
-              (open && waiting ? ' cursor-wait' : '')
-            }
-            size={'sm'}
-            onClick={() => {
-              window.open('##importStudents##', '_blank')
-              setOpen(true)
-              setWaiting(true)
-            }}
-          >
-            {FM('import-students')}
-          </Button>
-          <Button
-            color="gray"
-            className="p-0 rtl:rounded-l-lg rtl:rounded-r-none rtl:border-l"
-            size={'sm'}
-            onClick={() => setOpenModal(true)}
-          >
-            {FM('add-more-students')}
-          </Button>
-        </Button.Group>
-      </p>
-      <div className="flex justify-between items-center border-b mb-0 border-gray-200 dark:border-gray-700 pr-3 rtl:pl-3">
-        <Tabs
-          theme={themeForTabs}
-          aria-label="Default tabs"
-          className="mb-0 flex-1"
-          style="underline"
-          ref={tabsRef}
-          onActiveTabChange={(tab) => {
-            setClassName?.(Object.keys(studentGroups?.grades || {})[tab])
-            setActiveTab(tab)
-            setPage(1)
-            setOrderBy?.()
-          }}
-        >
-          {renderTabs(isSearched)}
-        </Tabs>
-
-        <div className="flex items-center">
-          <span
-            className="flex items-center"
-            onClick={() => {
-              setOpenSearchModal(true)
-            }}
-          >
-            <Tooltip content={FM('search')}>
-              <BiSearchAlt fontSize={18} />
-            </Tooltip>
-          </span>
-          <span className="mx-4 dark:text-gray-700">|</span>
-          <span>{FM('sort-by')}:</span>
-          <Select
-            className="ml-4 rtl:mr-4"
-            sizing={'sm'}
-            onChange={(e) => {
-              setOrderBy?.('id', e.target.value === 'latest' ? 'DESC' : 'ASC')
-            }}
-          >
-            <option disabled>{FM('order-by')}</option>
-            <option value={'latest'}>{FM('latest-first')}</option>
-            <option value={'oldest'}>{FM('oldest-first')}</option>
-          </Select>
-        </div>
+      <div>
+        {isCreateStudent ? (
+          <div className="flex py-4">
+            <div className="grow-0 h-full items-center py-4">
+              <a href="javascript:" className="flex" onClick={() => setIsCreateStudent(false)}>
+                <img src={ArrowLeftIcon} className="mr-2" />
+                <span className="hover:text-gray-900 font-semibold">{FM('add-student')}</span>
+              </a>
+            </div>
+            <div className="flex justify-center grow">
+              <a
+                href="javascript:"
+                className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
+                onClick={saveStudent}
+              >
+                <div className="mb-2 flex justify-center">
+                  <img src={EditIcon} />
+                </div>
+                <div className="text-center font-semibold">{FM('save')}</div>
+              </a>
+              <a
+                href="javascript:"
+                className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
+                onClick={() => setIsCreateStudent(false)}
+              >
+                <div className="mb-2 flex justify-center">
+                  <img src={CancelIcon} />
+                </div>
+                <div className="text-center font-semibold">{FM('cancel')}</div>
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-center py-4">
+            <a
+              href="javascript:"
+              className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
+              onClick={() => setIsCreateStudent(true)}
+            >
+              <div className="mb-2 flex justify-center">
+                <img src={AddStudentIcon} />
+              </div>
+              <div className="text-center font-semibold">{FM('add-student')}</div>
+            </a>
+            <a
+              href="javascript:"
+              className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
+            >
+              <div className="mb-2 flex justify-center">
+                <img src={ImportStudentIcon} />
+              </div>
+              <div className="text-center font-semibold">{FM('import-students')}</div>
+            </a>
+          </div>
+        )}
       </div>
-      <div className="">
-        {renderHeader()}
-        <div className="overflow-y-auto custom-scrollbar h-screen-student-table">
-          {renderStudents()}
-        </div>
-        {renderHeader()}
-      </div>
-      {getTotalPages() > 0 && (
-        <div className="flex justify-center bg-white dark:bg-gray-900 pb-2 pr-3 rtl:pl-3">
-          <Pagination
-            theme={PaginationTheme}
-            nextLabel={FM('next')}
-            previousLabel={FM('previous')}
-            key={getTotalPages()}
-            currentPage={page}
-            totalPages={getTotalPages()}
-            onPageChange={setPage}
-            showIcons
-          />
+      {isCreateStudent && (
+        <div className="bg-white dark:bg-gray-700 rounded-lg p-3 mb-3">
+          <div className="flex flex-row gap-10 justify-center ">
+            <div className="basis-1/3">
+              <div className="mb-1 block">
+                <Label htmlFor={'studentName'} value={getFieldLabel('studentName')} />
+                <TextInput
+                  value={studentData['studentName']}
+                  onChange={(e) => {
+                    setStudentData({ ...studentData, ['studentName']: e.target.value })
+                    setErrors({ ...errors, ['studentName']: false })
+                  }}
+                  className={`${errors['studentName'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                  id={'studentName'}
+                  type="text"
+                  placeholder={FM('student-name')}
+                />
+              </div>
+            </div>
+            <div className="basis-1/3">
+              <div className="mb-1 block">
+                <Label htmlFor={'studentID'} value={getFieldLabel('studentID')} />
+                <TextInput
+                  value={studentData['studentID']}
+                  onChange={(e) => {
+                    setStudentData({ ...studentData, ['studentID']: e.target.value })
+                    setErrors({ ...errors, ['studentID']: false })
+                  }}
+                  className={`${errors['studentID'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                  id={'studentID'}
+                  type="number"
+                  placeholder={FM('student-id')}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-6 gap-10 justify-center ">
+            <div className="col-span-2">
+              <div className="mb-1 block">
+                <Label htmlFor={'studentSchoolName'} value={getFieldLabel('studentSchoolName')} />
+                <Select
+                  value={studentData['studentSchoolName']}
+                  id={'studentSchoolName'}
+                  className={`${errors['studentSchoolName'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    if (value === 'create-new') {
+                      setCreateField('studentSchoolName')
+                      return
+                    }
+                    setStudentData({ ...studentData, ['studentSchoolName']: value })
+                    setErrors({ ...errors, ['studentSchoolName']: false })
+                  }}
+                >
+                  <option value="" disabled hidden>{FM('select')}</option>
+                  <option value="create-new">{FM('create-new-school')}</option>
+                  {renderSelectOptions('studentSchoolName')}
+                  {newFieldValues['studentSchoolName']?.map((value: string) => (
+                    <option key={value}>{value}</option>
+                  ))}
+                </Select>
+              </div>
+            </div>
+            <div className="col-span-2">
+              <div className="mb-1 block">
+                <Label htmlFor={'studentClass'} value={getFieldLabel('studentClass')} />
+                <Select
+                  value={studentData['studentClass']}
+                  id={'studentClass'}
+                  className={`${errors['studentClass'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    if (value === 'create-new') {
+                      setCreateField('studentClass')
+                      return
+                    }
+                    setStudentData({ ...studentData, ['studentClass']: value })
+                    setErrors({ ...errors, ['studentClass']: false })
+                  }}
+                >
+                  <option value="" disabled hidden>{FM('select')}</option>
+                  <option value="create-new">{FM('create-new-grade')}</option>
+                  {renderSelectOptions('studentClass')}
+                  {newFieldValues['studentClass']?.map((value: string) => (
+                    <option key={value}>{value}</option>
+                  ))}
+                </Select>
+              </div>
+            </div>
+            <div className="col-span-2">
+              <div className="mb-1 block">
+                <Label htmlFor={'studentSection'} value={getFieldLabel('studentSection')} />
+                <Select
+                  value={studentData['studentSection']}
+                  id={'studentSection'}
+                  className={`${errors['studentSection'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    if (value === 'create-new') {
+                      setCreateField('studentSection')
+                      return
+                    }
+                    setStudentData({ ...studentData, ['studentSection']: value })
+                    setErrors({ ...errors, ['studentSection']: false })
+                  }}
+                >
+                  <option value="" disabled hidden>{FM('select')}</option>
+                  <option value="create-new">{FM('create-new-section')}</option>
+                  {renderSelectOptions('studentSection')}
+                  {newFieldValues['studentSection']?.map((value: string) => (
+                    <option key={value}>{value}</option>
+                  ))}
+                </Select>
+              </div>
+            </div>
+          </div>
         </div>
       )}
-      <PromptDialog show={createField ? true : false} onClose={() => setCreateField('')} onSave={() => { }} />
-    </div>
+
+      {!isCreateStudent && <div className="bg-white dark:bg-gray-700 flex-grow rounded-lg">
+        <p className="text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800">
+          <div className="text-base flex">
+            {!isSearched && (
+              <>
+                {FM('students')} ({studentGroups?.totalStudents || 0})
+              </>
+            )}{' '}
+            {renderSearchedBy()}
+          </div>
+
+          {/* <Button.Group theme={buttonGroupTheme} className="ml-2">
+            <Button
+              color="gray"
+              className="p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0"
+              size={'sm'}
+              onClick={() => {
+                deleteAllStudents()
+              }}
+            >
+              {FM('delete-all-students')}
+            </Button>
+            <Button
+              disabled={open}
+              color="gray"
+              className={
+                'p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0' +
+                (open && waiting ? ' cursor-wait' : '')
+              }
+              size={'sm'}
+              onClick={() => {
+                window.open('##importStudents##', '_blank')
+                setOpen(true)
+                setWaiting(true)
+              }}
+            >
+              {FM('import-students')}
+            </Button>
+            <Button
+              color="gray"
+              className="p-0 rtl:rounded-l-lg rtl:rounded-r-none rtl:border-l"
+              size={'sm'}
+              onClick={() => setOpenModal(true)}
+            >
+              {FM('add-more-students')}
+            </Button>
+          </Button.Group> */}
+        </p>
+      </div>}
+      <PromptDialog show={createField ? true : false} onClose={() => setCreateField('')} onSave={onCreateNewFieldValue} title={createTitle} label={createLabel} />
+    </div >
   )
 }
 

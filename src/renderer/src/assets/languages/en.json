@@ -78,5 +78,8 @@
   "committee" : "Committee",
   "amendment": "Amendment",
   "add-committee" : "Add Committee",
-  "create-new-school" : "Create new school"
+  "create-new-school" : "Create new school",
+  "create-new-grade" : "Create new grade",
+  "create-new-section" : "Create new section",
+  "add-student" : "Add Student"
 }

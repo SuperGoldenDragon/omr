@@ -76,5 +76,8 @@
   "committee": "اللجنة",
   "amendment": "التعديل",
   "add-committee": "اللجنة الإضافية",
-  "create-new-school" : "Create new school"
+  "create-new-school" : "إنشاء مدرسة جديدة",
+  "create-new-grade" : "إنشاء فئة جديدة",
+  "create-new-section" : "إنشاء قسم جديد",
+  "add-student" : "إضافة طالب"
 }

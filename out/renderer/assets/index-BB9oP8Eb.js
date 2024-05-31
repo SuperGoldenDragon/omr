@@ -10548,7 +10548,7 @@ const buttonTheme = createTheme({
     xl: "px-6 py-3 text-base"
   }
 });
-const buttonGroupTheme$1 = createTheme({
+const buttonGroupTheme = createTheme({
   base: "inline-flex",
   position: {
     none: "",
@@ -11604,7 +11604,7 @@ const theme = {
   blockquote: blockquoteTheme,
   breadcrumb: breadcrumbTheme,
   button: buttonTheme,
-  buttonGroup: buttonGroupTheme$1,
+  buttonGroup: buttonGroupTheme,
   card: cardTheme,
   carousel: carouselTheme,
   checkbox: checkboxTheme,
@@ -19169,7 +19169,7 @@ const PaginationComponent = ({
   ] });
 };
 PaginationComponent.displayName = "Pagination";
-const Pagination = Object.assign(PaginationComponent, {
+Object.assign(PaginationComponent, {
   Button: PaginationButton
 });
 const Radio = reactExports.forwardRef(
@@ -19847,7 +19847,7 @@ const TabsComponent = reactExports.forwardRef(
   }
 );
 TabsComponent.displayName = "Tabs";
-const Tabs = Object.assign(TabsComponent, {
+Object.assign(TabsComponent, {
   Item: TabItem
 });
 const Textarea = reactExports.forwardRef(
@@ -24272,7 +24272,10 @@ const en = {
   committee: committee$1,
   amendment: amendment$1,
   "add-committee": "Add Committee",
-  "create-new-school": "Create new school"
+  "create-new-school": "Create new school",
+  "create-new-grade": "Create new grade",
+  "create-new-section": "Create new section",
+  "add-student": "Add Student"
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24376,7 +24379,10 @@ const ar = {
   committee,
   amendment,
   "add-committee": "اللجنة الإضافية",
-  "create-new-school": "Create new school"
+  "create-new-school": "إنشاء مدرسة جديدة",
+  "create-new-grade": "إنشاء فئة جديدة",
+  "create-new-section": "إنشاء قسم جديد",
+  "add-student": "إضافة طالب"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -24551,12 +24557,6 @@ function MdKeyboardArrowLeft(props) {
 function MdKeyboardArrowRight(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24" }, "child": [{ "tag": "path", "attr": { "fill": "none", "d": "M0 0h24v24H0V0z" }, "child": [] }, { "tag": "path", "attr": { "d": "M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" }, "child": [] }] })(props);
 }
-function MdEdit(props) {
-  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24" }, "child": [{ "tag": "path", "attr": { "fill": "none", "d": "M0 0h24v24H0z" }, "child": [] }, { "tag": "path", "attr": { "d": "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" }, "child": [] }] })(props);
-}
-function MdOutlineDeleteForever(props) {
-  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24" }, "child": [{ "tag": "path", "attr": { "fill": "none", "d": "M0 0h24v24H0V0z" }, "child": [] }, { "tag": "path", "attr": { "d": "M14.12 10.47 12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z" }, "child": [] }] })(props);
-}
 function MdOutlineSettings(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24" }, "child": [{ "tag": "path", "attr": { "fill": "none", "d": "M0 0h24v24H0V0z" }, "child": [] }, { "tag": "path", "attr": { "d": "M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65A.488.488 0 0 0 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1a.566.566 0 0 0-.18-.03c-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46a.5.5 0 0 0 .61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" }, "child": [] }] })(props);
 }
@@ -24572,7 +24572,7 @@ const LayoutWithSidebar = ({ children }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
     path === "/importStudents" ? null : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "h-screen", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(Sidebar, { theme: SidebarTheme, collapsed, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar.Logo, { href: "#", img: LogoImage, children: "OMR STUDIO" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar.Logo, { href: "#", img: LogoImage, children: "LOGO" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar.Items, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Sidebar.ItemGroup, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar.Item, { href: "#", active: path === "/", icon: LuBookOpenCheck, children: FM("exams") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -24607,7 +24607,7 @@ const LayoutWithSidebar = ({ children }) => {
         }
       )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1", children })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 bg-gray-100 dark:bg-gray-800 h-screen", children })
   ] });
 };
 const Exams = () => {
@@ -24775,15 +24775,6 @@ const StudentsProvider = ({ children }) => {
     }
   );
 };
-const buttonGroupTheme = {
-  base: "inline-flex",
-  position: {
-    none: "",
-    start: "rounded-r-none focus:ring-2 ",
-    middle: "rounded-none border-l-0 pl-0 focus:ring-2",
-    end: "rounded-l-none border-l-0 pl-0 focus:ring-2"
-  }
-};
 const ModalTheme = {
   root: {
     base: "fixed inset-x-0 top-0 z-50 h-screen overflow-y-auto overflow-x-hidden md:inset-0 md:h-full",
@@ -24837,119 +24828,27 @@ const ModalTheme = {
     popup: "border-t"
   }
 };
-const PaginationTheme = {
-  base: "",
-  layout: {
-    table: {
-      base: "text-sm text-gray-700 dark:text-gray-400",
-      span: "font-semibold text-gray-900 dark:text-white"
-    }
-  },
-  pages: {
-    base: "xs:mt-0 mt-2 inline-flex items-center -space-x-px",
-    showIcon: "inline-flex",
-    previous: {
-      base: "ml-0 ltr:rounded-l-lg rtl:rounded-r-lg border border-gray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white",
-      icon: "h-5 w-5 rtl:rotate-180"
-    },
-    next: {
-      base: "ltr:rounded-r-lg rtl:rounded-l-lg border border-gray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white",
-      icon: "h-5 w-5 rtl:rotate-180"
-    },
-    selector: {
-      base: "w-12 border border-gray-300 bg-white py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white",
-      active: "bg-cyan-50 text-cyan-600 hover:bg-cyan-100 hover:text-cyan-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white",
-      disabled: "cursor-not-allowed opacity-50"
-    }
-  }
-};
-const themeForTabs = {
-  base: "flex flex-col gap-0",
-  tablist: {
-    base: "flex text-center",
-    styles: {
-      default: "flex-wrap border-b border-gray-200 dark:border-gray-700",
-      underline: "-mb-px flex-wrap border-0 border-gray-200 dark:border-gray-700",
-      pills: "flex-wrap space-x-2 text-sm font-medium text-gray-500 dark:text-gray-400",
-      fullWidth: "grid w-full grid-flow-col divide-x divide-gray-200 rounded-none text-sm font-medium shadow dark:divide-gray-700 dark:text-gray-400"
-    },
-    tabitem: {
-      base: "flex items-center justify-center rounded-t-lg p-4 text-sm font-medium first:ml-0 focus:outline-none focus:ring-0 focus:ring-cyan-300 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500",
-      styles: {
-        default: {
-          base: "rounded-t-lg",
-          active: {
-            on: "bg-gray-100 text-cyan-600 dark:bg-gray-800 dark:text-cyan-500",
-            off: "text-gray-500 hover:bg-gray-50 hover:text-gray-600 dark:text-gray-400 dark:hover:bg-gray-800  dark:hover:text-gray-300"
-          }
-        },
-        underline: {
-          base: "rounded-t-lg",
-          active: {
-            on: "active rounded-t-lg border-b-2 border-cyan-600 text-cyan-600 dark:border-cyan-500 dark:text-cyan-500",
-            off: "border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
-          }
-        },
-        pills: {
-          base: "",
-          active: {
-            on: "rounded-lg bg-cyan-600 text-white",
-            off: "rounded-lg hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-white"
-          }
-        },
-        fullWidth: {
-          base: "ml-0 flex w-full rounded-none first:ml-0",
-          active: {
-            on: "active rounded-none bg-gray-100 p-4 text-gray-900 dark:bg-gray-700 dark:text-white",
-            off: "rounded-none bg-white hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
-          }
-        }
-      },
-      icon: "mr-2 h-5 w-5 ml-2"
-    }
-  },
-  tabitemcontainer: {
-    base: "",
-    styles: {
-      default: "",
-      underline: "",
-      pills: "",
-      fullWidth: ""
-    }
-  },
-  tabpanel: ""
-};
-function BiSearchAlt(props) {
-  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24" }, "child": [{ "tag": "path", "attr": { "d": "M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z" }, "child": [] }, { "tag": "path", "attr": { "d": "M11.412 8.586c.379.38.588.882.588 1.414h2a3.977 3.977 0 0 0-1.174-2.828c-1.514-1.512-4.139-1.512-5.652 0l1.412 1.416c.76-.758 2.07-.756 2.826-.002z" }, "child": [] }] })(props);
-}
-function PiSortAscendingBold(props) {
-  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 256 256", "fill": "currentColor" }, "child": [{ "tag": "path", "attr": { "d": "M128,128a12,12,0,0,1-12,12H48a12,12,0,0,1,0-24h68A12,12,0,0,1,128,128ZM48,76H180a12,12,0,0,0,0-24H48a12,12,0,0,0,0,24Zm52,104H48a12,12,0,0,0,0,24h52a12,12,0,0,0,0-24Zm132.49-20.49a12,12,0,0,0-17,0L196,179V112a12,12,0,0,0-24,0v67l-19.51-19.52a12,12,0,0,0-17,17l40,40a12,12,0,0,0,17,0l40-40A12,12,0,0,0,232.49,159.51Z" }, "child": [] }] })(props);
-}
-function PiSortDescendingBold(props) {
-  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 256 256", "fill": "currentColor" }, "child": [{ "tag": "path", "attr": { "d": "M36,128a12,12,0,0,1,12-12h68a12,12,0,0,1,0,24H48A12,12,0,0,1,36,128ZM48,76h52a12,12,0,0,0,0-24H48a12,12,0,0,0,0,24ZM180,180H48a12,12,0,0,0,0,24H180a12,12,0,0,0,0-24ZM232.49,79.51l-40-40a12,12,0,0,0-17,0l-40,40a12,12,0,0,0,17,17L172,77v67a12,12,0,0,0,24,0V77l19.51,19.52a12,12,0,0,0,17-17Z" }, "child": [] }] })(props);
-}
-function PiStudentBold(props) {
-  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 256 256", "fill": "currentColor" }, "child": [{ "tag": "path", "attr": { "d": "M227.79,52.62l-96-32a11.85,11.85,0,0,0-7.58,0l-96,32A12,12,0,0,0,20,63.37,6.05,6.05,0,0,0,20,64v80a12,12,0,0,0,24,0V80.65l23.71,7.9a67.92,67.92,0,0,0,18.42,85A100.36,100.36,0,0,0,46,209.44a12,12,0,1,0,20.1,13.11C80.37,200.59,103,188,128,188s47.63,12.59,61.95,34.55a12,12,0,1,0,20.1-13.11,100.36,100.36,0,0,0-40.18-35.92,67.92,67.92,0,0,0,18.42-85l39.5-13.17a12,12,0,0,0,0-22.76Zm-99.79-8L186.05,64,128,83.35,70,64ZM172,120A44,44,0,1,1,90.94,96.29l33.27,11.09a11.89,11.89,0,0,0,7.58,0l33.27-11.09A43.85,43.85,0,0,1,172,120Z" }, "child": [] }] })(props);
-}
-function GrNotes(props) {
-  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24" }, "child": [{ "tag": "path", "attr": { "fill": "none", "strokeWidth": "2", "d": "M3,1 L3,23 L16,23 L21,18 L21,1 L3,1 Z M6,17 L11,17 M6,13 L18,13 M6,9 L16,9 M3,5 L21,5 M21,17 L15,17 L15,23" }, "child": [] }] })(props);
-}
 const PromptDialog = ({
   show,
   title,
   onClose,
+  onSave,
   okText,
-  cancelText
+  cancelText,
+  label
 }) => {
   const [value, setValue] = reactExports.useState("");
   const handleSave = () => {
     if (!value)
       return;
+    setValue("");
+    onSave(value);
+    onClose();
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal, { theme: ModalTheme, show, onClose, size: "sm", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(Modal.Header, { className: "py-3", children: title }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { value: title }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { value: label }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(TextInput, { value, onChange: (e) => setValue(e.target.value) })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Footer, { className: "justify-end py-3 px-4", children: [
@@ -24966,10 +24865,16 @@ PromptDialog.defaultProps = {
   okText: FM("save"),
   cancelText: FM("cancel"),
   title: "",
+  label: "",
   onSave: () => {
     return;
   }
 };
+const AddStudentIcon = "data:image/svg+xml,%3csvg%20width='42'%20height='28'%20viewBox='0%200%2042%2028'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_1424'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='42'%20height='28'%3e%3cpath%20d='M0.599976%200H41.68V27.7619H0.599976V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1424)'%3e%3cpath%20d='M40.9688%2020.407C41.5151%2021.9446%2041.5201%2025.5637%2041.5201%2025.5637C41.4559%2025.6247%2041.3917%2025.6735%2041.3275%2025.7136L40.9286%2023.4072C40.9286%2023.4072%2040.8153%2024.9378%2040.8455%2025.8287C40.0715%2026.1825%2039.6184%2025.6317%2039.6184%2025.6317C39.4057%2022.7744%2039.6322%2021.1688%2039.8198%2020.3739C39.6826%2020.1769%2039.5983%2019.9172%2039.5932%2019.626C39.5831%2019.1484%2039.7958%2018.7282%2040.0966%2018.5574L40.0463%2013.3397L35.0158%2016.4829C34.6357%2016.72%2034.2015%2016.3539%2034.1876%2015.7751L34.1285%2013.7145C34.1184%2013.4495%2034.0202%2013.2107%2033.8617%2013.0678C25.9817%205.89761%2019.5264%206.44849%2015.5053%208.17086C11.1242%2010.0484%208.64981%2013.6047%208.54661%2013.7546L8.54157%2013.7616C8.43333%2013.9185%208.37922%2014.1225%208.37922%2014.3334L8.40439%2016.6398C8.40816%2017.2238%207.98528%2017.6247%207.59009%2017.4016L1.10086%2013.7285C0.622597%2013.4548%200.612529%2012.5308%201.08072%2012.238L20.6201%200.095937C20.7687%200.0070295%2020.931%205.63413e-05%2021.0783%200.0819907L41.1702%2011.1432C41.6535%2011.4082%2041.6686%2012.3408%2041.1954%2012.6389L40.5246%2013.0538L40.5737%2018.5103C40.9336%2018.6114%2041.2055%2019.0473%2041.2143%2019.5702C41.2243%2019.898%2041.1262%2020.1961%2040.9688%2020.407ZM9.36972%2014.8424C9.33951%2014.8773%209.32063%2014.9313%209.32063%2014.9924V27.5022C9.32063%2027.6521%209.43894%2027.748%209.53207%2027.6661C10.9908%2026.4353%2019.9695%2019.6731%2033.0927%2027.7271C33.1871%2027.7811%2033.2903%2027.6922%2033.2903%2027.5563V14.4484C33.2903%2014.3874%2033.2701%2014.3264%2033.2311%2014.2916C32.2998%2013.3816%2020.3105%202.10246%209.36972%2014.8424Z'%20fill='%231F8295'/%3e%3c/g%3e%3c/svg%3e";
+const ImportStudentIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='28'%20viewBox='0%200%2026%2028'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M18.04%2024H24.9619C25.5358%2024%2026%2023.5533%2026%2023.0009C26%2022.4467%2025.5358%2022%2024.9619%2022H18.04C17.4662%2022%2017%2022.4467%2017%2023.0009C17%2023.5533%2017.4662%2024%2018.04%2024Z'%20fill='%231F8295'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M20.1721%2019.3206L17.3138%2022.2284C16.8954%2022.6558%2016.8954%2023.3442%2017.3138%2023.7716L20.1721%2026.6794C20.5885%2027.1069%2021.2698%2027.1069%2021.6862%2026.6794C22.1046%2026.2561%2022.1046%2025.5636%2021.6862%2025.1382L19.5879%2023.001L21.6862%2020.8618C22.1046%2020.4364%2022.1046%2019.7439%2021.6862%2019.3206C21.2698%2018.8931%2020.5885%2018.8931%2020.1721%2019.3206Z'%20fill='%231F8295'/%3e%3cmask%20id='mask0_1_1433'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='25'%20height='28'%3e%3cpath%20d='M0.209961%200H24.6076V27.7619H0.209961V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1433)'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M13.9834%20-0.0654297H4.16573C3.17725%20-0.0654297%202.23092%200.309092%201.53171%200.970869C0.834419%201.63628%200.441711%202.53623%200.441711%203.47435C0.441711%208.40495%200.441711%2019.1334%200.441711%2024.064C0.441711%2025.0021%200.834419%2025.9039%201.53171%2026.5675C2.23092%2027.2311%203.17725%2027.6038%204.16573%2027.6038H23.123C23.6842%2027.6038%2024.1383%2027.1711%2024.1383%2026.6384V25.0294H22.7609C22.8624%2025.7075%2022.6402%2026.422%2022.0904%2026.9438C21.1652%2027.8219%2019.6652%2027.8219%2018.74%2026.9438L16.0312%2024.3694C15.7458%2024.0985%2015.5504%2023.7785%2015.4393%2023.4349L15.4374%2023.4295C15.378%2023.2404%2015.3416%2023.0386%2015.3378%2022.8313V22.7241C15.3416%2022.5168%2015.378%2022.3168%2015.4374%2022.1259L15.4393%2022.1205C15.5504%2021.7787%2015.7458%2021.4569%2016.0312%2021.186L18.74%2018.6116C19.6652%2017.7335%2021.1652%2017.7335%2022.0904%2018.6116C22.6402%2019.1334%2022.8624%2019.8479%2022.7609%2020.526H24.1383V9.5867H17.7074C15.65%209.5867%2013.9834%208.00316%2013.9834%206.04873V-0.0654297ZM16.014%200.505444V6.04873C16.014%206.93595%2016.7726%207.65591%2017.7074%207.65591H23.5387C23.508%207.625%2023.4774%207.59409%2023.4448%207.56319C22.0655%206.25236%2017.491%201.90536%2016.1136%200.596347C16.081%200.56544%2016.0485%200.534533%2016.014%200.505444Z'%20fill='%231F8295'/%3e%3c/g%3e%3c/svg%3e";
+const EditIcon = "data:image/svg+xml,%3csvg%20width='28'%20height='28'%20viewBox='0%200%2028%2028'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_3424'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='2'%20width='26'%20height='26'%3e%3cpath%20d='M0%202.10257H25.8227V28.0001H0V2.10257Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_3424)'%3e%3cpath%20d='M23.5417%2025.8634H2.14067V4.48813H14.9804V2.35159H2.14067C0.95834%202.35159%200%203.30871%200%204.48813V25.8634C0%2027.0428%200.95834%2027.9999%202.14067%2027.9999H23.5417C24.7226%2027.9999%2025.681%2027.0428%2025.681%2025.8634V13.0385H23.5417V25.8634Z'%20fill='%231F8295'/%3e%3c/g%3e%3cpath%20d='M8.55994%2019.4854H13.0653L23.9841%208.58046L19.4448%204.04688L8.55994%2014.9179V19.4854Z'%20fill='%231F8295'%20fill-opacity='0.9'/%3e%3cmask%20id='mask1_1_3424'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='20'%20y='0'%20width='9'%20height='8'%3e%3cpath%20d='M20.7417%200H28.0001V7.177H20.7417V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_1_3424)'%3e%3cpath%20d='M27.195%202.35155L25.681%200.839409C24.8446%200.00405128%2023.4907%200.00405128%2022.6557%200.839409L20.9587%202.53561L25.4981%207.06778L27.195%205.37299C28.0315%204.53764%2028.0315%203.18407%2027.195%202.35155Z'%20fill='%231F8295'%20fill-opacity='0.9'/%3e%3c/g%3e%3c/svg%3e";
+const CancelIcon = "data:image/svg+xml,%3csvg%20width='30'%20height='30'%20viewBox='0%200%2030%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_3436'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='6'%20y='7'%20width='18'%20height='16'%3e%3cpath%20d='M6.40784%207.86429H23.8836V22.4274H6.40784V7.86429Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_3436)'%3e%3cpath%20d='M15.8134%2015.1029L23.7569%208.50288C23.9338%208.35537%2023.9338%208.13453%2023.7569%207.98702C23.5811%207.84037%2023.3163%207.84037%2023.1394%207.98702L15.1959%2014.588L7.28135%207.96287C7.10552%207.81536%206.84074%207.81536%206.66387%207.96287C6.487%208.11038%206.487%208.33122%206.66387%208.47786L14.5784%2015.1029L6.63491%2021.7039C6.45804%2021.8505%206.45804%2022.0714%206.63491%2022.2189C6.81074%2022.3664%207.10552%2022.3664%207.25239%2022.2189L15.1959%2015.6188L23.1094%2022.2189C23.1984%2022.2922%2023.3163%2022.3172%2023.4332%2022.3172C23.5511%2022.3172%2023.669%2022.268%2023.7569%2022.2189C23.9338%2022.0714%2023.9338%2021.8505%2023.7569%2021.7039L15.8134%2015.1029Z'%20fill='%23358E9F'/%3e%3c/g%3e%3cmask%20id='mask1_1_3436'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='30'%20height='30'%3e%3cpath%20d='M0%200H30V30H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_1_3436)'%3e%3cpath%20d='M25.6508%204.43252C22.8004%201.56237%2018.9958%20-0.0137799%2014.9515%200.00139023C10.986%200.0135262%207.19964%201.5912%204.39472%204.39459C1.56098%207.22985%200%2010.9965%200%2015.0044C0%2017.5954%200.653823%2020.0879%201.88259%2022.292C2.31644%2023.0703%203.43295%2023.0687%203.86681%2022.2905C3.86984%2022.2814%203.87439%2022.2754%203.87894%2022.2678C4.07312%2021.9204%204.0716%2021.4987%203.87894%2021.1513C2.86711%2019.3294%202.29066%2017.2329%202.29066%2015.0044C2.29066%2013.2311%202.65625%2011.5427%203.31311%2010.0075C3.31918%209.91037%203.32828%209.81328%203.3389%209.71468C3.50425%208.27961%204.26426%206.95983%205.42324%206.09362L5.4642%206.06328C5.7767%205.83118%206.12257%205.66432%206.48968%205.57026C8.75152%203.52839%2011.7461%202.28446%2015.0273%202.29053C21.96%202.30266%2027.6411%207.9307%2027.7184%2014.8618C27.7564%2018.451%2026.3016%2021.7065%2023.9351%2024.0442C23.3116%2025.455%2021.9433%2026.4122%2020.402%2026.5138C18.7637%2027.286%2016.9326%2027.7183%2015.0046%2027.7183C13.8653%2027.7183%2012.7624%2027.5666%2011.7112%2027.286C11.1833%2027.1434%2010.6296%2027.3937%2010.3975%2027.8897C10.3899%2027.9064%2010.3823%2027.9231%2010.3732%2027.9398C10.0774%2028.5754%2010.4293%2029.3187%2011.1059%2029.4993C12.362%2029.8345%2013.6696%2030.0075%2015.0046%2030.0075C19.0124%2030.0075%2022.7806%2028.448%2025.6129%2025.6143C28.4481%2022.779%2030.0091%2019.0123%2030.0091%2015.0044C30.0091%2011.0375%2028.4451%207.24654%2025.6508%204.43252Z'%20fill='%23358E9F'/%3e%3c/g%3e%3cpath%20d='M23.9354%2024.0445C22.913%2025.0563%2021.7191%2025.8937%2020.4023%2026.5141C21.9436%2026.4125%2023.3119%2025.4553%2023.9354%2024.0445Z'%20fill='%23358E9F'/%3e%3cpath%20d='M6.49005%205.57022C6.12294%205.66427%205.77707%205.83114%205.46457%206.06324L5.42361%206.09358C4.26463%206.95978%203.50462%208.27957%203.33927%209.71464C3.32865%209.81324%203.31954%209.91033%203.31348%2010.0074C4.04467%208.30687%205.13538%206.79443%206.49005%205.57022Z'%20fill='%23358E9F'/%3e%3c/svg%3e";
+const ArrowLeftIcon = "data:image/svg+xml,%3csvg%20width='19'%20height='18'%20viewBox='0%200%2019%2018'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M19%209C19%209.6778%2018.5277%2010.2331%2017.9285%2010.2822L17.8421%2010.2857L3.87801%2010.2854L8.50365%2015.8415C8.93775%2016.3629%208.90899%2017.1763%208.43943%2017.6584C7.99458%2018.115%207.31369%2018.1104%206.87414%2017.6653L6.8032%2017.5871L0.253624%209.72022C-0.0845415%209.31405%20-0.0845415%208.68596%200.253624%208.27978L6.8032%200.412934C7.2373%20-0.108472%207.96987%20-0.140396%208.43943%200.34163C8.88428%200.798287%208.9335%201.55239%208.56834%202.07384L8.50365%202.15851L3.87849%207.71406L17.8421%207.71429C18.4816%207.71429%2019%208.28992%2019%209Z'%20fill='%23464646'/%3e%3c/svg%3e";
 const Students = () => {
   const ipc = window.electron.ipcRenderer;
   const [open, setOpen] = reactExports.useState(false);
@@ -24987,9 +24892,9 @@ const Students = () => {
     setSearchBy,
     className
   } = useStudents();
-  const tabsRef = reactExports.useRef(null);
-  const [_activeTab, setActiveTab] = reactExports.useState(0);
-  const [openModal, setOpenModal] = reactExports.useState(false);
+  reactExports.useRef(null);
+  reactExports.useState(0);
+  reactExports.useState(false);
   const [openSearchModal, setOpenSearchModal] = reactExports.useState(false);
   const [openDeleteModal, setOpenDeleteModal] = reactExports.useState(false);
   const [deleteId, setDeleteId] = reactExports.useState(void 0);
@@ -25003,6 +24908,10 @@ const Students = () => {
   const [errors, setErrors] = reactExports.useState({});
   const [searchedBy, setSearchedBy] = reactExports.useState({});
   const [createField, setCreateField] = reactExports.useState("");
+  const [createTitle, setCreateTitle] = reactExports.useState("");
+  const [createLabel, setCreateLabel] = reactExports.useState("");
+  const [newFieldValues, setNewFieldValues] = reactExports.useState({});
+  const [isCreateStudent, setIsCreateStudent] = reactExports.useState(false);
   reactExports.useEffect(() => {
     ipc.on("import-students", (_event, { event }) => {
       console.log("event", event);
@@ -25015,137 +24924,20 @@ const Students = () => {
       }
     });
   }, []);
-  const renderTabs = (isSearched2) => {
-    const re2 = [];
-    if (Object.keys(studentGroups?.grades || {}).length > 0 && studentGroups) {
-      for (const key in studentGroups.grades) {
-        const total = key === className && isSearched2 ? students2?.total : studentGroups.grades[key].totalStudents;
-        re2.push(/* @__PURE__ */ jsxRuntimeExports.jsx(Tabs.Item, { title: `${key} (${total})`, icon: PiStudentBold }, key));
-      }
-    } else {
-      re2.push(/* @__PURE__ */ jsxRuntimeExports.jsx(Tabs.Item, { title: `السنة المشترك	(0)`, icon: PiStudentBold }, 1));
+  reactExports.useEffect(() => {
+    if (!createField)
+      return;
+    if (createField === "studentSchoolName") {
+      setCreateTitle(FM("create-new-school"));
+      setCreateLabel(getFieldLabel("studentSchoolName"));
+    } else if (createField === "studentClass") {
+      setCreateTitle(FM("create-new-grade"));
+      setCreateLabel(getFieldLabel("studentClass"));
+    } else if (createField === "studentSection") {
+      setCreateTitle(FM("create-new-section"));
+      setCreateLabel(getFieldLabel("studentSection"));
     }
-    return re2;
-  };
-  const renderStudents = () => {
-    const re2 = [];
-    if (students2 && students2?.students?.length > 0) {
-      const currentStudents = students2.students;
-      const startIndex = (page - 1) * perPage + 1;
-      for (let i = 0; i < currentStudents.length; i++) {
-        const student = currentStudents[i];
-        const index2 = startIndex + i;
-        re2.push(
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "div",
-            {
-              className: "flex justify-between items-center border-b mb-0 border-gray-200 dark:border-gray-700 pr-3 rtl:pl-3",
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3.5 px-4 pl-10 w-28 break-all", children: index2 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3.5 px-4 flex-1 break-all", children: student.studentID }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3.5 px-4 flex-1 min-w-80 break-all", children: student.studentName }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3.5 px-4 flex-1 break-all", children: student.studentSection }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3.5 px-4 flex-1 break-all", children: student.studentSchoolName }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "py-3.5 px-4 flex-1 flex break-all", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "span",
-                    {
-                      className: "font-medium text-cyan-600 hover:underline dark:text-cyan-500",
-                      onClick: () => {
-                        openEditModal(student);
-                      },
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { content: FM("edit"), placement: "top", className: "", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MdEdit, { fontSize: 20 }) })
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "span",
-                    {
-                      className: "font-medium text-red-600 hover:underline dark:text-red-500 ml-2",
-                      onClick: () => {
-                        handleDeleteModal(student.id);
-                      },
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { content: FM("delete"), placement: "top", className: "", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MdOutlineDeleteForever, { fontSize: 21 }) })
-                    }
-                  )
-                ] })
-              ]
-            },
-            index2
-          )
-        );
-      }
-    } else {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-32 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(GrNotes, { fontSize: "150" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center mt-4", children: FM("no-records-found") })
-      ] });
-    }
-    return re2;
-  };
-  const getTotalPages = () => {
-    if (students2) {
-      const total = students2.total;
-      return Math.ceil(total / perPage);
-    }
-    return 0;
-  };
-  const SortButton = ({ name, title }) => {
-    const type = order?.[name] || "ASC";
-    let re2 = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-2 hidden group-hover:block", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      PiSortAscendingBold,
-      {
-        onClick: () => {
-          setOrderBy?.(name, "ASC");
-        }
-      }
-    ) }) });
-    if (order?.[name] !== void 0) {
-      if (type === "ASC") {
-        re2 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          PiSortDescendingBold,
-          {
-            onClick: () => {
-              setOrderBy?.(name, "DESC");
-            }
-          }
-        ) });
-      } else if (type === "DESC") {
-        re2 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          PiSortAscendingBold,
-          {
-            onClick: () => {
-              setOrderBy?.(name, "ASC");
-            }
-          }
-        ) });
-      }
-    }
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        className: "flex flex-row items-center",
-        onClick: () => {
-          setOrderBy?.(name, type === "ASC" ? "DESC" : "ASC");
-        },
-        children: [
-          title,
-          re2
-        ]
-      }
-    );
-  };
-  const renderHeader = () => {
-    if (students2?.students.length === 0)
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center bg-gray-100 dark:bg-gray-700 border-b border-t mb-0 border-gray-200 dark:border-gray-700 pr-3 rtl:pl-3", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-2 pl-10 w-28", children: "#" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-2 flex-1 group", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SortButton, { title: FM("student-id"), name: "studentID" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-2 flex-1 min-w-80 group", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SortButton, { title: FM("student-name"), name: "studentName" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-2 flex-1 group", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SortButton, { title: FM("section"), name: "studentSection" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-2 flex-1 group", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SortButton, { title: FM("school"), name: "studentSchoolName" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-2 flex-1" })
-    ] });
-  };
+  }, [createField]);
   const renderSelectOptions = (field) => {
     const schoolOptions = Object.keys(studentGroups?.schools || {});
     const gradeOptions = Object.keys(studentGroups?.grades || {});
@@ -25196,7 +24988,17 @@ const Students = () => {
     ipc.invoke("addStudent", studentData).then((data) => {
       console.log("data", data);
       reloadData();
-      setOpenModal(false);
+      setNewFieldValues({
+        studentSchoolName: newFieldValues.studentSchoolName?.filter(
+          (value) => value != studentData.studentSchoolName
+        ),
+        studentClass: newFieldValues.studentClass?.filter(
+          (value) => value != studentData.studentClass
+        ),
+        studentSection: newFieldValues.studentSection?.filter(
+          (value) => value != studentData.studentSection
+        )
+      });
       setStudentData({
         studentName: "",
         studentID: 0,
@@ -25207,41 +25009,6 @@ const Students = () => {
     }).catch((err) => {
       console.log("err", err);
     });
-  };
-  const editStudent = () => {
-    console.log("studentData", studentData);
-    const errors2 = {};
-    const fields = Object.keys(studentData);
-    fields.forEach((field) => {
-      if (!studentData[field]) {
-        errors2[field] = true;
-      }
-      if (field === "studentID" && isNaN(Number(studentData[field]))) {
-        errors2[field] = true;
-      }
-    });
-    if (Object.keys(errors2).length > 0) {
-      setErrors(errors2);
-      return;
-    }
-    ipc.invoke("updateStudent", studentData).then((data) => {
-      console.log("data", data);
-      reloadData();
-      setOpenModal(false);
-      setStudentData({
-        studentName: "",
-        studentID: 0,
-        studentSchoolName: "",
-        studentClass: "",
-        studentSection: ""
-      });
-    }).catch((err) => {
-      console.log("err", err);
-    });
-  };
-  const handleDeleteModal = (id2) => {
-    setOpenDeleteModal(true);
-    setDeleteId(id2);
   };
   const deleteStudent = () => {
     if (deleteId) {
@@ -25254,122 +25021,6 @@ const Students = () => {
         console.log("err", err);
       });
     }
-  };
-  const deleteAllStudents = () => {
-    ipc.invoke("removeAllStudents").then((data) => {
-      console.log("data", data);
-      reloadData();
-    }).catch((err) => {
-      console.log("err", err);
-    });
-  };
-  const openEditModal = (data) => {
-    console.log("data sdsd", data);
-    setOpenModal(true);
-    setStudentData({
-      studentName: data.studentName,
-      studentID: data.studentID,
-      studentSchoolName: data.studentSchoolName,
-      studentClass: data.studentClass,
-      studentSection: data.studentSection,
-      id: data.id
-    });
-  };
-  const renderCreateModal = () => {
-    const fields = Object.keys(studentData).filter((field) => {
-      return field !== "id";
-    });
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      Modal,
-      {
-        theme: ModalTheme,
-        show: openModal,
-        onClose: () => {
-          setOpenModal(false);
-          setStudentData({
-            studentName: "",
-            studentID: 0,
-            studentSchoolName: "",
-            studentClass: "",
-            studentSection: ""
-          });
-          setErrors({});
-        },
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Modal.Header, { className: "py-3", children: FM("create-more-students") }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Modal.Body, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-6 gap-5 ", children: fields?.map((field) => {
-            return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: field === "studentName" || field === "studentID" ? "col-span-3" : "col-span-2",
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-1 block", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: field, value: getFieldLabel(field) }) }),
-                  ["studentSchoolName", "studentClass", "studentSection"].includes(field) ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                    Select,
-                    {
-                      value: studentData[field],
-                      id: field,
-                      className: `${errors[field] && "ring-1 ring-red-500 rounded-lg"}`,
-                      onChange: (e) => {
-                        const value = e.target.value;
-                        if (value === "create-new-school") {
-                          setCreateField("studentSchool");
-                          return;
-                        }
-                        setStudentData({ ...studentData, [field]: value });
-                        setErrors({ ...errors, [field]: false });
-                      },
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: FM("select") }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "create-new-school", children: FM("create-new-school") }),
-                        renderSelectOptions(field)
-                      ]
-                    }
-                  ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    TextInput,
-                    {
-                      value: studentData[field],
-                      onChange: (e) => {
-                        setStudentData({ ...studentData, [field]: e.target.value });
-                        setErrors({ ...errors, [field]: false });
-                      },
-                      className: `${errors[field] && "ring-1 ring-red-500 rounded-lg"}`,
-                      id: field,
-                      type: field === "studentID" ? "number" : "text",
-                      min: field === "studentID" ? 0 : void 0,
-                      placeholder: ""
-                    }
-                  )
-                ]
-              },
-              field
-            );
-          }) }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Footer, { className: "justify-end py-3 px-4", children: [
-            studentData.id ? /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "rtl:ml-2", onClick: editStudent, children: FM("edit") }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "rtl:ml-2", onClick: saveStudent, children: FM("save") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Button,
-              {
-                color: "gray",
-                className: "",
-                onClick: () => {
-                  setOpenModal(false);
-                  setStudentData({
-                    studentName: "",
-                    studentID: 0,
-                    studentSchoolName: "",
-                    studentClass: "",
-                    studentSection: ""
-                  });
-                  setErrors({});
-                },
-                children: FM("cancel")
-              }
-            )
-          ] })
-        ]
-      }
-    );
   };
   const handleSearch = () => {
     console.log("studentData", studentData);
@@ -25563,132 +25214,207 @@ const Students = () => {
   const isSearched = Object.keys(searchedBy).filter((field) => {
     return searchedBy[field];
   }).length > 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    renderCreateModal(),
+  const onCreateNewFieldValue = (value) => {
+    if (!value)
+      return;
+    if (!newFieldValues[createField]) {
+      setNewFieldValues({ ...newFieldValues, [createField]: [value] });
+    } else {
+      setNewFieldValues({
+        ...newFieldValues,
+        [createField]: newFieldValues[createField].concat(value)
+      });
+    }
+    setStudentData({ ...studentData, [createField]: value });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-2", children: [
     renderSearchModal(),
     renderDeleteModal(),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-base flex", children: [
-        !isSearched && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          FM("students"),
-          " (",
-          studentGroups?.totalStudents || 0,
-          ")"
-        ] }),
-        " ",
-        renderSearchedBy()
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(Button.Group, { theme: buttonGroupTheme, className: "ml-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Button,
-          {
-            color: "gray",
-            className: "p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0",
-            size: "sm",
-            onClick: () => {
-              deleteAllStudents();
-            },
-            children: FM("delete-all-students")
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Button,
-          {
-            disabled: open,
-            color: "gray",
-            className: "p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0" + (open && waiting ? " cursor-wait" : ""),
-            size: "sm",
-            onClick: () => {
-              window.open("##importStudents##", "_blank");
-              setOpen(true);
-              setWaiting(true);
-            },
-            children: FM("import-students")
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Button,
-          {
-            color: "gray",
-            className: "p-0 rtl:rounded-l-lg rtl:rounded-r-none rtl:border-l",
-            size: "sm",
-            onClick: () => setOpenModal(true),
-            children: FM("add-more-students")
-          }
-        )
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center border-b mb-0 border-gray-200 dark:border-gray-700 pr-3 rtl:pl-3", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Tabs,
-        {
-          theme: themeForTabs,
-          "aria-label": "Default tabs",
-          className: "mb-0 flex-1",
-          style: "underline",
-          ref: tabsRef,
-          onActiveTabChange: (tab) => {
-            setClassName?.(Object.keys(studentGroups?.grades || {})[tab]);
-            setActiveTab(tab);
-            setPage(1);
-            setOrderBy?.();
-          },
-          children: renderTabs(isSearched)
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "span",
-          {
-            className: "flex items-center",
-            onClick: () => {
-              setOpenSearchModal(true);
-            },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip, { content: FM("search"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(BiSearchAlt, { fontSize: 18 }) })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mx-4 dark:text-gray-700", children: "|" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-          FM("sort-by"),
-          ":"
-        ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: isCreateStudent ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow-0 h-full items-center py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("a", { href: "javascript:", className: "flex", onClick: () => setIsCreateStudent(false), children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ArrowLeftIcon, className: "mr-2" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "hover:text-gray-900 font-semibold", children: FM("add-student") })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center grow", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          Select,
+          "a",
           {
-            className: "ml-4 rtl:mr-4",
-            sizing: "sm",
-            onChange: (e) => {
-              setOrderBy?.("id", e.target.value === "latest" ? "DESC" : "ASC");
-            },
+            href: "javascript:",
+            className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+            onClick: saveStudent,
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("option", { disabled: true, children: FM("order-by") }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "latest", children: FM("latest-first") }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "oldest", children: FM("oldest-first") })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("save") })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "a",
+          {
+            href: "javascript:",
+            className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+            onClick: () => setIsCreateStudent(false),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelIcon }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("cancel") })
             ]
           }
         )
       ] })
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center py-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "a",
+        {
+          href: "javascript:",
+          className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+          onClick: () => setIsCreateStudent(true),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: AddStudentIcon }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("add-student") })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "a",
+        {
+          href: "javascript:",
+          className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ImportStudentIcon }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("import-students") })
+          ]
+        }
+      )
+    ] }) }),
+    isCreateStudent && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white dark:bg-gray-700 rounded-lg p-3 mb-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-row gap-10 justify-center ", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "basis-1/3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-1 block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "studentName", value: getFieldLabel("studentName") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TextInput,
+            {
+              value: studentData["studentName"],
+              onChange: (e) => {
+                setStudentData({ ...studentData, ["studentName"]: e.target.value });
+                setErrors({ ...errors, ["studentName"]: false });
+              },
+              className: `${errors["studentName"] && "ring-1 ring-red-500 rounded-lg"}`,
+              id: "studentName",
+              type: "text",
+              placeholder: FM("student-name")
+            }
+          )
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "basis-1/3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-1 block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "studentID", value: getFieldLabel("studentID") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TextInput,
+            {
+              value: studentData["studentID"],
+              onChange: (e) => {
+                setStudentData({ ...studentData, ["studentID"]: e.target.value });
+                setErrors({ ...errors, ["studentID"]: false });
+              },
+              className: `${errors["studentID"] && "ring-1 ring-red-500 rounded-lg"}`,
+              id: "studentID",
+              type: "number",
+              placeholder: FM("student-id")
+            }
+          )
+        ] }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-6 gap-10 justify-center ", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-span-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-1 block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "studentSchoolName", value: getFieldLabel("studentSchoolName") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Select,
+            {
+              value: studentData["studentSchoolName"],
+              id: "studentSchoolName",
+              className: `${errors["studentSchoolName"] && "ring-1 ring-red-500 rounded-lg"}`,
+              onChange: (e) => {
+                const value = e.target.value;
+                if (value === "create-new") {
+                  setCreateField("studentSchoolName");
+                  return;
+                }
+                setStudentData({ ...studentData, ["studentSchoolName"]: value });
+                setErrors({ ...errors, ["studentSchoolName"]: false });
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", disabled: true, hidden: true, children: FM("select") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "create-new", children: FM("create-new-school") }),
+                renderSelectOptions("studentSchoolName"),
+                newFieldValues["studentSchoolName"]?.map((value) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: value }, value))
+              ]
+            }
+          )
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-span-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-1 block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "studentClass", value: getFieldLabel("studentClass") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Select,
+            {
+              value: studentData["studentClass"],
+              id: "studentClass",
+              className: `${errors["studentClass"] && "ring-1 ring-red-500 rounded-lg"}`,
+              onChange: (e) => {
+                const value = e.target.value;
+                if (value === "create-new") {
+                  setCreateField("studentClass");
+                  return;
+                }
+                setStudentData({ ...studentData, ["studentClass"]: value });
+                setErrors({ ...errors, ["studentClass"]: false });
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", disabled: true, hidden: true, children: FM("select") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "create-new", children: FM("create-new-grade") }),
+                renderSelectOptions("studentClass"),
+                newFieldValues["studentClass"]?.map((value) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: value }, value))
+              ]
+            }
+          )
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-span-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-1 block", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "studentSection", value: getFieldLabel("studentSection") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Select,
+            {
+              value: studentData["studentSection"],
+              id: "studentSection",
+              className: `${errors["studentSection"] && "ring-1 ring-red-500 rounded-lg"}`,
+              onChange: (e) => {
+                const value = e.target.value;
+                if (value === "create-new") {
+                  setCreateField("studentSection");
+                  return;
+                }
+                setStudentData({ ...studentData, ["studentSection"]: value });
+                setErrors({ ...errors, ["studentSection"]: false });
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", disabled: true, hidden: true, children: FM("select") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "create-new", children: FM("create-new-section") }),
+                renderSelectOptions("studentSection"),
+                newFieldValues["studentSection"]?.map((value) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: value }, value))
+              ]
+            }
+          )
+        ] }) })
+      ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "", children: [
-      renderHeader(),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "overflow-y-auto custom-scrollbar h-screen-student-table", children: renderStudents() }),
-      renderHeader()
-    ] }),
-    getTotalPages() > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center bg-white dark:bg-gray-900 pb-2 pr-3 rtl:pl-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Pagination,
-      {
-        theme: PaginationTheme,
-        nextLabel: FM("next"),
-        previousLabel: FM("previous"),
-        currentPage: page,
-        totalPages: getTotalPages(),
-        onPageChange: setPage,
-        showIcons: true
-      },
-      getTotalPages()
-    ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(PromptDialog, { show: createField ? true : false, onClose: () => setCreateField(""), onSave: () => {
-    } })
+    !isCreateStudent && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white dark:bg-gray-700 flex-grow rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-base flex", children: [
+      !isSearched && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        FM("students"),
+        " (",
+        studentGroups?.totalStudents || 0,
+        ")"
+      ] }),
+      " ",
+      renderSearchedBy()
+    ] }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(PromptDialog, { show: createField ? true : false, onClose: () => setCreateField(""), onSave: onCreateNewFieldValue, title: createTitle, label: createLabel })
   ] });
 };
 function distributeStudents(totalStudents, numGroups) {
