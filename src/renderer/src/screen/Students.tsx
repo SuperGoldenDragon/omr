@@ -37,15 +37,15 @@ const Students = () => {
   const {
     students,
     studentGroups,
-    setPage,
+    /* setPage,
     setClassName,
     page,
     perPage,
     order,
-    setOrderBy,
+    setOrderBy, */
+    /* className, */
     reloadData,
-    setSearchBy,
-    className
+    setSearchBy
   } = useStudents()
 
   // const [openModal, setOpenModal] = useState(false)
@@ -75,11 +75,11 @@ const Students = () => {
       console.log('event', event)
 
       if (event === 'closed') {
-        setOpen(false)
-        setWaiting(false)
+        // setOpen(false)
+        // setWaiting(false)
       }
       if (event === 'mounted') {
-        setWaiting(false)
+        // setWaiting(false)
       }
     })
   }, [])
