@@ -20,6 +20,8 @@ import { BiSearchAlt } from 'react-icons/bi'
 import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
 import { PiSortAscendingBold, PiSortDescendingBold, PiStudentBold } from 'react-icons/pi'
 import { GrNotes } from 'react-icons/gr'
+import PromptDialog from '@renderer/components/PromptDialog'
+
 
 type CreateStudentProps = {
   id?: number
@@ -61,6 +63,9 @@ const Students = () => {
   })
   const [errors, setErrors] = useState<Record<string, boolean>>({})
   const [searchedBy, setSearchedBy] = useState<Record<string, string | number>>({})
+
+  // field of new student
+  const [createField, setCreateField] = useState<string>('')
 
   useEffect(() => {
     ipc.on('import-students', (_event, { event }) => {
@@ -481,11 +486,19 @@ const Students = () => {
                       id={field}
                       className={`${errors[field] && 'ring-1 ring-red-500 rounded-lg'}`}
                       onChange={(e) => {
-                        setStudentData({ ...studentData, [field]: e.target.value })
+                        // get value of select school
+                        const value = e.target.value
+                        // if select create new school open enter new school dialog
+                        if (value === 'create-new-school') {
+                          setCreateField('studentSchool')
+                          return
+                        }
+                        setStudentData({ ...studentData, [field]: value })
                         setErrors({ ...errors, [field]: false })
                       }}
                     >
                       <option value="">{FM('select')}</option>
+                      <option value="create-new-school">{FM('create-new-school')}</option>
                       {renderSelectOptions(field)}
                     </Select>
                   ) : (
@@ -862,6 +875,7 @@ const Students = () => {
           />
         </div>
       )}
+      <PromptDialog show={createField ? true : false} onClose={() => setCreateField('')} onSave={() => { }} />
     </div>
   )
 }

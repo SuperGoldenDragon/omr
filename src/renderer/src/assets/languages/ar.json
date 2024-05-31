@@ -75,5 +75,6 @@
   "delete-all-students": "حذف جميع الطلاب",
   "committee": "اللجنة",
   "amendment": "التعديل",
-  "add-committee": "اللجنة الإضافية"
+  "add-committee": "اللجنة الإضافية",
+  "create-new-school" : "Create new school"
 }

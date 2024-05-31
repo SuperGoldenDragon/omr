@@ -77,5 +77,6 @@
   "student-list": "Student List",
   "committee" : "Committee",
   "amendment": "Amendment",
-  "add-committee" : "Add Committee"
+  "add-committee" : "Add Committee",
+  "create-new-school" : "Create new school"
 }

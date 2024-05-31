@@ -8,6 +8,7 @@ import { FaUsersBetweenLines } from 'react-icons/fa6'
 import { LuBookOpenCheck } from 'react-icons/lu'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlineSettings } from 'react-icons/md'
 import { useLocation } from 'react-router-dom'
+import LogoImage from '@renderer/assets/favicon.svg'
 
 const LayoutWithSidebar = ({ children }: { children: JSX.Element }) => {
   const { settings } = useSettings()
@@ -24,6 +25,9 @@ const LayoutWithSidebar = ({ children }: { children: JSX.Element }) => {
       {path === '/importStudents' ? null : (
         <div className="h-screen">
           <Sidebar theme={SidebarTheme} collapsed={collapsed}>
+            <Sidebar.Logo href="#" img={LogoImage}>
+              LOGO
+            </Sidebar.Logo>
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 <Sidebar.Item href="#" active={path === '/'} icon={LuBookOpenCheck}>
