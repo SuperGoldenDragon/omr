@@ -55,15 +55,15 @@ const LayoutWithSidebar = ({ children }: { children: JSX.Element }) => {
             </Sidebar.Items>
           </Sidebar>
           <div
-            className={`transition-all ease-in-out duration-300 absolute bottom-4 ltr:left-3 rtl:right-3 ${collapsed ? 'w-10 rounded-full' : 'rounded-lg w-56'} h-10  flex items-center justify-center bg-gray-200 dark:bg-gray-700`}
+            className={`transition-all ease-in-out duration-300 absolute bottom-4 ltr:left-3 rtl:right-3 ${collapsed ? 'w-10 rounded-full' : 'rounded-lg w-56'} h-10  flex items-center justify-center bg-gray-400 dark:bg-gray-700`}
             onClick={() => {
               setCollapsed(!collapsed)
             }}
           >
             {collapsed ? (
-              <MdKeyboardArrowRight className="" fontSize={28} />
+              <MdKeyboardArrowRight className="text-white" fontSize={28} />
             ) : (
-              <MdKeyboardArrowLeft className="" fontSize={28} />
+              <MdKeyboardArrowLeft className="text-white" fontSize={28} />
             )}
           </div>
         </div>

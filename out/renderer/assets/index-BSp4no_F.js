@@ -24614,11 +24614,11 @@ const LayoutWithSidebar = ({ children }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: `transition-all ease-in-out duration-300 absolute bottom-4 ltr:left-3 rtl:right-3 ${collapsed ? "w-10 rounded-full" : "rounded-lg w-56"} h-10  flex items-center justify-center bg-gray-200 dark:bg-gray-700`,
+          className: `transition-all ease-in-out duration-300 absolute bottom-4 ltr:left-3 rtl:right-3 ${collapsed ? "w-10 rounded-full" : "rounded-lg w-56"} h-10  flex items-center justify-center bg-gray-300 dark:bg-gray-700`,
           onClick: () => {
             setCollapsed(!collapsed);
           },
-          children: collapsed ? /* @__PURE__ */ jsxRuntimeExports.jsx(MdKeyboardArrowRight, { className: "", fontSize: 28 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(MdKeyboardArrowLeft, { className: "", fontSize: 28 })
+          children: collapsed ? /* @__PURE__ */ jsxRuntimeExports.jsx(MdKeyboardArrowRight, { className: "text-white", fontSize: 28 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(MdKeyboardArrowLeft, { className: "text-white", fontSize: 28 })
         }
       )
     ] }),
@@ -25494,7 +25494,7 @@ const License = ({ onActivate }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: Flight1, className: "absolute right-[25px] top-[35px] w-[100px]" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: Flight2, className: "absolute right-[40px] top-[5px] w-[60px]" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-full flex items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex w-full justify-center", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-[500px] bg-white p-3 rtl:rounded-r-2xl rounded-l-2xl flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-2/3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-[500px] bg-white dark:bg-gray-700 p-3 rtl:rounded-r-2xl rounded-l-2xl flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-2/3", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center mb-3 text-[45px] font-semibold", children: FM("license") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-5 text-center", children: FM("enter-your-license") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-[#5FC3CA]", children: FM("enter-license") }),
