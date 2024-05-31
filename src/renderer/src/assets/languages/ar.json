@@ -79,5 +79,9 @@
   "create-new-school" : "إنشاء مدرسة جديدة",
   "create-new-grade" : "إنشاء فئة جديدة",
   "create-new-section" : "إنشاء قسم جديد",
-  "add-student" : "إضافة طالب"
+  "add-student" : "إضافة طالب",
+  "license" : "رخصة",
+  "enter-your-license" : "الرجاء إدخال الترخيص الخاص بك للمتابعة...",
+  "enter-license" : "إدخال رخصة",
+  "submit" : "إرسال"
 }

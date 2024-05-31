@@ -8,6 +8,7 @@ import { FaUsersBetweenLines } from 'react-icons/fa6'
 import { LuBookOpenCheck } from 'react-icons/lu'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlineSettings } from 'react-icons/md'
 import { useLocation } from 'react-router-dom'
+import OpenBookLightIcon from '@renderer/assets/icons/openbook-light.svg'
 import LogoImage from '@renderer/assets/favicon.svg'
 
 const LayoutWithSidebar = ({ children }: { children: JSX.Element }) => {
@@ -33,7 +34,6 @@ const LayoutWithSidebar = ({ children }: { children: JSX.Element }) => {
                 <Sidebar.Item href="#" active={path === '/'} icon={LuBookOpenCheck}>
                   {FM('exams')}
                 </Sidebar.Item>
-
                 <Sidebar.Item
                   href="#committee"
                   active={path === '/committee'}

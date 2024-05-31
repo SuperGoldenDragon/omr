@@ -33,6 +33,8 @@ function createWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
+    minWidth: 800,
+    minHeight: 600,
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
@@ -43,6 +45,8 @@ function createWindow(): void {
       sandbox: false
     }
   })
+
+  mainWindow.setMinimumSize(800, 600)
 
   // attach fullscreen(f11 and not 'maximized') && focus listeners
   attachTitlebarToWindow(mainWindow)
@@ -68,6 +72,8 @@ function createWindow(): void {
     subWindow = new BrowserWindow({
       width: 800,
       height: 600,
+      minWidth: 800,
+      minHeight: 600,
       //   parent: mainWindow,
       modal: true,
       show: true,

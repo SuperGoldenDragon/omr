@@ -1048,6 +1048,12 @@ input[type="range"]::-ms-fill-lower {
 .right-0 {
   right: 0px;
 }
+.right-\[25px\] {
+  right: 25px;
+}
+.right-\[40px\] {
+  right: 40px;
+}
 .top-0 {
   top: 0px;
 }
@@ -1066,6 +1072,12 @@ input[type="range"]::-ms-fill-lower {
 .top-4 {
   top: 1rem;
 }
+.top-\[35px\] {
+  top: 35px;
+}
+.top-\[5px\] {
+  top: 5px;
+}
 .-z-10 {
   z-index: -10;
 }
@@ -1083,6 +1095,9 @@ input[type="range"]::-ms-fill-lower {
 }
 .z-50 {
   z-index: 50;
+}
+.z-\[9999\] {
+  z-index: 9999;
 }
 .z-auto {
   z-index: auto;
@@ -1254,6 +1269,10 @@ input[type="range"]::-ms-fill-lower {
 .hidden {
   display: none;
 }
+.size-full {
+  width: 100%;
+  height: 100%;
+}
 .h-0 {
   height: 0px;
 }
@@ -1402,6 +1421,18 @@ input[type="range"]::-ms-fill-lower {
 .w-96 {
   width: 24rem;
 }
+.w-\[100px\] {
+  width: 100px;
+}
+.w-\[360px\] {
+  width: 360px;
+}
+.w-\[500px\] {
+  width: 500px;
+}
+.w-\[60px\] {
+  width: 60px;
+}
 .w-auto {
   width: auto;
 }
@@ -1478,6 +1509,9 @@ input[type="range"]::-ms-fill-lower {
 }
 .basis-1\/3 {
   flex-basis: 33.333333%;
+}
+.basis-2\/3 {
+  flex-basis: 66.666667%;
 }
 .origin-\[0\] {
   transform-origin: 0;
@@ -1755,6 +1789,10 @@ input[type="range"]::-ms-fill-lower {
   border-start-end-radius: 0.5rem;
   border-end-end-radius: 0.5rem;
 }
+.rounded-l-2xl {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
 .rounded-l-lg {
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
@@ -1766,6 +1804,10 @@ input[type="range"]::-ms-fill-lower {
 .rounded-l-none {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+}
+.rounded-r-2xl {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 .rounded-r-lg {
   border-top-right-radius: 0.5rem;
@@ -2549,6 +2591,9 @@ input[type="range"]::-ms-fill-lower {
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
+.text-\[45px\] {
+  font-size: 45px;
+}
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -2602,6 +2647,10 @@ input[type="range"]::-ms-fill-lower {
 .text-\[\#3F83F8\] {
   --tw-text-opacity: 1;
   color: rgb(63 131 248 / var(--tw-text-opacity));
+}
+.text-\[\#5FC3CA\] {
+  --tw-text-opacity: 1;
+  color: rgb(95 195 202 / var(--tw-text-opacity));
 }
 .text-blue-500 {
   --tw-text-opacity: 1;
@@ -3085,6 +3134,9 @@ html.dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
 /* Handle on hover */
 html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #ffffff23; /* color of the scrollbar handle on hover */
+}
+.bg-license-screen {
+  background: conic-gradient(from -1.64deg at 52.89% 52.66%, #9FE6EA -34.2deg, #A5E3E7 85.25deg, #F0DAC2 153.64deg, #F7E3CD 280.49deg, #9FE6EA 325.8deg, #A5E3E7 445.25deg)
 }
 .after\:absolute::after {
   content: var(--tw-content);
@@ -4498,6 +4550,10 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(250 202 21 / var(--tw-bg-opacity));
 }
+.dark\:hover\:text-gray-200:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
 .dark\:hover\:text-gray-300:hover:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
@@ -5073,6 +5129,10 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+.rtl\:rounded-l-2xl:where([dir="rtl"], [dir="rtl"] *) {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
 .rtl\:rounded-l-lg:where([dir="rtl"], [dir="rtl"] *) {
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
@@ -5080,6 +5140,10 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 .rtl\:rounded-r:where([dir="rtl"], [dir="rtl"] *) {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
+}
+.rtl\:rounded-r-2xl:where([dir="rtl"], [dir="rtl"] *) {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 .rtl\:rounded-r-lg:where([dir="rtl"], [dir="rtl"] *) {
   border-top-right-radius: 0.5rem;

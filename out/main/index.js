@@ -1262,6 +1262,8 @@ function createWindow() {
   mainWindow = new electron.BrowserWindow({
     width: 1280,
     height: 720,
+    minWidth: 800,
+    minHeight: 600,
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: "hidden",
@@ -1272,6 +1274,7 @@ function createWindow() {
       sandbox: false
     }
   });
+  mainWindow.setMinimumSize(800, 600);
   main.attachTitlebarToWindow(mainWindow);
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
@@ -1285,6 +1288,8 @@ function createWindow() {
     subWindow = new electron.BrowserWindow({
       width: 800,
       height: 600,
+      minWidth: 800,
+      minHeight: 600,
       //   parent: mainWindow,
       modal: true,
       show: true,

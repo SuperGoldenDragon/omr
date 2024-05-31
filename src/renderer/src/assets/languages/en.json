@@ -81,5 +81,9 @@
   "create-new-school" : "Create new school",
   "create-new-grade" : "Create new grade",
   "create-new-section" : "Create new section",
-  "add-student" : "Add Student"
+  "add-student" : "Add Student",
+  "license" : "License",
+  "enter-your-license" : "Please enter your license to proceed...",
+  "enter-license" : "Enter License",
+  "submit" : "Submit"
 }

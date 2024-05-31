@@ -24192,6 +24192,8 @@ const next$1 = "Next";
 const previous$1 = "Previous";
 const committee$1 = "Committee";
 const amendment$1 = "Amendment";
+const license$1 = "License";
+const submit$1 = "Submit";
 const en = {
   exams: exams$1,
   committees: committees$1,
@@ -24275,7 +24277,11 @@ const en = {
   "create-new-school": "Create new school",
   "create-new-grade": "Create new grade",
   "create-new-section": "Create new section",
-  "add-student": "Add Student"
+  "add-student": "Add Student",
+  license: license$1,
+  "enter-your-license": "Please enter your license to proceed...",
+  "enter-license": "Enter License",
+  submit: submit$1
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24301,6 +24307,8 @@ const next = "التالي";
 const previous = "السابق";
 const committee = "اللجنة";
 const amendment = "التعديل";
+const license = "رخصة";
+const submit = "إرسال";
 const ar = {
   exams,
   committees,
@@ -24382,7 +24390,11 @@ const ar = {
   "create-new-school": "إنشاء مدرسة جديدة",
   "create-new-grade": "إنشاء فئة جديدة",
   "create-new-section": "إنشاء قسم جديد",
-  "add-student": "إضافة طالب"
+  "add-student": "إضافة طالب",
+  license,
+  "enter-your-license": "الرجاء إدخال الترخيص الخاص بك للمتابعة...",
+  "enter-license": "إدخال رخصة",
+  submit
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -24542,6 +24554,9 @@ function IconBase(props) {
   };
   return IconContext !== void 0 ? /* @__PURE__ */ React.createElement(IconContext.Consumer, null, (conf) => elem(conf)) : elem(DefaultContext);
 }
+function FaArrowLeft(props) {
+  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 448 512" }, "child": [{ "tag": "path", "attr": { "d": "M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" }, "child": [] }] })(props);
+}
 function FaUserGraduate(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 448 512" }, "child": [{ "tag": "path", "attr": { "d": "M319.4 320.6L224 416l-95.4-95.4C57.1 323.7 0 382.2 0 454.4v9.6c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-9.6c0-72.2-57.1-130.7-128.6-133.8zM13.6 79.8l6.4 1.5v58.4c-7 4.2-12 11.5-12 20.3 0 8.4 4.6 15.4 11.1 19.7L3.5 242c-1.7 6.9 2.1 14 7.6 14h41.8c5.5 0 9.3-7.1 7.6-14l-15.6-62.3C51.4 175.4 56 168.4 56 160c0-8.8-5-16.1-12-20.3V87.1l66 15.9c-8.6 17.2-14 36.4-14 57 0 70.7 57.3 128 128 128s128-57.3 128-128c0-20.6-5.3-39.8-14-57l96.3-23.2c18.2-4.4 18.2-27.1 0-31.5l-190.4-46c-13-3.1-26.7-3.1-39.7 0L13.6 48.2c-18.1 4.4-18.1 27.2 0 31.6z" }, "child": [] }] })(props);
 }
@@ -24619,7 +24634,7 @@ function HiMiniLanguage(props) {
 function VscVmActive(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 16 16", "fill": "currentColor" }, "child": [{ "tag": "path", "attr": { "fillRule": "evenodd", "clipRule": "evenodd", "d": "M1.5 2h13l.5.5v5.503a5.006 5.006 0 0 0-1-.583V3H2v9h5a5 5 0 0 0 1 3H4v-1h3v-1H1.5l-.5-.5v-10l.5-.5z" }, "child": [] }, { "tag": "path", "attr": { "fillRule": "evenodd", "clipRule": "evenodd", "d": "M9.778 8.674a4 4 0 1 1 4.444 6.652 4 4 0 0 1-4.444-6.652zm2.13 4.99l2.387-3.182-.8-.6-2.077 2.769-1.301-1.041-.625.78 1.704 1.364.713-.09z" }, "child": [] }] })(props);
 }
-const Settings = () => {
+const Settings = ({ onDeactivate }) => {
   const { settings: settings2, updateSettings } = useSettings();
   const { setMode } = useThemeMode();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4", children: [
@@ -24677,9 +24692,14 @@ const Settings = () => {
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: FM("active") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs", children: FM("license-is-active", { date: "Aug 28, 2028" }) })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-base p-4 flex items-center w-36", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cursor-default", size: "sm", color: "failure", children: FM("deactivate") }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-base p-4 flex items-center w-36", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cursor-default", size: "sm", color: "failure", onClick: onDeactivate, children: FM("deactivate") }) })
     ] })
   ] });
+};
+Settings.defaultProps = {
+  onDeactivate: () => {
+    return;
+  }
 };
 const StudentsContext = reactExports.createContext({
   students: void 0,
@@ -24874,7 +24894,6 @@ const AddStudentIcon = "data:image/svg+xml,%3csvg%20width='42'%20height='28'%20v
 const ImportStudentIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='28'%20viewBox='0%200%2026%2028'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M18.04%2024H24.9619C25.5358%2024%2026%2023.5533%2026%2023.0009C26%2022.4467%2025.5358%2022%2024.9619%2022H18.04C17.4662%2022%2017%2022.4467%2017%2023.0009C17%2023.5533%2017.4662%2024%2018.04%2024Z'%20fill='%231F8295'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M20.1721%2019.3206L17.3138%2022.2284C16.8954%2022.6558%2016.8954%2023.3442%2017.3138%2023.7716L20.1721%2026.6794C20.5885%2027.1069%2021.2698%2027.1069%2021.6862%2026.6794C22.1046%2026.2561%2022.1046%2025.5636%2021.6862%2025.1382L19.5879%2023.001L21.6862%2020.8618C22.1046%2020.4364%2022.1046%2019.7439%2021.6862%2019.3206C21.2698%2018.8931%2020.5885%2018.8931%2020.1721%2019.3206Z'%20fill='%231F8295'/%3e%3cmask%20id='mask0_1_1433'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='25'%20height='28'%3e%3cpath%20d='M0.209961%200H24.6076V27.7619H0.209961V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1433)'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M13.9834%20-0.0654297H4.16573C3.17725%20-0.0654297%202.23092%200.309092%201.53171%200.970869C0.834419%201.63628%200.441711%202.53623%200.441711%203.47435C0.441711%208.40495%200.441711%2019.1334%200.441711%2024.064C0.441711%2025.0021%200.834419%2025.9039%201.53171%2026.5675C2.23092%2027.2311%203.17725%2027.6038%204.16573%2027.6038H23.123C23.6842%2027.6038%2024.1383%2027.1711%2024.1383%2026.6384V25.0294H22.7609C22.8624%2025.7075%2022.6402%2026.422%2022.0904%2026.9438C21.1652%2027.8219%2019.6652%2027.8219%2018.74%2026.9438L16.0312%2024.3694C15.7458%2024.0985%2015.5504%2023.7785%2015.4393%2023.4349L15.4374%2023.4295C15.378%2023.2404%2015.3416%2023.0386%2015.3378%2022.8313V22.7241C15.3416%2022.5168%2015.378%2022.3168%2015.4374%2022.1259L15.4393%2022.1205C15.5504%2021.7787%2015.7458%2021.4569%2016.0312%2021.186L18.74%2018.6116C19.6652%2017.7335%2021.1652%2017.7335%2022.0904%2018.6116C22.6402%2019.1334%2022.8624%2019.8479%2022.7609%2020.526H24.1383V9.5867H17.7074C15.65%209.5867%2013.9834%208.00316%2013.9834%206.04873V-0.0654297ZM16.014%200.505444V6.04873C16.014%206.93595%2016.7726%207.65591%2017.7074%207.65591H23.5387C23.508%207.625%2023.4774%207.59409%2023.4448%207.56319C22.0655%206.25236%2017.491%201.90536%2016.1136%200.596347C16.081%200.56544%2016.0485%200.534533%2016.014%200.505444Z'%20fill='%231F8295'/%3e%3c/g%3e%3c/svg%3e";
 const SaveIcon = "data:image/svg+xml,%3csvg%20width='31'%20height='30'%20viewBox='0%200%2031%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_4799'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='31'%20height='30'%3e%3cpath%20d='M0%200H31V30H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_4799)'%3e%3cpath%20d='M15.5%200C6.95362%200%200%206.72931%200%2015C0%2023.2707%206.95362%2030%2015.5%2030C24.0464%2030%2031%2023.2707%2031%2015C31%206.72931%2024.0464%200%2015.5%200ZM15.5%2028.0004C8.09255%2028.0004%202.06623%2022.1685%202.06623%2015C2.06623%207.8315%208.09255%202.00063%2015.5%202.00063C22.9074%202.00063%2028.9338%207.8315%2028.9338%2015C28.9338%2022.1685%2022.9074%2028.0004%2015.5%2028.0004Z'%20fill='%23358E9F'/%3e%3c/g%3e%3cpath%20d='M20.9065%2013.9985H16.533V9.76606C16.533%209.21391%2016.0704%208.76627%2015.4998%208.76627C14.9293%208.76627%2014.4667%209.21391%2014.4667%209.76606V13.9985H10.0932C9.52261%2013.9985%209.06006%2014.4462%209.06006%2014.9983C9.06006%2015.5505%209.52261%2015.9981%2010.0932%2015.9981H14.4667V20.2306C14.4667%2020.7827%2014.9293%2021.2304%2015.4998%2021.2304C16.0704%2021.2304%2016.533%2020.7827%2016.533%2020.2306V15.9981H20.9065C21.4771%2015.9981%2021.9396%2015.5505%2021.9396%2014.9983C21.9396%2014.4462%2021.4771%2013.9985%2020.9065%2013.9985Z'%20fill='%23358E9F'/%3e%3c/svg%3e";
 const CancelIcon = "data:image/svg+xml,%3csvg%20width='30'%20height='30'%20viewBox='0%200%2030%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_3436'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='6'%20y='7'%20width='18'%20height='16'%3e%3cpath%20d='M6.40784%207.86429H23.8836V22.4274H6.40784V7.86429Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_3436)'%3e%3cpath%20d='M15.8134%2015.1029L23.7569%208.50288C23.9338%208.35537%2023.9338%208.13453%2023.7569%207.98702C23.5811%207.84037%2023.3163%207.84037%2023.1394%207.98702L15.1959%2014.588L7.28135%207.96287C7.10552%207.81536%206.84074%207.81536%206.66387%207.96287C6.487%208.11038%206.487%208.33122%206.66387%208.47786L14.5784%2015.1029L6.63491%2021.7039C6.45804%2021.8505%206.45804%2022.0714%206.63491%2022.2189C6.81074%2022.3664%207.10552%2022.3664%207.25239%2022.2189L15.1959%2015.6188L23.1094%2022.2189C23.1984%2022.2922%2023.3163%2022.3172%2023.4332%2022.3172C23.5511%2022.3172%2023.669%2022.268%2023.7569%2022.2189C23.9338%2022.0714%2023.9338%2021.8505%2023.7569%2021.7039L15.8134%2015.1029Z'%20fill='%23358E9F'/%3e%3c/g%3e%3cmask%20id='mask1_1_3436'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='30'%20height='30'%3e%3cpath%20d='M0%200H30V30H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_1_3436)'%3e%3cpath%20d='M25.6508%204.43252C22.8004%201.56237%2018.9958%20-0.0137799%2014.9515%200.00139023C10.986%200.0135262%207.19964%201.5912%204.39472%204.39459C1.56098%207.22985%200%2010.9965%200%2015.0044C0%2017.5954%200.653823%2020.0879%201.88259%2022.292C2.31644%2023.0703%203.43295%2023.0687%203.86681%2022.2905C3.86984%2022.2814%203.87439%2022.2754%203.87894%2022.2678C4.07312%2021.9204%204.0716%2021.4987%203.87894%2021.1513C2.86711%2019.3294%202.29066%2017.2329%202.29066%2015.0044C2.29066%2013.2311%202.65625%2011.5427%203.31311%2010.0075C3.31918%209.91037%203.32828%209.81328%203.3389%209.71468C3.50425%208.27961%204.26426%206.95983%205.42324%206.09362L5.4642%206.06328C5.7767%205.83118%206.12257%205.66432%206.48968%205.57026C8.75152%203.52839%2011.7461%202.28446%2015.0273%202.29053C21.96%202.30266%2027.6411%207.9307%2027.7184%2014.8618C27.7564%2018.451%2026.3016%2021.7065%2023.9351%2024.0442C23.3116%2025.455%2021.9433%2026.4122%2020.402%2026.5138C18.7637%2027.286%2016.9326%2027.7183%2015.0046%2027.7183C13.8653%2027.7183%2012.7624%2027.5666%2011.7112%2027.286C11.1833%2027.1434%2010.6296%2027.3937%2010.3975%2027.8897C10.3899%2027.9064%2010.3823%2027.9231%2010.3732%2027.9398C10.0774%2028.5754%2010.4293%2029.3187%2011.1059%2029.4993C12.362%2029.8345%2013.6696%2030.0075%2015.0046%2030.0075C19.0124%2030.0075%2022.7806%2028.448%2025.6129%2025.6143C28.4481%2022.779%2030.0091%2019.0123%2030.0091%2015.0044C30.0091%2011.0375%2028.4451%207.24654%2025.6508%204.43252Z'%20fill='%23358E9F'/%3e%3c/g%3e%3cpath%20d='M23.9354%2024.0445C22.913%2025.0563%2021.7191%2025.8937%2020.4023%2026.5141C21.9436%2026.4125%2023.3119%2025.4553%2023.9354%2024.0445Z'%20fill='%23358E9F'/%3e%3cpath%20d='M6.49005%205.57022C6.12294%205.66427%205.77707%205.83114%205.46457%206.06324L5.42361%206.09358C4.26463%206.95978%203.50462%208.27957%203.33927%209.71464C3.32865%209.81324%203.31954%209.91033%203.31348%2010.0074C4.04467%208.30687%205.13538%206.79443%206.49005%205.57022Z'%20fill='%23358E9F'/%3e%3c/svg%3e";
-const ArrowLeftIcon = "data:image/svg+xml,%3csvg%20width='19'%20height='18'%20viewBox='0%200%2019%2018'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M19%209C19%209.6778%2018.5277%2010.2331%2017.9285%2010.2822L17.8421%2010.2857L3.87801%2010.2854L8.50365%2015.8415C8.93775%2016.3629%208.90899%2017.1763%208.43943%2017.6584C7.99458%2018.115%207.31369%2018.1104%206.87414%2017.6653L6.8032%2017.5871L0.253624%209.72022C-0.0845415%209.31405%20-0.0845415%208.68596%200.253624%208.27978L6.8032%200.412934C7.2373%20-0.108472%207.96987%20-0.140396%208.43943%200.34163C8.88428%200.798287%208.9335%201.55239%208.56834%202.07384L8.50365%202.15851L3.87849%207.71406L17.8421%207.71429C18.4816%207.71429%2019%208.28992%2019%209Z'%20fill='%23464646'/%3e%3c/svg%3e";
 const AddLightIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='23'%20viewBox='0%200%2026%2023'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_1860'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='26'%20height='23'%3e%3cpath%20d='M0%200.25H25.3614V22.75H0V0.25Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1860)'%3e%3cpath%20d='M12.6807%200.25C5.68882%200.25%200%205.29698%200%2011.5C0%2017.703%205.68882%2022.75%2012.6807%2022.75C19.6726%2022.75%2025.3614%2017.703%2025.3614%2011.5C25.3614%205.29698%2019.6726%200.25%2012.6807%200.25ZM12.6807%2021.2503C6.62059%2021.2503%201.6904%2016.8764%201.6904%2011.5C1.6904%206.12363%206.62059%201.75048%2012.6807%201.75048C18.7408%201.75048%2023.671%206.12363%2023.671%2011.5C23.671%2016.8764%2018.7408%2021.2503%2012.6807%2021.2503Z'%20fill='white'/%3e%3c/g%3e%3cpath%20d='M17.1043%2010.7489H13.5262V7.57455C13.5262%207.16043%2013.1478%206.82471%2012.681%206.82471C12.2143%206.82471%2011.8358%207.16043%2011.8358%207.57455V10.7489H8.2578C7.79102%2010.7489%207.4126%2011.0846%207.4126%2011.4987C7.4126%2011.9129%207.79102%2012.2486%208.2578%2012.2486H11.8358V15.4229C11.8358%2015.8371%2012.2143%2016.1728%2012.681%2016.1728C13.1478%2016.1728%2013.5262%2015.8371%2013.5262%2015.4229V12.2486H17.1043C17.5711%2012.2486%2017.9495%2011.9129%2017.9495%2011.4987C17.9495%2011.0846%2017.5711%2010.7489%2017.1043%2010.7489Z'%20fill='white'/%3e%3c/svg%3e";
 const EditLightIcon = "data:image/svg+xml,%3csvg%20width='25'%20height='23'%20viewBox='0%200%2025%2023'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_1868'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='1'%20width='24'%20height='22'%3e%3cpath%20d='M0.950439%201.72705H23.084V23H0.950439V1.72705Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1868)'%3e%3cpath%20d='M21.1289%2021.245H2.78528V3.68677H13.7907V1.93176H2.78528C1.77187%201.93176%200.950439%202.71797%200.950439%203.68677V21.245C0.950439%2022.2138%201.77187%2023%202.78528%2023H21.1289C22.1411%2023%2022.9625%2022.2138%2022.9625%2021.245V10.7103H21.1289V21.245Z'%20fill='white'/%3e%3c/g%3e%3cpath%20d='M8.28735%2016.0056H12.149L21.5079%207.04798L17.6171%203.32397L8.28735%2012.2537V16.0056Z'%20fill='white'/%3e%3cmask%20id='mask1_1_1868'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='18'%20y='0'%20width='7'%20height='6'%3e%3cpath%20d='M18.729%200H24.9505V5.89538H18.729V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_1_1868)'%3e%3cpath%20d='M24.2604%201.9318L22.9626%200.689688C22.2457%200.00350255%2021.0853%200.00350255%2020.3695%200.689688L18.915%202.08299L22.8059%205.80584L24.2604%204.4137C24.9773%203.72751%2024.9773%202.61566%2024.2604%201.9318Z'%20fill='white'/%3e%3c/g%3e%3c/svg%3e";
 const CancelLightIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='23'%20viewBox='0%200%2026%2023'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_1881'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='5'%20y='6'%20width='16'%20height='12'%3e%3cpath%20d='M5.87927%206.02905H20.4424V17.1941H5.87927V6.02905Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1881)'%3e%3cpath%20d='M13.717%2011.5787L20.3366%206.5186C20.484%206.40551%2020.484%206.2362%2020.3366%206.12311C20.1901%206.01068%2019.9695%206.01068%2019.8221%206.12311L13.2025%2011.1838L6.60701%206.10459C6.46048%205.9915%206.23983%205.9915%206.09244%206.10459C5.94505%206.21769%205.94505%206.38699%206.09244%206.49943L12.6879%2011.5787L6.06831%2016.6394C5.92092%2016.7518%205.92092%2016.9211%206.06831%2017.0342C6.21483%2017.1473%206.46048%2017.1473%206.58288%2017.0342L13.2025%2011.9741L19.7971%2017.0342C19.8712%2017.0904%2019.9695%2017.1096%2020.0669%2017.1096C20.1651%2017.1096%2020.2634%2017.0719%2020.3366%2017.0342C20.484%2016.9211%2020.484%2016.7518%2020.3366%2016.6394L13.717%2011.5787Z'%20fill='white'/%3e%3c/g%3e%3cmask%20id='mask1_1_1881'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='26'%20height='23'%3e%3cpath%20d='M0.539429%200H25.5394V23H0.539429V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_1_1881)'%3e%3cpath%20d='M21.9151%203.39826C19.5397%201.19781%2016.3692%20-0.0105707%2012.999%200.00105974C9.69447%200.0103639%206.53913%201.21991%204.2017%203.36918C1.84025%205.54288%200.539429%208.43067%200.539429%2011.5034C0.539429%2013.4898%201.08428%2015.4007%202.10825%2017.0906C2.4698%2017.6872%203.40022%2017.686%203.76177%2017.0894C3.7643%2017.0824%203.76809%2017.0778%203.77188%2017.072C3.93369%2016.8056%203.93243%2016.4823%203.77188%2016.216C2.92869%2014.8192%202.44831%2013.2119%202.44831%2011.5034C2.44831%2010.1438%202.75297%208.84936%203.30035%207.67238C3.30541%207.59794%203.31299%207.52351%203.32184%207.44791C3.45964%206.34769%204.09298%205.33586%205.0588%204.67177L5.09293%204.64851C5.35334%204.47057%205.64157%204.34264%205.9475%204.27053C7.83236%202.70509%2010.3278%201.75141%2013.0622%201.75607C18.8394%201.76537%2023.5737%206.0802%2023.6381%2011.3941C23.6697%2014.1458%2022.4574%2016.6416%2020.4853%2018.4339C19.9658%2019.5155%2018.8255%2020.2493%2017.5411%2020.3273C16.1758%2020.9192%2014.65%2021.2507%2013.0432%2021.2507C12.0938%2021.2507%2011.1748%2021.1344%2010.2987%2020.9192C9.85881%2020.8099%209.39739%2021.0018%209.20397%2021.3821C9.19765%2021.3949%209.19133%2021.4077%209.18375%2021.4205C8.93724%2021.9078%209.23052%2022.4777%209.79433%2022.6161C10.8411%2022.8731%2011.9308%2023.0057%2013.0432%2023.0057C16.3831%2023.0057%2019.5233%2021.8101%2021.8835%2019.6376C24.2462%2017.4639%2025.547%2014.5761%2025.547%2011.5034C25.547%208.46207%2024.2437%205.55567%2021.9151%203.39826Z'%20fill='white'/%3e%3c/g%3e%3cpath%20d='M20.4854%2018.434C19.6333%2019.2097%2018.6384%2019.8517%2017.5411%2020.3274C18.8255%2020.2494%2019.9658%2019.5156%2020.4854%2018.434Z'%20fill='white'/%3e%3cpath%20d='M5.94769%204.27063C5.64176%204.34274%205.35353%204.47067%205.09311%204.64861L5.05898%204.67187C4.09316%205.33596%203.45982%206.34779%203.32203%207.44802C3.31318%207.52361%203.30559%207.59805%203.30054%207.67248C3.90986%206.36873%204.81879%205.20919%205.94769%204.27063Z'%20fill='white'/%3e%3c/svg%3e";
@@ -25235,10 +25254,18 @@ const Students = () => {
     renderSearchModal(),
     renderDeleteModal(),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: isCreateStudent ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow-0 h-full items-center py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("a", { href: "javascript:", className: "flex", onClick: () => setIsCreateStudent(false), children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ArrowLeftIcon, className: "mr-2" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "hover:text-gray-900 font-semibold", children: FM("add-student") })
-      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow-0 h-full items-center py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "a",
+        {
+          href: "javascript:",
+          className: "flex items-center text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer",
+          onClick: () => setIsCreateStudent(false),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(FaArrowLeft, { className: "mr-2" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold", children: FM("add-student") })
+          ]
+        }
+      ) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center grow", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "a",
@@ -25420,10 +25447,31 @@ const Students = () => {
         renderSearchedBy()
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center border-r border-gray-700", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: AddLightIcon, className: "object-none mx-3" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center border-r border-gray-700", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditLightIcon, className: "object-none mx-3" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center border-r border-gray-700", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelLightIcon, className: "object-none mx-3" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffIcon, className: "object-none mx-3" }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: AddLightIcon, className: "object-none mx-3" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditLightIcon, className: "object-none mx-3" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelLightIcon, className: "object-none mx-3" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffIcon, className: "object-none mx-3" }) })
       ] })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -25437,6 +25485,30 @@ const Students = () => {
       }
     )
   ] });
+};
+const Flight1 = "" + new URL("flight-1-7Yf4RcSt.png", import.meta.url).href;
+const Flight2 = "" + new URL("flight-2-QU7BZdfQ.png", import.meta.url).href;
+const PrettyGirl = "" + new URL("liscense-right-BoPx4i2K.png", import.meta.url).href;
+const License = ({ onActivate }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "z-[9999] h-full w-full bg-license-screen fixed size-full", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: Flight1, className: "absolute right-[25px] top-[35px] w-[100px]" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: Flight2, className: "absolute right-[40px] top-[5px] w-[60px]" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-full flex items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex w-full justify-center", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-[500px] bg-white p-3 rtl:rounded-r-2xl rounded-l-2xl flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-2/3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center mb-3 text-[45px] font-semibold", children: FM("license") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-5 text-center", children: FM("enter-your-license") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-[#5FC3CA]", children: FM("enter-license") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TextInput, { className: "mb-3" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "px-5", onClick: onActivate, children: FM("submit") }) })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: PrettyGirl, className: "w-[360px] rtl:rounded-l-2xl rounded-r-2xl" }) })
+    ] }) })
+  ] });
+};
+License.defaultProps = {
+  onActivate: () => {
+    return;
+  }
 };
 function distributeStudents(totalStudents, numGroups) {
   const groupSizes = [];
@@ -25467,12 +25539,19 @@ function App() {
   reactExports.useEffect(() => {
     console.log("App initialized", /* @__PURE__ */ new Date());
   }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Flowbite, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(HashRouter, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutWithSidebar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(StudentsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
+  const [isActivated, setIsActivated] = reactExports.useState(false);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Flowbite, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(HashRouter, { children: isActivated ? /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutWithSidebar, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(StudentsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Exams, {}) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/settings", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, {}) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Route,
+      {
+        path: "/settings",
+        element: /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, { onDeactivate: () => setIsActivated(false) })
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/committee", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Committee, {}) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/students", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Students, {}) })
-  ] }) }) }) }) });
+  ] }) }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(License, { onActivate: () => setIsActivated(true) }) }) });
 }
 client.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) })

@@ -31,6 +31,7 @@ import AddLightIcon from '@renderer/assets/icons/add-light.svg'
 import EditLightIcon from '@renderer/assets/icons/edit-light.svg'
 import CancelLightIcon from '@renderer/assets/icons/cancel-light.svg'
 import CollapseOffIcon from '@renderer/assets/icons/collapse-off-light.svg'
+import { FaArrowLeft } from 'react-icons/fa'
 
 type CreateStudentProps = {
   id?: number
@@ -80,7 +81,6 @@ const Students = () => {
   const [newFieldValues, setNewFieldValues] = useState<any>({})
 
   const [isCreateStudent, setIsCreateStudent] = useState<boolean>(false)
-
 
   useEffect(() => {
     ipc.on('import-students', (_event, { event }) => {
@@ -710,9 +710,13 @@ const Students = () => {
         {isCreateStudent ? (
           <div className="flex py-4">
             <div className="grow-0 h-full items-center py-4">
-              <a href="javascript:" className="flex" onClick={() => setIsCreateStudent(false)}>
-                <img src={ArrowLeftIcon} className="mr-2" />
-                <span className="hover:text-gray-900 font-semibold">{FM('add-student')}</span>
+              <a
+                href="javascript:"
+                className="flex items-center text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer"
+                onClick={() => setIsCreateStudent(false)}
+              >
+                <FaArrowLeft className="mr-2" />
+                <span className="font-semibold">{FM('add-student')}</span>
               </a>
             </div>
             <div className="flex justify-center grow">
@@ -816,7 +820,9 @@ const Students = () => {
                     setErrors({ ...errors, ['studentSchoolName']: false })
                   }}
                 >
-                  <option value="" disabled hidden>{FM('select')}</option>
+                  <option value="" disabled hidden>
+                    {FM('select')}
+                  </option>
                   <option value="create-new">{FM('create-new-school')}</option>
                   {renderSelectOptions('studentSchoolName')}
                   {newFieldValues['studentSchoolName']?.map((value: string) => (
@@ -842,7 +848,9 @@ const Students = () => {
                     setErrors({ ...errors, ['studentClass']: false })
                   }}
                 >
-                  <option value="" disabled hidden>{FM('select')}</option>
+                  <option value="" disabled hidden>
+                    {FM('select')}
+                  </option>
                   <option value="create-new">{FM('create-new-grade')}</option>
                   {renderSelectOptions('studentClass')}
                   {newFieldValues['studentClass']?.map((value: string) => (
@@ -868,7 +876,9 @@ const Students = () => {
                     setErrors({ ...errors, ['studentSection']: false })
                   }}
                 >
-                  <option value="" disabled hidden>{FM('select')}</option>
+                  <option value="" disabled hidden>
+                    {FM('select')}
+                  </option>
                   <option value="create-new">{FM('create-new-section')}</option>
                   {renderSelectOptions('studentSection')}
                   {newFieldValues['studentSection']?.map((value: string) => (
@@ -881,32 +891,43 @@ const Students = () => {
         </div>
       )}
 
-      {!isCreateStudent && <div className="bg-white dark:bg-gray-700 flex-grow rounded-lg">
-        <p className="text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800">
-          <div className="text-base flex">
-            {!isSearched && (
-              <>
-                {FM('students')} ({studentGroups?.totalStudents || 0})
-              </>
-            )}{' '}
-            {renderSearchedBy()}
-          </div>
-          <div className="ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]">
-            <a href="javascript:" className="h-9 w-9 flex justify-center border-r border-gray-700">
-              <img src={AddLightIcon} className="object-none mx-3" />
-            </a>
-            <a href="javascript:" className="h-9 w-9 flex justify-center border-r border-gray-700">
-              <img src={EditLightIcon} className="object-none mx-3" />
-            </a>
-            <a href="javascript:" className="h-9 w-9 flex justify-center border-r border-gray-700">
-              <img src={CancelLightIcon} className="object-none mx-3" />
-            </a>
-            <a href="javascript:" className="h-9 w-9 flex justify-center">
-              <img src={CollapseOffIcon} className="object-none mx-3" />
-            </a>
-          </div>
-        </p>
-      </div>}
+      {!isCreateStudent && (
+        <div className="bg-white dark:bg-gray-700 flex-grow rounded-lg">
+          <p className="text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800">
+            <div className="text-base flex">
+              {!isSearched && (
+                <>
+                  {FM('students')} ({studentGroups?.totalStudents || 0})
+                </>
+              )}{' '}
+              {renderSearchedBy()}
+            </div>
+            <div className="ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]">
+              <a
+                href="javascript:"
+                className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
+              >
+                <img src={AddLightIcon} className="object-none mx-3" />
+              </a>
+              <a
+                href="javascript:"
+                className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
+              >
+                <img src={EditLightIcon} className="object-none mx-3" />
+              </a>
+              <a
+                href="javascript:"
+                className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
+              >
+                <img src={CancelLightIcon} className="object-none mx-3" />
+              </a>
+              <a href="javascript:" className="h-9 w-9 flex justify-center cursor-pointer">
+                <img src={CollapseOffIcon} className="object-none mx-3" />
+              </a>
+            </div>
+          </p>
+        </div>
+      )}
       <PromptDialog
         show={createField ? true : false}
         onClose={() => setCreateField('')}

@@ -5,7 +5,7 @@ import { HiMiniLanguage } from 'react-icons/hi2'
 import { MdOutlineSettings } from 'react-icons/md'
 import { VscVmActive } from 'react-icons/vsc'
 
-const Settings = () => {
+const Settings = ({ onDeactivate }: { onDeactivate: any }) => {
   const { settings, updateSettings } = useSettings()
   const { setMode } = useThemeMode()
 
@@ -69,13 +69,19 @@ const Settings = () => {
           <p className="text-xs">{FM('license-is-active', { date: 'Aug 28, 2028' })}</p>
         </div>
         <div className="text-base p-4 flex items-center w-36">
-          <Button className="cursor-default" size={'sm'} color="failure">
+          <Button className="cursor-default" size={'sm'} color="failure" onClick={onDeactivate}>
             {FM('deactivate')}
           </Button>
         </div>
       </div>
     </div>
   )
+}
+
+Settings.defaultProps = {
+  onDeactivate: () => {
+    return
+  }
 }
 
 export default Settings
