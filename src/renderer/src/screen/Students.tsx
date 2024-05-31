@@ -1,32 +1,21 @@
 import { useStudents } from '@renderer/context/Students'
-import { buttonGroupTheme } from '@renderer/themes/ButtonGroupTheme'
+// import { buttonGroupTheme } from '@renderer/themes/ButtonGroupTheme'
 import { ModalTheme } from '@renderer/themes/ModalTheme'
-import { PaginationTheme } from '@renderer/themes/PaginationTheme'
-import { themeForTabs } from '@renderer/themes/tabs'
+// import { PaginationTheme } from '@renderer/themes/PaginationTheme'
+// import { themeForTabs } from '@renderer/themes/tabs'
 import { FM } from '@renderer/utils/i18helper'
-import {
-  Button,
-  Label,
-  Modal,
-  Pagination,
-  Select,
-  Tabs,
-  TabsRef,
-  TextInput,
-  Tooltip
-} from 'flowbite-react'
-import { useEffect, useRef, useState } from 'react'
-import { BiSearchAlt } from 'react-icons/bi'
-import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
-import { PiSortAscendingBold, PiSortDescendingBold, PiStudentBold } from 'react-icons/pi'
-import { GrNotes } from 'react-icons/gr'
+import { Button, Label, Modal, Select, TextInput } from 'flowbite-react'
+import { useEffect, useState } from 'react'
+// import { BiSearchAlt } from 'react-icons/bi'
+// import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
+// import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi'
+// import { GrNotes } from 'react-icons/gr'
 import PromptDialog from '@renderer/components/PromptDialog'
 import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
 import ImportStudentIcon from '@renderer/assets/icons/import-student.svg'
-import EditIcon from '@renderer/assets/icons/edit.svg'
+// import EditIcon from '@renderer/assets/icons/edit.svg'
 import SaveIcon from '@renderer/assets/icons/create-round.svg'
 import CancelIcon from '@renderer/assets/icons/cancel.svg'
-import ArrowLeftIcon from '@renderer/assets/icons/arrow-left.svg'
 import AddLightIcon from '@renderer/assets/icons/add-light.svg'
 import EditLightIcon from '@renderer/assets/icons/edit-light.svg'
 import CancelLightIcon from '@renderer/assets/icons/cancel-light.svg'
@@ -43,8 +32,8 @@ type CreateStudentProps = {
 }
 const Students = () => {
   const ipc = window.electron.ipcRenderer
-  const [open, setOpen] = useState(false)
-  const [waiting, setWaiting] = useState(false)
+  // const [open, setOpen] = useState(false)
+  // const [waiting, setWaiting] = useState(false)
   const {
     students,
     studentGroups,
@@ -58,9 +47,8 @@ const Students = () => {
     setSearchBy,
     className
   } = useStudents()
-  const tabsRef = useRef<TabsRef>(null)
-  const [_activeTab, setActiveTab] = useState(0)
-  const [openModal, setOpenModal] = useState(false)
+
+  // const [openModal, setOpenModal] = useState(false)
   const [openSearchModal, setOpenSearchModal] = useState(false)
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [deleteId, setDeleteId] = useState<number | undefined>(undefined)
@@ -109,171 +97,6 @@ const Students = () => {
       setCreateLabel(getFieldLabel('studentSection'))
     }
   }, [createField])
-
-  // render tabs
-  const renderTabs = (isSearched: boolean) => {
-    const re: any[] = []
-
-    if (Object.keys(studentGroups?.grades || {}).length > 0 && studentGroups) {
-      for (const key in studentGroups.grades) {
-        const total =
-          key === className && isSearched
-            ? students?.total
-            : studentGroups.grades[key].totalStudents
-        re.push(<Tabs.Item key={key} title={`${key} (${total})`} icon={PiStudentBold} />)
-      }
-    } else {
-      re.push(<Tabs.Item key={1} title={`السنة المشترك	(0)`} icon={PiStudentBold} />)
-    }
-
-    return re
-  }
-
-  // render students
-  const renderStudents = () => {
-    const re: any[] = []
-    if (students && students?.students?.length > 0) {
-      const currentStudents = students.students
-      const startIndex = (page - 1) * perPage + 1
-      // loop through students
-      for (let i = 0; i < currentStudents.length; i++) {
-        const student = currentStudents[i]
-        const index = startIndex + i
-
-        re.push(
-          <div
-            key={index}
-            className="flex justify-between items-center border-b mb-0 border-gray-200 dark:border-gray-700 pr-3 rtl:pl-3"
-          >
-            <div className="py-3.5 px-4 pl-10 w-28 break-all">{index}</div>
-            <div className="py-3.5 px-4 flex-1 break-all">{student.studentID}</div>
-            <div className="py-3.5 px-4 flex-1 min-w-80 break-all">{student.studentName}</div>
-            <div className="py-3.5 px-4 flex-1 break-all">{student.studentSection}</div>
-            <div className="py-3.5 px-4 flex-1 break-all">{student.studentSchoolName}</div>
-            <div className="py-3.5 px-4 flex-1 flex break-all">
-              <span
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                onClick={() => {
-                  openEditModal(student)
-                }}
-              >
-                <Tooltip content={FM('edit')} placement="top" className="">
-                  <MdEdit fontSize={20} />
-                </Tooltip>
-              </span>
-              <span
-                className="font-medium text-red-600 hover:underline dark:text-red-500 ml-2"
-                onClick={() => {
-                  handleDeleteModal(student.id)
-                }}
-              >
-                <Tooltip content={FM('delete')} placement="top" className="">
-                  <MdOutlineDeleteForever fontSize={21} />
-                </Tooltip>
-              </span>
-            </div>
-          </div>
-        )
-      }
-    } else {
-      return (
-        <>
-          <div className="mt-32 flex items-center justify-center">
-            <GrNotes fontSize={'150'} />
-          </div>
-          <div className="flex items-center justify-center mt-4">{FM('no-records-found')}</div>
-        </>
-      )
-    }
-
-    return re
-  }
-
-  // get total pages
-  const getTotalPages = () => {
-    if (students) {
-      const total = students.total
-      return Math.ceil(total / perPage)
-    }
-    return 0
-  }
-
-  // render sort icon
-  const SortButton = ({ name, title }: { name: string; title: string }) => {
-    const type = order?.[name] || 'ASC'
-
-    let re = (
-      <>
-        <span className="ml-2 hidden group-hover:block">
-          <PiSortAscendingBold
-            onClick={() => {
-              setOrderBy?.(name, 'ASC')
-            }}
-          />
-        </span>
-      </>
-    )
-
-    if (order?.[name] !== undefined) {
-      if (type === 'ASC') {
-        re = (
-          <span className="ml-2">
-            <PiSortDescendingBold
-              onClick={() => {
-                setOrderBy?.(name, 'DESC')
-              }}
-            />
-          </span>
-        )
-      } else if (type === 'DESC') {
-        re = (
-          <span className="ml-2">
-            <PiSortAscendingBold
-              onClick={() => {
-                setOrderBy?.(name, 'ASC')
-              }}
-            />
-          </span>
-        )
-      }
-    }
-
-    return (
-      <div
-        className="flex flex-row items-center"
-        onClick={() => {
-          setOrderBy?.(name, type === 'ASC' ? 'DESC' : 'ASC')
-        }}
-      >
-        {title}
-        {re}
-      </div>
-    )
-  }
-
-  // render header
-  const renderHeader = () => {
-    if (students?.students.length === 0) return <></>
-
-    return (
-      <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-700 border-b border-t mb-0 border-gray-200 dark:border-gray-700 pr-3 rtl:pl-3">
-        <div className="px-4 py-2 pl-10 w-28">#</div>
-        <div className="px-4 py-2 flex-1 group">
-          <SortButton title={FM('student-id')} name="studentID" />
-        </div>
-        <div className="px-4 py-2 flex-1 min-w-80 group">
-          <SortButton title={FM('student-name')} name="studentName" />
-        </div>
-        <div className="px-4 py-2 flex-1 group">
-          <SortButton title={FM('section')} name="studentSection" />
-        </div>
-        <div className="px-4 py-2 flex-1 group">
-          <SortButton title={FM('school')} name="studentSchoolName" />
-        </div>
-        <div className="px-4 py-2 flex-1"></div>
-      </div>
-    )
-  }
 
   // render select options
   const renderSelectOptions = (field: string) => {
@@ -382,7 +205,7 @@ const Students = () => {
   }
 
   // edit student
-  const editStudent = () => {
+  /* const editStudent = () => {
     console.log('studentData', studentData)
 
     // verify data and set errors
@@ -428,13 +251,13 @@ const Students = () => {
       .catch((err) => {
         console.log('err', err)
       })
-  }
+  } */
 
   // open delete modal
-  const handleDeleteModal = (id: number) => {
+  /* const handleDeleteModal = (id: number) => {
     setOpenDeleteModal(true)
     setDeleteId(id)
-  }
+  } */
 
   // delete student
   const deleteStudent = () => {
@@ -454,7 +277,7 @@ const Students = () => {
   }
 
   // delete all students
-  const deleteAllStudents = () => {
+  /* const deleteAllStudents = () => {
     ipc
       .invoke('removeAllStudents')
       .then((data) => {
@@ -464,22 +287,7 @@ const Students = () => {
       .catch((err) => {
         console.log('err', err)
       })
-  }
-
-  // open edit modal
-  const openEditModal = (data: CreateStudentProps) => {
-    console.log('data sdsd', data)
-
-    setOpenModal(true)
-    setStudentData({
-      studentName: data.studentName,
-      studentID: data.studentID,
-      studentSchoolName: data.studentSchoolName,
-      studentClass: data.studentClass,
-      studentSection: data.studentSection,
-      id: data.id
-    })
-  }
+  } */
 
   // handle search
   const handleSearch = () => {
