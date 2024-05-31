@@ -24,8 +24,13 @@ import PromptDialog from '@renderer/components/PromptDialog'
 import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
 import ImportStudentIcon from '@renderer/assets/icons/import-student.svg'
 import EditIcon from '@renderer/assets/icons/edit.svg'
+import SaveIcon from '@renderer/assets/icons/create-round.svg'
 import CancelIcon from '@renderer/assets/icons/cancel.svg'
 import ArrowLeftIcon from '@renderer/assets/icons/arrow-left.svg'
+import AddLightIcon from '@renderer/assets/icons/add-light.svg'
+import EditLightIcon from '@renderer/assets/icons/edit-light.svg'
+import CancelLightIcon from '@renderer/assets/icons/cancel-light.svg'
+import CollapseOffIcon from '@renderer/assets/icons/collapse-off-light.svg'
 
 type CreateStudentProps = {
   id?: number
@@ -717,7 +722,7 @@ const Students = () => {
                 onClick={saveStudent}
               >
                 <div className="mb-2 flex justify-center">
-                  <img src={EditIcon} />
+                  <img src={SaveIcon} />
                 </div>
                 <div className="text-center font-semibold">{FM('save')}</div>
               </a>
@@ -886,47 +891,30 @@ const Students = () => {
             )}{' '}
             {renderSearchedBy()}
           </div>
-
-          {/* <Button.Group theme={buttonGroupTheme} className="ml-2">
-            <Button
-              color="gray"
-              className="p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0"
-              size={'sm'}
-              onClick={() => {
-                deleteAllStudents()
-              }}
-            >
-              {FM('delete-all-students')}
-            </Button>
-            <Button
-              disabled={open}
-              color="gray"
-              className={
-                'p-0 rtl:rounded-r-lg rtl:rounded-l-none rtl:border-l-0' +
-                (open && waiting ? ' cursor-wait' : '')
-              }
-              size={'sm'}
-              onClick={() => {
-                window.open('##importStudents##', '_blank')
-                setOpen(true)
-                setWaiting(true)
-              }}
-            >
-              {FM('import-students')}
-            </Button>
-            <Button
-              color="gray"
-              className="p-0 rtl:rounded-l-lg rtl:rounded-r-none rtl:border-l"
-              size={'sm'}
-              onClick={() => setOpenModal(true)}
-            >
-              {FM('add-more-students')}
-            </Button>
-          </Button.Group> */}
+          <div className="ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]">
+            <a href="javascript:" className="h-9 w-9 flex justify-center border-r border-gray-700">
+              <img src={AddLightIcon} className="object-none mx-3" />
+            </a>
+            <a href="javascript:" className="h-9 w-9 flex justify-center border-r border-gray-700">
+              <img src={EditLightIcon} className="object-none mx-3" />
+            </a>
+            <a href="javascript:" className="h-9 w-9 flex justify-center border-r border-gray-700">
+              <img src={CancelLightIcon} className="object-none mx-3" />
+            </a>
+            <a href="javascript:" className="h-9 w-9 flex justify-center">
+              <img src={CollapseOffIcon} className="object-none mx-3" />
+            </a>
+          </div>
         </p>
       </div>}
-      <PromptDialog show={createField ? true : false} onClose={() => setCreateField('')} onSave={onCreateNewFieldValue} title={createTitle} label={createLabel} />
-    </div >
+      <PromptDialog
+        show={createField ? true : false}
+        onClose={() => setCreateField('')}
+        onSave={onCreateNewFieldValue}
+        title={createTitle}
+        label={createLabel}
+      />
+    </div>
   )
 }
 
