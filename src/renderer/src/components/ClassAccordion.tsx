@@ -7,7 +7,7 @@ import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
 import { useState } from 'react'
 import SectionAccordion from './SectionAccordion'
 
-const ClassAccordion = () => {
+const ClassAccordion = ({ classNameStr, sections }: { classNameStr: string; sections: any }) => {
   const [collapse, setCollapse] = useState<boolean>(false)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
@@ -22,7 +22,7 @@ const ClassAccordion = () => {
             <div className="w-10 flex justify-center">
               <img src={ClassIcon} className="object-none mr-2" />
             </div>
-            <span>Class name</span>
+            <span className="px-2">{classNameStr}</span>
           </div>
           <div className="flex gap-0">
             <a
@@ -62,15 +62,18 @@ const ClassAccordion = () => {
           aria-labelledby="flush-headingOne"
           data-twe-parent="#accordionFlushExample"
         >
-          <SectionAccordion />
-          <SectionAccordion />
-          <SectionAccordion />
+          {Object.keys(sections).map((sectionName, index) => (
+            <SectionAccordion key={index} sectionName={sectionName} students={sections[sectionName] || []}/>
+          ))}
         </div>
       </div>
     </div>
   )
 }
 
-ClassAccordion.defaultProps = {}
+ClassAccordion.defaultProps = {
+  classNameStr: '',
+  sections: {}
+}
 
 export default ClassAccordion

@@ -8,9 +8,11 @@ import RedCrossIcon from '@renderer/assets/icons/red-cross.svg'
 import { useState } from 'react'
 import { FM } from '@renderer/utils/i18helper'
 
-const SectionAccordion = () => {
+const SectionAccordion = ({ sectionName, students }: { sectionName: string; students: any }) => {
   const [collapse, setCollapse] = useState<boolean>(false)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
+
+  console.log(students)
 
   return (
     <div className="py-1">
@@ -22,11 +24,13 @@ const SectionAccordion = () => {
           >
             <div className="w-10 flex justify-center">
               <span className="mr-2 text-[11px] px-[3.5px] font-bold py-[2px] border border-[#1F8194] section-shadow">
-                1
+                {sectionName || ''}
               </span>
             </div>
-            <span className="w-20">{FM('name')}</span>
-            <span>{FM('mobile-num')}</span>
+            <span className="w-40 px-2" hidden={!collapse}>
+              {FM('name')}
+            </span>
+            <span hidden={!collapse}>{FM('mobile-num')}</span>
           </div>
           <div className="flex gap-0">
             <a
@@ -72,18 +76,20 @@ const SectionAccordion = () => {
           aria-labelledby="flush-headingOne"
           data-twe-parent="#accordionFlushExample"
         >
-          <div className="flex mb-1">
-            <div className="w-10"></div>
-            <div className="flex grow rounded-md shadow-md bg-[#F7F3F3]">
-              <div className="w-20"></div>
-              <div className="grow">This is phone number</div>
-              <div className="py-1 px-2 flex items-center">
-                <a href="javascript:" className="cursor-pointer">
-                  <img src={RedCrossIcon} className="object-none" />
-                </a>
+          {students?.map((student: any, index: number) => (
+            <div className="flex mb-1" key={index}>
+              <div className="w-10"></div>
+              <div className="flex grow rounded-md shadow-md bg-[#F7F3F3]">
+                <div className="w-40 px-2">{student?.studentName}</div>
+                <div className="grow">{student?.mobile}</div>
+                <div className="py-1 px-2 flex items-center">
+                  <a href="javascript:" className="cursor-pointer">
+                    <img src={RedCrossIcon} className="object-none" />
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
@@ -91,7 +97,8 @@ const SectionAccordion = () => {
 }
 
 SectionAccordion.defaultProps = {
-  section: 1
+  sectionName: '',
+  students: []
 }
 
 export default SectionAccordion

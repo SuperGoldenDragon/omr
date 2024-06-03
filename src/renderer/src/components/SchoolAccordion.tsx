@@ -4,13 +4,24 @@ import EditSmallIcon from '@renderer/assets/icons/edit-green-small.svg'
 import CancelSmallIcon from '@renderer/assets/icons/cancel-red-small.svg'
 import CollapseOffDark from '@renderer/assets/icons/collapse-off-dark.svg'
 import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ClassAccordion from './ClassAccordion'
 
-const SchoolAccordion = () => {
+const SchoolAccordion = ({ schoolName }: { schoolName: string }) => {
+  const ipc = window.electron.ipcRenderer
+
+  const [classesObj, setClassesObj] = useState<any>({})
   const [collapse, setCollapse] = useState<boolean>(false)
   // get dark mode for change
   const darkMode: boolean = document.documentElement.classList.contains('dark')
+
+  useEffect(() => {
+    if (schoolName) {
+      ipc.invoke('getStudentsBySchool', schoolName).then((result) => {
+        setClassesObj(result || {})
+      })
+    }
+  }, [schoolName])
 
   return (
     <div id="accordionFlushExample">
@@ -23,7 +34,7 @@ const SchoolAccordion = () => {
             <div className="w-10 flex justify-center">
               <img src={SchoolIcon} className="mr-2 object-none" />
             </div>
-            <span>School name</span>
+            <span className="px-2">{schoolName}</span>
           </div>
           <div className="flex gap-0">
             <a
@@ -63,15 +74,21 @@ const SchoolAccordion = () => {
           aria-labelledby="flush-headingOne"
           data-twe-parent="#accordionFlushExample"
         >
-          <ClassAccordion />
-          <ClassAccordion />
-          <ClassAccordion />
+          {Object.keys(classesObj).map((classNameStr, index) => (
+            <ClassAccordion
+              key={index}
+              classNameStr={classNameStr}
+              sections={classesObj[classNameStr] || {}}
+            />
+          ))}
         </div>
       </div>
     </div>
   )
 }
 
-SchoolAccordion.defaultProps = {}
+SchoolAccordion.defaultProps = {
+  schoolName: ''
+}
 
 export default SchoolAccordion

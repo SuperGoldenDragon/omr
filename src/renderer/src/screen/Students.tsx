@@ -736,7 +736,9 @@ const Students = () => {
             </div>
           </p>
           <div className="p-4">
-            <SchoolAccordion />
+            {Object.keys(studentGroups?.schools || {}).map((schoolName: string, index: number) => (
+              <SchoolAccordion key={index} schoolName={schoolName} />
+            ))}
           </div>
         </div>
       )}
