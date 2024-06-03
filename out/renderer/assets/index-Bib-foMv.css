@@ -1502,9 +1502,6 @@ input[type="range"]::-ms-fill-lower {
 .shrink-0 {
   flex-shrink: 0;
 }
-.flex-grow {
-  flex-grow: 1;
-}
 .grow {
   flex-grow: 1;
 }
@@ -3180,6 +3177,44 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 }
 .section-shadow {
   box-shadow: -3px 3px #1F8194;
+}
+/* Customize scrollbar */
+.overflow-y-auto-light::-webkit-scrollbar {
+  width: 9px; /* Width of the scrollbar */
+}
+/* Customize scrollbar track */
+.overflow-y-auto-light::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color of the scrollbar track */
+  border-radius: 12px;
+}
+/* Customize scrollbar thumb */
+.overflow-y-auto-light::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 12px; /* Radius of the scrollbar thumb */
+}
+/* Customize scrollbar thumb on hover */
+.overflow-y-auto-light::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the scrollbar thumb on hover */
+  border-radius: 12px;
+}
+/* Customize scrollbar */
+.overflow-y-auto-dark::-webkit-scrollbar {
+  width: 9px; /* Width of the scrollbar */
+}
+/* Customize scrollbar track */
+.overflow-y-auto-dark::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color of the scrollbar track */
+  border-radius: 12px;
+}
+/* Customize scrollbar thumb */
+.overflow-y-auto-dark::-webkit-scrollbar-thumb {
+  background-color: red; /* Color of the scrollbar thumb */
+  border-radius: 12px; /* Radius of the scrollbar thumb */
+}
+/* Customize scrollbar thumb on hover */
+.overflow-y-auto-dark::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the scrollbar thumb on hover */
+  border-radius: 12px;
 }
 .after\:absolute::after {
   content: var(--tw-content);

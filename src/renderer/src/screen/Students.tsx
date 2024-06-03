@@ -33,6 +33,7 @@ type CreateStudentProps = {
 }
 const Students = () => {
   const ipc = window.electron.ipcRenderer
+  const darkMode = document.documentElement.classList.contains('dark')
   // const [open, setOpen] = useState(false)
   // const [waiting, setWaiting] = useState(false)
   const {
@@ -82,6 +83,13 @@ const Students = () => {
       if (event === 'mounted') {
         // setWaiting(false)
       }
+    })
+
+    ipc.on('xlsx-filename', (_event, filename: string) => {
+      if (!filename) return
+      ipc.invoke('loadStudentsFromXlsx', filename).then(() => {
+        reloadData()
+      })
     })
   }, [])
 
@@ -511,8 +519,12 @@ const Students = () => {
     setStudentData({ ...studentData, [createField]: value })
   }
 
+  const onOpenImportDialog = () => {
+    ipc.invoke('import-students')
+  }
+
   return (
-    <div className="px-2">
+    <div className="p-2 flex flex-col h-screen">
       {renderSearchModal()}
       {renderDeleteModal()}
       <div>
@@ -566,6 +578,7 @@ const Students = () => {
             <a
               href="javascript:"
               className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
+              onClick={() => onOpenImportDialog()}
             >
               <div className="mb-2 flex justify-center">
                 <img src={ImportStudentIcon} />
@@ -700,7 +713,7 @@ const Students = () => {
       </div>
 
       {!isCreateStudent && (
-        <div className="bg-white dark:bg-gray-700 flex-grow rounded-lg">
+        <div className="bg-white dark:bg-gray-700 rounded-lg flex-1 flex flex-col h-0 p-1">
           <p className="text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800">
             <div className="text-base flex">
               {!isSearched && (
@@ -734,7 +747,9 @@ const Students = () => {
               </a>
             </div>
           </p>
-          <div className="p-4">
+          <div
+            className={`p-4 flex-1 h-0 overflow-auto ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
+          >
             {Object.keys(studentGroups?.schools || {}).map((schoolName: string, index: number) => (
               <SchoolAccordion key={index} schoolName={schoolName} />
             ))}

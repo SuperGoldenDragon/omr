@@ -1,6 +1,15 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { attachTitlebarToWindow, setupTitlebar } from 'custom-electron-titlebar/main'
-import { BrowserWindow, Menu, OpenDialogOptions, app, dialog, ipcMain, nativeTheme } from 'electron'
+import {
+  BrowserWindow,
+  Menu,
+  OpenDialogOptions,
+  app,
+  dialog,
+  ipcMain,
+  nativeTheme,
+  webContents
+} from 'electron'
 import { machineIdSync } from 'node-machine-id'
 import { join } from 'node:path'
 import 'reflect-metadata'
@@ -164,9 +173,37 @@ app.whenReady().then(async () => {
   // Create the main window
   createWindow()
 
-  ipcMain.on('import-students', (_event, arg) => {
-    console.log('import-students', arg)
+  ipcMain.handle('import-students', (_event, arg) => {
+    if (!mainWindow) return
+    interface DialogConfig {
+      title: string
+      buttonLabel: string
+      filters: {
+        name: string
+        extensions: any
+      }[]
+      properties: any
+    }
+    const config: DialogConfig = {
+      title: 'Select excel file',
+      buttonLabel: 'Select',
+      filters: [
+        {
+          name: 'Excel file',
+          extensions: ['xlsx']
+        }
+      ],
+      properties: ['openFile']
+    }
 
+    try {
+      const filenames = dialog?.showOpenDialogSync(mainWindow, config)
+      if (!filenames) return
+      webContents?.getFocusedWebContents()?.send('xlsx-filename', filenames[0])
+      // webContents?.getFocusedWebContents().send('xlsx_data', HandleXlsx.getJson(filename))
+    } catch (e) {
+      console.log(e)
+    }
     mainWindow!.webContents.send('import-students', arg)
   })
 

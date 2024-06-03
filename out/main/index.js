@@ -1328,7 +1328,7 @@ function createWindow() {
 electron.app.whenReady().then(async () => {
   AppDataSource.initialize().then(async () => {
     console.log("Data Source has been initialized!");
-    await Promise.resolve().then(() => require("./handlers-DEgTU5It.js"));
+    await Promise.resolve().then(() => require("./handlers-BubUIU8d.js"));
     const setting = AppDataSource.manager.getRepository(exports.Setting);
     const existingSetting = await setting.findOne({ where: { id: 1 } });
     if (!existingSetting) {
@@ -1347,8 +1347,28 @@ electron.app.whenReady().then(async () => {
     utils.optimizer.watchWindowShortcuts(window2);
   });
   createWindow();
-  electron.ipcMain.on("import-students", (_event, arg) => {
-    console.log("import-students", arg);
+  electron.ipcMain.handle("import-students", (_event, arg) => {
+    if (!mainWindow)
+      return;
+    const config = {
+      title: "Select excel file",
+      buttonLabel: "Select",
+      filters: [
+        {
+          name: "Excel file",
+          extensions: ["xlsx"]
+        }
+      ],
+      properties: ["openFile"]
+    };
+    try {
+      const filenames = electron.dialog?.showOpenDialogSync(mainWindow, config);
+      if (!filenames)
+        return;
+      electron.webContents?.getFocusedWebContents()?.send("xlsx-filename", filenames[0]);
+    } catch (e) {
+      console.log(e);
+    }
     mainWindow.webContents.send("import-students", arg);
   });
   electron.app.on("activate", function() {

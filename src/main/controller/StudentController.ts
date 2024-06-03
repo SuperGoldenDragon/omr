@@ -4,6 +4,8 @@ import { Like, Repository } from 'typeorm'
 import { AppDataSource } from '..'
 import { Student } from '../entities/Student'
 import { StudentList, groupedStudents, importFileInfoProps } from '../types/common'
+import fs from 'fs'
+import xlsx from 'xlsx'
 
 class StudentController {
   private readonly student: Repository<Student>
@@ -120,7 +122,7 @@ class StudentController {
             }
           })
 
-        //   find 'رقم رخصة الاقامة' from the header and save all student in the database
+          //   find 'رقم رخصة الاقامة' from the header and save all student in the database
 
           if (studentColumnKey) {
             schoolName = sheets.getCell(studentColumnKey).value?.toString()
@@ -895,6 +897,147 @@ class StudentController {
 
     // return true
     return true
+  }
+
+  // load students from xlsx and store
+  loadStudentsFromXlsx = (_event: IpcMainInvokeEvent, filename: string): any => {
+    if (!filename) return 0
+    let xlsxData: any = []
+    const students: any = []
+
+    if (fs?.existsSync(filename)) {
+      try {
+        // Read Excel file
+        const workbook = xlsx.readFile(filename)
+        // Assume we only have one sheet
+        xlsxData = workbook.SheetNames.map((sheetName) => {
+          const worksheet = workbook.Sheets[sheetName]
+          // Parse data from the sheet
+          return { sheetName, rows: xlsx.utils.sheet_to_json(worksheet) }
+        })
+
+        // Send data to renderer process
+      } catch (error) {
+        // Send error message to renderer process
+        // event.sender.send('excel-error', error.message);
+        console.log('read-sheet-error', error)
+      }
+    } else {
+      // Send error message to renderer process
+      console.log('excel-error', 'File not found.')
+    }
+
+    xlsxData.forEach((sheet: any) => {
+      const { rows } = sheet
+      const nRows = rows.length
+
+      try {
+        let i = 0
+        let schoolName: any = ''
+        let section: any = ''
+        let grade: any = ''
+
+        for (i = 0; i < nRows; i++) {
+          const values = Object.values(rows[i])
+          // this is the grade
+          if (values.indexOf('الصف') >= 0) {
+            grade =
+              values.filter((val: any) => !(val.includes('الصف') || val.includes(':')))[0] || ''
+          }
+          // section row and next row is schoolname
+          if (values.indexOf('القسم') >= 0) {
+            section =
+              Object.values(rows[i + 2]).filter(
+                (val: any) => !(val.includes('الفصل') || val.includes(':'))
+              )[0] || ''
+            // get school name
+            if (i + 1 < nRows) {
+              schoolName = Object.values(rows[i + 1])[0] || ''
+            }
+          }
+          if (schoolName && section && grade) break
+          if (values.indexOf('الطلاب') >= 0) break
+        }
+        schoolName = schoolName.trimStart().trimEnd()
+        grade = grade.trimStart().trimEnd()
+        section = section.trimStart().trimEnd()
+
+        if (!schoolName || !section || !grade) return
+
+        // if (!obj[schoolName]) obj[schoolName] = {}
+        // if (!obj[schoolName][grade]) obj[schoolName][grade] = {}
+        // if (!obj[schoolName][grade][section]) obj[schoolName][grade][section] = []
+
+        let mobileNoKey = ''
+        let idKey = ''
+        let nameKey = ''
+        do {
+          i++
+        } while (
+          Object.values(rows[i])
+            .map((val: any) => val.trim())
+            .indexOf('اسم الطالب'.trim()) < 0
+        )
+
+        const keys = Object.keys(rows[i])
+
+        idKey =
+          keys[
+            Object.values(rows[i])
+              .map((val: any) => val.trim())
+              .indexOf('رقم رخصة الاقامة'.trim())
+          ]
+        nameKey =
+          keys[
+            Object.values(rows[i])
+              .map((val: any) => val.trim())
+              .indexOf('اسم الطالب'.trim())
+          ]
+        mobileNoKey =
+          keys[
+            Object.values(rows[i])
+              .map((val: any) => val.trim())
+              .indexOf('رقم جوال الطالب'.trim())
+          ]
+        i++
+
+        if (!idKey || !nameKey || !mobileNoKey) return
+
+        for (; i < nRows; i++) {
+          try {
+            students.push({
+              studentSchoolName: schoolName,
+              studentClass: grade,
+              studentSection: section,
+              studentName: rows[i][nameKey].toString().trimStart().trimEnd(),
+              studentID: rows[i][idKey].toString().trimStart().trimEnd()
+            })
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    })
+
+    return Promise.all(
+      students.map((arg: any) => {
+        try {
+          const student = new Student()
+          student.studentSchoolName = arg.studentSchoolName
+          student.studentClass = arg.studentClass
+          student.studentSection = arg.studentSection
+          student.studentName = arg.studentName
+          student.studentID = Number(arg.studentID)
+          if (isNaN(student.studentID)) return
+          return this.student.save(student)
+        } catch (e) {
+          console.log(e)
+        }
+        return
+      })
+    )
   }
 }
 

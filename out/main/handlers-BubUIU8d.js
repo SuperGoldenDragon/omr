@@ -3,6 +3,8 @@ const electron = require("electron");
 const index = require("./index.js");
 const ExcelJS = require("exceljs");
 const typeorm = require("typeorm");
+const fs = require("fs");
+const xlsx = require("xlsx");
 class SettingController {
   setting;
   // constructor
@@ -496,6 +498,105 @@ class StudentController {
     await this.student.delete({});
     return true;
   };
+  // load students from xlsx and store
+  loadStudentsFromXlsx = (_event, filename) => {
+    if (!filename)
+      return 0;
+    let xlsxData = [];
+    const students = [];
+    if (fs?.existsSync(filename)) {
+      try {
+        const workbook = xlsx.readFile(filename);
+        xlsxData = workbook.SheetNames.map((sheetName) => {
+          const worksheet = workbook.Sheets[sheetName];
+          return { sheetName, rows: xlsx.utils.sheet_to_json(worksheet) };
+        });
+      } catch (error) {
+        console.log("read-sheet-error", error);
+      }
+    } else {
+      console.log("excel-error", "File not found.");
+    }
+    xlsxData.forEach((sheet) => {
+      const { rows } = sheet;
+      const nRows = rows.length;
+      try {
+        let i = 0;
+        let schoolName = "";
+        let section = "";
+        let grade = "";
+        for (i = 0; i < nRows; i++) {
+          const values = Object.values(rows[i]);
+          if (values.indexOf("الصف") >= 0) {
+            grade = values.filter((val) => !(val.includes("الصف") || val.includes(":")))[0] || "";
+          }
+          if (values.indexOf("القسم") >= 0) {
+            section = Object.values(rows[i + 2]).filter(
+              (val) => !(val.includes("الفصل") || val.includes(":"))
+            )[0] || "";
+            if (i + 1 < nRows) {
+              schoolName = Object.values(rows[i + 1])[0] || "";
+            }
+          }
+          if (schoolName && section && grade)
+            break;
+          if (values.indexOf("الطلاب") >= 0)
+            break;
+        }
+        schoolName = schoolName.trimStart().trimEnd();
+        grade = grade.trimStart().trimEnd();
+        section = section.trimStart().trimEnd();
+        if (!schoolName || !section || !grade)
+          return;
+        let mobileNoKey = "";
+        let idKey = "";
+        let nameKey = "";
+        do {
+          i++;
+        } while (Object.values(rows[i]).map((val) => val.trim()).indexOf("اسم الطالب".trim()) < 0);
+        const keys = Object.keys(rows[i]);
+        idKey = keys[Object.values(rows[i]).map((val) => val.trim()).indexOf("رقم رخصة الاقامة".trim())];
+        nameKey = keys[Object.values(rows[i]).map((val) => val.trim()).indexOf("اسم الطالب".trim())];
+        mobileNoKey = keys[Object.values(rows[i]).map((val) => val.trim()).indexOf("رقم جوال الطالب".trim())];
+        i++;
+        if (!idKey || !nameKey || !mobileNoKey)
+          return;
+        for (; i < nRows; i++) {
+          try {
+            students.push({
+              studentSchoolName: schoolName,
+              studentClass: grade,
+              studentSection: section,
+              studentName: rows[i][nameKey].toString().trimStart().trimEnd(),
+              studentID: rows[i][idKey].toString().trimStart().trimEnd()
+            });
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    return Promise.all(
+      students.map((arg) => {
+        try {
+          const student = new index.Student();
+          student.studentSchoolName = arg.studentSchoolName;
+          student.studentClass = arg.studentClass;
+          student.studentSection = arg.studentSection;
+          student.studentName = arg.studentName;
+          student.studentID = Number(arg.studentID);
+          if (isNaN(student.studentID))
+            return;
+          return this.student.save(student);
+        } catch (e) {
+          console.log(e);
+        }
+        return;
+      })
+    );
+  };
 }
 const StudentController$1 = new StudentController();
 class CommitteeController {
@@ -647,6 +748,7 @@ const CommitteeController$1 = new CommitteeController();
   electron.ipcMain.handle("updateStudent", StudentController$1.updateStudent),
   electron.ipcMain.handle("deleteStudent", StudentController$1.deleteStudent),
   electron.ipcMain.handle("removeAllStudents", StudentController$1.removeAllStudents),
+  electron.ipcMain.handle("loadStudentsFromXlsx", StudentController$1.loadStudentsFromXlsx),
   // committee
   electron.ipcMain.handle("getCommittees", CommitteeController$1.getCommittees),
   electron.ipcMain.handle("addCommittee", CommitteeController$1.createCommittee),

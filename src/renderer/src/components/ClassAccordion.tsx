@@ -63,7 +63,11 @@ const ClassAccordion = ({ classNameStr, sections }: { classNameStr: string; sect
           data-twe-parent="#accordionFlushExample"
         >
           {Object.keys(sections).map((sectionName, index) => (
-            <SectionAccordion key={index} sectionName={sectionName} students={sections[sectionName] || []}/>
+            <SectionAccordion
+              key={index}
+              sectionName={sectionName}
+              students={sections[sectionName] || []}
+            />
           ))}
         </div>
       </div>

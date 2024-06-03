@@ -25071,7 +25071,14 @@ const ClassAccordion = ({ classNameStr, sections }) => {
         "data-twe-collapse-show": collapse,
         "aria-labelledby": "flush-headingOne",
         "data-twe-parent": "#accordionFlushExample",
-        children: Object.keys(sections).map((sectionName, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(SectionAccordion, { sectionName, students: sections[sectionName] || [] }, index2))
+        children: Object.keys(sections).map((sectionName, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SectionAccordion,
+          {
+            sectionName,
+            students: sections[sectionName] || []
+          },
+          index2
+        ))
       }
     )
   ] }) });
@@ -25172,6 +25179,7 @@ SchoolAccordion.defaultProps = {
 };
 const Students = () => {
   const ipc = window.electron.ipcRenderer;
+  const darkMode = document.documentElement.classList.contains("dark");
   const {
     students: students2,
     studentGroups,
@@ -25205,6 +25213,13 @@ const Students = () => {
   reactExports.useEffect(() => {
     ipc.on("import-students", (_event, { event }) => {
       console.log("event", event);
+    });
+    ipc.on("xlsx-filename", (_event, filename) => {
+      if (!filename)
+        return;
+      ipc.invoke("loadStudentsFromXlsx", filename).then(() => {
+        reloadData();
+      });
     });
   }, []);
   reactExports.useEffect(() => {
@@ -25510,7 +25525,10 @@ const Students = () => {
     }
     setStudentData({ ...studentData, [createField]: value });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-2", children: [
+  const onOpenImportDialog = () => {
+    ipc.invoke("import-students");
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-2 flex flex-col h-screen", children: [
     renderSearchModal(),
     renderDeleteModal(),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: isCreateStudent ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
@@ -25570,6 +25588,7 @@ const Students = () => {
         {
           href: "javascript:",
           className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+          onClick: () => onOpenImportDialog(),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ImportStudentIcon }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("import-students") })
@@ -25695,7 +25714,7 @@ const Students = () => {
         ] }) })
       ] })
     ] }),
-    !isCreateStudent && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white dark:bg-gray-700 flex-grow rounded-lg", children: [
+    !isCreateStudent && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white dark:bg-gray-700 rounded-lg flex-1 flex flex-col h-0 p-1", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-base flex", children: [
           !isSearched && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -25735,7 +25754,13 @@ const Students = () => {
           /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffIcon, className: "object-none mx-3" }) })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-4", children: Object.keys(studentGroups?.schools || {}).map((schoolName, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(SchoolAccordion, { schoolName }, index2)) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: `p-4 flex-1 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
+          children: Object.keys(studentGroups?.schools || {}).map((schoolName, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(SchoolAccordion, { schoolName }, index2))
+        }
+      )
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       PromptDialog,
