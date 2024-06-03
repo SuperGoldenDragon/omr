@@ -13608,7 +13608,7 @@ const computePosition$1 = async (reference, floating, config) => {
   let resetCount = 0;
   for (let i = 0; i < validMiddleware.length; i++) {
     const {
-      name,
+      name: name2,
       fn
     } = validMiddleware[i];
     const {
@@ -13634,8 +13634,8 @@ const computePosition$1 = async (reference, floating, config) => {
     y2 = nextY != null ? nextY : y2;
     middlewareData = {
       ...middlewareData,
-      [name]: {
-        ...middlewareData[name],
+      [name2]: {
+        ...middlewareData[name2],
         ...data
       }
     };
@@ -15081,8 +15081,8 @@ var isTabbableRadio = function isTabbableRadio2(node) {
     return true;
   }
   var radioScope = node.form || getRootNode(node);
-  var queryRadios = function queryRadios2(name) {
-    return radioScope.querySelectorAll('input[type="radio"][name="' + name + '"]');
+  var queryRadios = function queryRadios2(name2) {
+    return radioScope.querySelectorAll('input[type="radio"][name="' + name2 + '"]');
   };
   var radioSet;
   if (typeof window !== "undefined" && typeof window.CSS !== "undefined" && typeof window.CSS.escape === "function") {
@@ -15690,8 +15690,8 @@ const useFloatingParentNodeId = () => {
   return ((_React$useContext = reactExports.useContext(FloatingNodeContext)) == null ? void 0 : _React$useContext.id) || null;
 };
 const useFloatingTree = () => reactExports.useContext(FloatingTreeContext);
-function createAttribute(name) {
-  return "data-floating-ui-" + name;
+function createAttribute(name2) {
+  return "data-floating-ui-" + name2;
 }
 function useLatestRef(value) {
   const ref = reactExports.useRef(value);
@@ -18590,7 +18590,7 @@ const FooterBrand = ({
   className,
   children,
   href,
-  name,
+  name: name2,
   src,
   theme: customTheme = {},
   ...props
@@ -18598,7 +18598,7 @@ const FooterBrand = ({
   const theme2 = mergeDeep(getTheme().footer.brand, customTheme);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: href ? /* @__PURE__ */ jsxRuntimeExports.jsxs("a", { "data-testid": "flowbite-footer-brand", href, className: twMerge(theme2.base, className), ...props, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("img", { alt, src, className: theme2.img }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "data-testid": "flowbite-footer-brand-span", className: theme2.span, children: name }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "data-testid": "flowbite-footer-brand-span", className: theme2.span, children: name2 }),
     children
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
     "img",
@@ -20083,7 +20083,7 @@ const ToggleSwitch = reactExports.forwardRef(
     sizing = "md",
     disabled,
     label,
-    name,
+    name: name2,
     onChange,
     theme: customTheme = {},
     ...props
@@ -20100,7 +20100,7 @@ const ToggleSwitch = reactExports.forwardRef(
       }
     };
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      name && checked ? /* @__PURE__ */ jsxRuntimeExports.jsx("input", { ref, checked, hidden: true, name, readOnly: true, type: "checkbox", className: "sr-only" }) : null,
+      name2 && checked ? /* @__PURE__ */ jsxRuntimeExports.jsx("input", { ref, checked, hidden: true, name: name2, readOnly: true, type: "checkbox", className: "sr-only" }) : null,
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
@@ -23269,11 +23269,11 @@ class Formatter {
     const iOpts = options.interpolation;
     this.formatSeparator = iOpts.formatSeparator ? iOpts.formatSeparator : iOpts.formatSeparator || ",";
   }
-  add(name, fc2) {
-    this.formats[name.toLowerCase().trim()] = fc2;
+  add(name2, fc2) {
+    this.formats[name2.toLowerCase().trim()] = fc2;
   }
-  addCached(name, fc2) {
-    this.formats[name.toLowerCase().trim()] = createCachedFormatter(fc2);
+  addCached(name2, fc2) {
+    this.formats[name2.toLowerCase().trim()] = createCachedFormatter(fc2);
   }
   format(value, format, lng) {
     let options = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : {};
@@ -23305,9 +23305,9 @@ class Formatter {
     return result;
   }
 }
-function removePending(q2, name) {
-  if (q2.pending[name] !== void 0) {
-    delete q2.pending[name];
+function removePending(q2, name2) {
+  if (q2.pending[name2] !== void 0) {
+    delete q2.pending[name2];
     q2.pendingCount--;
   }
 }
@@ -23340,21 +23340,21 @@ class Connector extends EventEmitter {
     languages.forEach((lng) => {
       let hasAllNamespaces = true;
       namespaces.forEach((ns) => {
-        const name = `${lng}|${ns}`;
+        const name2 = `${lng}|${ns}`;
         if (!options.reload && this.store.hasResourceBundle(lng, ns)) {
-          this.state[name] = 2;
-        } else if (this.state[name] < 0)
+          this.state[name2] = 2;
+        } else if (this.state[name2] < 0)
           ;
-        else if (this.state[name] === 1) {
-          if (pending[name] === void 0)
-            pending[name] = true;
+        else if (this.state[name2] === 1) {
+          if (pending[name2] === void 0)
+            pending[name2] = true;
         } else {
-          this.state[name] = 1;
+          this.state[name2] = 1;
           hasAllNamespaces = false;
-          if (pending[name] === void 0)
-            pending[name] = true;
-          if (toLoad[name] === void 0)
-            toLoad[name] = true;
+          if (pending[name2] === void 0)
+            pending[name2] = true;
+          if (toLoad[name2] === void 0)
+            toLoad[name2] = true;
           if (toLoadNamespaces[ns] === void 0)
             toLoadNamespaces[ns] = true;
         }
@@ -23378,8 +23378,8 @@ class Connector extends EventEmitter {
       toLoadNamespaces: Object.keys(toLoadNamespaces)
     };
   }
-  loaded(name, err, data) {
-    const s = name.split("|");
+  loaded(name2, err, data) {
+    const s = name2.split("|");
     const lng = s[0];
     const ns = s[1];
     if (err)
@@ -23389,11 +23389,11 @@ class Connector extends EventEmitter {
         skipCopy: true
       });
     }
-    this.state[name] = err ? -1 : 2;
+    this.state[name2] = err ? -1 : 2;
     const loaded = {};
     this.queue.forEach((q2) => {
       pushPath(q2.loaded, [lng], ns);
-      removePending(q2, name);
+      removePending(q2, name2);
       if (err)
         q2.errors.push(err);
       if (q2.pendingCount === 0 && !q2.done) {
@@ -23484,8 +23484,8 @@ class Connector extends EventEmitter {
         callback();
       return null;
     }
-    toLoad.toLoad.forEach((name) => {
-      this.loadOne(name);
+    toLoad.toLoad.forEach((name2) => {
+      this.loadOne(name2);
     });
   }
   load(languages, namespaces, callback) {
@@ -23496,9 +23496,9 @@ class Connector extends EventEmitter {
       reload: true
     }, callback);
   }
-  loadOne(name) {
+  loadOne(name2) {
     let prefix = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "";
-    const s = name.split("|");
+    const s = name2.split("|");
     const lng = s[0];
     const ns = s[1];
     this.read(lng, ns, "read", void 0, void 0, (err, data) => {
@@ -23506,7 +23506,7 @@ class Connector extends EventEmitter {
         this.logger.warn(`${prefix}loading namespace ${ns} for language ${lng} failed`, err);
       if (!err && data)
         this.logger.log(`${prefix}loaded namespace ${ns} for language ${lng}`, data);
-      this.loaded(name, err, data);
+      this.loaded(name2, err, data);
     });
   }
   saveMissing(languages, namespace, key, fallbackValue, isUpdate) {
@@ -24194,6 +24194,7 @@ const committee$1 = "Committee";
 const amendment$1 = "Amendment";
 const license$1 = "License";
 const submit$1 = "Submit";
+const name$1 = "Name";
 const en = {
   exams: exams$1,
   committees: committees$1,
@@ -24281,7 +24282,9 @@ const en = {
   license: license$1,
   "enter-your-license": "Please enter your license to proceed...",
   "enter-license": "Enter License",
-  submit: submit$1
+  submit: submit$1,
+  name: name$1,
+  "mobile-num": "Mobile No."
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24309,6 +24312,7 @@ const committee = "اللجنة";
 const amendment = "التعديل";
 const license = "رخصة";
 const submit = "إرسال";
+const name = "اسم الطالب";
 const ar = {
   exams,
   committees,
@@ -24394,7 +24398,9 @@ const ar = {
   license,
   "enter-your-license": "الرجاء إدخال الترخيص الخاص بك للمتابعة...",
   "enter-license": "إدخال رخصة",
-  submit
+  submit,
+  name,
+  "mobile-num": "رقم جوال الطالب"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -24906,11 +24912,12 @@ const CollapseOffDark = "data:image/svg+xml,%3csvg%20width='24'%20height='16'%20
 const ClassIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='15'%20viewBox='0%200%2026%2015'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_696'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='26'%20height='15'%3e%3cpath%20d='M0%200H26V15H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_696)'%3e%3cpath%20d='M25.2084%2013.2022H23.6682C23.4999%2012.0661%2022.9634%209.96015%2021.2462%208.83838C20.8642%208.58854%2020.4182%208.39524%2019.9123%208.26526C21.2556%207.63305%2022.2046%206.11372%2022.2046%204.33442C22.2046%201.98958%2020.5588%200.0878906%2018.5289%200.0878906C16.4989%200.0878906%2014.8531%201.98958%2014.8531%204.33442C14.8531%206.11372%2015.8029%207.63305%2017.1462%208.26526C16.6396%208.39524%2016.1943%208.58854%2015.8123%208.83838C14.0951%209.96015%2013.5579%2012.0661%2013.3903%2013.2022H12.6337C12.4653%2012.0661%2011.9288%209.96015%2010.2116%208.83838C9.82966%208.58854%209.38359%208.39524%208.87774%208.26526C10.2211%207.63305%2011.1701%206.11372%2011.1701%204.33442C11.1701%201.98958%209.52426%200.0878906%207.49432%200.0878906C5.46438%200.0878906%203.81856%201.98958%203.81856%204.33442C3.81856%206.11372%204.7683%207.63305%206.11163%208.26526C5.60506%208.39524%205.15971%208.58854%204.77777%208.83838C3.06052%209.96015%202.52334%2012.0661%202.35569%2013.2022H0.814835C0.386252%2013.2022%200.0385742%2013.6032%200.0385742%2014.0986C0.0385742%2014.5933%200.386252%2014.995%200.814835%2014.995H25.2084C25.637%2014.995%2025.9846%2014.5933%2025.9846%2014.0986C25.9846%2013.6032%2025.637%2013.2022%2025.2084%2013.2022Z'%20fill='%231D8094'/%3e%3c/g%3e%3c/svg%3e";
 const UserHomeIcon = "data:image/svg+xml,%3csvg%20width='25'%20height='22'%20viewBox='0%200%2025%2022'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M9.9668%208.4337C9.9668%209.66518%2011.0765%2010.6668%2012.44%2010.6668C13.8046%2010.6668%2014.9142%209.66518%2014.9142%208.4337C14.9142%207.20221%2013.8046%206.20062%2012.44%206.20062C11.0765%206.20062%209.9668%207.20221%209.9668%208.4337ZM14.0831%208.4337C14.0831%209.25198%2013.3463%209.91735%2012.44%209.91735C11.5336%209.91735%2010.7968%209.25198%2010.7968%208.4337C10.7968%207.61642%2011.5336%206.95106%2012.44%206.95106C13.3463%206.95106%2014.0831%207.61642%2014.0831%208.4337Z'%20fill='%2319467E'/%3e%3cpath%20d='M11.5044%2011.3859C9.44565%2011.3859%207.7688%2012.8989%207.7688%2014.7583C7.7688%2016.1599%209.03346%2017.3002%2010.5856%2017.3002H14.3998C15.9531%2017.3002%2017.2167%2016.1599%2017.2167%2014.7583C17.2167%2012.8989%2015.5409%2011.3859%2013.4811%2011.3859H11.5044ZM16.3855%2014.7583C16.3855%2015.7467%2015.4949%2016.5508%2014.3998%2016.5508H10.5856C9.49057%2016.5508%208.59992%2015.7467%208.59992%2014.7583C8.59992%2013.3121%209.90277%2012.1363%2011.5044%2012.1363H13.4811C15.0827%2012.1363%2016.3855%2013.3121%2016.3855%2014.7583Z'%20fill='%2319467E'/%3e%3cmask%20id='mask0_48_5136'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='25'%20height='22'%3e%3cpath%20d='M0%200.5H25V21.5H0V0.5Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_5136)'%3e%3cpath%20d='M12.7454%200.58587C12.596%200.483584%2012.3893%200.483584%2012.2399%200.58587L0.194257%208.90749C0.052741%209.00471%20-0.00453944%209.17282%200.0527408%209.32574C0.110021%209.47765%200.268384%209.57994%200.446963%209.57994H1.90705V18.6844H1.52069C1.29044%2018.6844%201.10512%2018.8525%201.10512%2019.0601V21.115C1.10512%2021.3226%201.29044%2021.4907%201.52069%2021.4907H23.4646C23.6937%2021.4907%2023.8802%2021.3226%2023.8802%2021.115V19.0601C23.8802%2018.8525%2023.6937%2018.6844%2023.4646%2018.6844H23.0783V9.57994H24.5383C24.7169%209.57994%2024.8753%209.47765%2024.9326%209.32574C24.9887%209.17282%2024.9326%209.00471%2024.791%208.90749L12.7454%200.58587ZM23.0502%2020.7402H1.93513V19.4348H23.0491V20.7402H23.0502ZM22.6627%208.83052C22.4336%208.83052%2022.2471%208.99762%2022.2471%209.20523V18.6844H2.73817V9.20523C2.73817%208.99762%202.55173%208.83052%202.32261%208.83052H1.67343L12.4927%201.35656L23.3119%208.83052H22.6627Z'%20fill='%2319467E'/%3e%3c/g%3e%3c/svg%3e";
 const ExchangeIcon = "data:image/svg+xml,%3csvg%20width='35'%20height='22'%20viewBox='0%200%2035%2022'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_5146'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='35'%20height='22'%3e%3cpath%20d='M0.58905%200.5H34.5891V21.5H0.58905V0.5Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_5146)'%3e%3cmask%20id='mask1_48_5146'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='-9'%20width='35'%20height='40'%3e%3cpath%20d='M21.7905%20-8.56201L34.9271%208.00706L13.3359%2030.6887L0.199341%2014.1209L21.7905%20-8.56201Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_48_5146)'%3e%3cmask%20id='mask2_48_5146'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='-9'%20width='35'%20height='40'%3e%3cpath%20d='M21.7905%20-8.56201L34.9271%208.00706L13.3359%2030.6887L0.199341%2014.1209L21.7905%20-8.56201Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask2_48_5146)'%3e%3cpath%20d='M12.1372%2010.3873L12.1578%209.90384C12.2182%208.43473%2012.4396%206.58779%2013.6263%205.32376C14.7373%204.13431%2016.1789%203.51907%2017.6819%203.59489L23.7859%203.90561C23.8971%203.91058%2024.0062%203.92053%2024.1152%203.93296L24.2027%201.78026C24.2199%201.3788%2024.4154%201.02706%2024.7242%200.841869C25.0352%200.655434%2025.3969%200.672835%2025.6928%200.887856L33.9962%206.99546C34.2921%207.21421%2034.4573%207.58459%2034.44%207.98729C34.4238%208.38874%2034.2273%208.73924%2033.9163%208.92443L25.1496%2014.162C24.8365%2014.3472%2024.4748%2014.3286%2024.1811%2014.111C23.8874%2013.8948%2023.7222%2013.5256%2023.7384%2013.1229L23.8258%2010.9814L12.1372%2010.3873ZM33.5676%207.83814C33.56%207.8282%2033.5514%207.8195%2033.5406%207.8108L25.2393%201.70568C25.1863%201.6684%2025.1378%201.6858%2025.1129%201.70071C25.0881%201.71563%2025.0481%201.75167%2025.0438%201.82376L24.911%205.07394L24.4316%204.96705C24.2113%204.91609%2023.9802%204.88502%2023.7459%204.87383L17.6419%204.5631C16.3667%204.49847%2015.1433%205.02049%2014.1996%206.03221C13.5032%206.77422%2013.1436%207.81453%2013.0259%209.46136L24.708%2010.0555L24.5806%2013.1652C24.5774%2013.2385%2024.6151%2013.2771%2024.6389%2013.2932C24.6616%2013.3106%2024.7091%2013.3342%2024.7663%2013.3007L33.5319%208.06311C33.5848%208.03203%2033.5978%207.98107%2033.5989%207.94254C33.6%207.91769%2033.5967%207.87543%2033.5676%207.83814ZM0.889218%2014.9848C0.718614%2014.7698%200.628992%2014.4852%200.64195%2014.1831C0.659226%2013.7817%200.854666%2013.4312%201.16564%2013.2472L9.93234%208.00966C10.2455%207.82323%2010.6072%207.84187%2010.9009%208.05938C11.1946%208.27564%2011.3598%208.64602%2011.3436%209.04748L11.2562%2011.189L22.9447%2011.7831L22.9242%2012.2678C22.8648%2013.7357%2022.6424%2015.5826%2021.4546%2016.8479C20.3435%2018.0374%2018.9031%2018.6526%2017.399%2018.5768L11.295%2018.2661C11.1838%2018.2611%2011.0747%2018.2511%2010.9668%2018.2387L10.8782%2020.3914C10.862%2020.7929%2010.6666%2021.1446%2010.3567%2021.3298C10.0457%2021.5175%209.68508%2021.4988%209.38814%2021.2838L1.08466%2015.1762C1.01123%2015.1215%200.945367%2015.0581%200.888139%2014.986L0.889218%2014.9848ZM10.4701%208.90082C10.4604%208.88963%2010.4506%208.88217%2010.4442%208.87596C10.4215%208.85856%2010.374%208.83619%2010.3178%208.86975L1.55004%2014.1086C1.49713%2014.1396%201.48417%2014.1906%201.48202%2014.2291C1.48094%2014.2614%201.48741%2014.3199%201.54032%2014.3609L9.84272%2020.466C9.89563%2020.5033%209.94422%2020.4859%209.96798%2020.471C9.99281%2020.456%2010.0328%2020.42%2010.036%2020.3479L10.1688%2017.0965L10.6493%2017.2046C10.8696%2017.2543%2011.0996%2017.2854%2011.3339%2017.2978L17.4379%2017.6073C18.7131%2017.6719%2019.9365%2017.1499%2020.8802%2016.1382C21.5767%2015.3962%2021.9362%2014.3559%2022.055%2012.7091L10.3718%2012.115L10.4992%209.00522C10.5014%208.95799%2010.4863%208.92443%2010.469%208.90206L10.4701%208.90082Z'%20fill='%2370856E'/%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
+const RedCrossIcon = "data:image/svg+xml,%3csvg%20width='15'%20height='12'%20viewBox='0%200%2015%2012'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_5119'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='15'%20height='12'%3e%3cpath%20d='M0%200H14.5631V11.165H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_5119)'%3e%3cpath%20d='M7.83783%205.54954L14.4574%200.489491C14.6048%200.376399%2014.6048%200.207091%2014.4574%200.0939989C14.3109%20-0.0184321%2014.0902%20-0.0184321%2013.9429%200.0939989L7.32326%205.15471L0.727798%200.0754808C0.581271%20-0.0376115%200.360618%20-0.0376115%200.213228%200.0754808C0.0658388%200.188573%200.0658388%200.357881%200.213228%200.470312L6.80869%205.54954L0.189094%2010.6103C0.0417049%2010.7227%200.0417049%2010.892%200.189094%2011.0051C0.335622%2011.1182%200.581271%2011.1182%200.703664%2011.0051L7.32326%205.94503L13.9179%2011.0051C13.992%2011.0613%2014.0902%2011.0805%2014.1876%2011.0805C14.2859%2011.0805%2014.3842%2011.0428%2014.4574%2011.0051C14.6048%2010.892%2014.6048%2010.7227%2014.4574%2010.6103L7.83783%205.54954Z'%20fill='%23ED1F24'/%3e%3c/g%3e%3c/svg%3e";
 const SectionAccordion = () => {
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "accordionFlushExample", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", id: "flush-headingOne", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -24918,7 +24925,8 @@ const SectionAccordion = () => {
           onClick: () => setCollapse(!collapse),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mr-2 text-[11px] px-[3.5px] font-bold py-[2px] border border-[#1F8194] section-shadow", children: "1" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Accordion Item #1" })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-20", children: FM("name") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: FM("mobile-num") })
           ]
         }
       ),
@@ -24975,16 +24983,18 @@ const SectionAccordion = () => {
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        id: "flush-collapseOne",
-        className: `!visible border-0 ${collapse ? "" : "hidden"}`,
+        className: `!visible border-0 ${collapse ? "" : "hidden"} py-3`,
         "data-twe-collapse-item": true,
         "data-twe-collapse-show": collapse,
         "aria-labelledby": "flush-headingOne",
         "data-twe-parent": "#accordionFlushExample",
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-5 py-4", children: [
-          "Placeholder content for this accordion, which is intended to demonstrate the",
-          /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: ".accordion-flush" }),
-          " class. This is the first item's accordion body."
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex mb-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex grow rounded-md shadow-md bg-[#F7F3F3]", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-20" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow", children: "This is phone number" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1 px-2 flex items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: RedCrossIcon, className: "object-none" }) }) })
+          ] })
         ] })
       }
     )
@@ -24996,8 +25006,8 @@ SectionAccordion.defaultProps = {
 const ClassAccordion = () => {
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "accordionFlushExample", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", id: "flush-headingOne", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -25005,7 +25015,7 @@ const ClassAccordion = () => {
           onClick: () => setCollapse(!collapse),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ClassIcon, className: "object-none mr-2" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Accordion Item #1" })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Class name" })
           ]
         }
       ),
@@ -25054,7 +25064,6 @@ const ClassAccordion = () => {
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        id: "flush-collapseOne",
         className: `!visible border-0 ${collapse ? "" : "hidden"}`,
         "data-twe-collapse-item": true,
         "data-twe-collapse-show": collapse,
@@ -25074,7 +25083,7 @@ const SchoolAccordion = () => {
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "accordionFlushExample", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", id: "flush-headingOne", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
@@ -25082,7 +25091,7 @@ const SchoolAccordion = () => {
           onClick: () => setCollapse(!collapse),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: SchoolIcon, className: "mr-2 object-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Accordion Item #1" })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "School name" })
           ]
         }
       ),
@@ -25131,7 +25140,6 @@ const SchoolAccordion = () => {
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        id: "flush-collapseOne",
         className: `!visible border-0 ${collapse ? "" : "hidden"}`,
         "data-twe-collapse-item": true,
         "data-twe-collapse-show": collapse,

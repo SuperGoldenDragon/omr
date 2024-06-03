@@ -12,9 +12,9 @@ const ClassAccordion = () => {
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
   return (
-    <div id="accordionFlushExample">
+    <div className="py-1">
       <div className="rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
-        <div className="mb-0 flex" id="flush-headingOne">
+        <div className="mb-0 flex">
           <div
             className="flex items-center grow cursor-pointer"
             onClick={() => setCollapse(!collapse)}
@@ -22,7 +22,7 @@ const ClassAccordion = () => {
             <div className="w-10 flex justify-center">
               <img src={ClassIcon} className="object-none mr-2" />
             </div>
-            <span>Accordion Item #1</span>
+            <span>Class name</span>
           </div>
           <div className="flex gap-0">
             <a
@@ -56,7 +56,6 @@ const ClassAccordion = () => {
           </div>
         </div>
         <div
-          id="flush-collapseOne"
           className={`!visible border-0 ${collapse ? '' : 'hidden'}`}
           data-twe-collapse-item
           data-twe-collapse-show={collapse}

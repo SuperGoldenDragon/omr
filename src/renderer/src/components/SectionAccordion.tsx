@@ -4,16 +4,18 @@ import CollapseOffDark from '@renderer/assets/icons/collapse-off-dark.svg'
 import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
 import UserHomeIcon from '@renderer/assets/icons/user-home.svg'
 import ExchangeIcon from '@renderer/assets/icons/exchange.svg'
+import RedCrossIcon from '@renderer/assets/icons/red-cross.svg'
 import { useState } from 'react'
+import { FM } from '@renderer/utils/i18helper'
 
 const SectionAccordion = () => {
   const [collapse, setCollapse] = useState<boolean>(false)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
   return (
-    <div id="accordionFlushExample">
+    <div className="py-1">
       <div className="rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
-        <div className="mb-0 flex" id="flush-headingOne">
+        <div className="mb-0 flex">
           <div
             className="flex items-center grow cursor-pointer"
             onClick={() => setCollapse(!collapse)}
@@ -23,7 +25,8 @@ const SectionAccordion = () => {
                 1
               </span>
             </div>
-            <span>Accordion Item #1</span>
+            <span className="w-20">{FM('name')}</span>
+            <span>{FM('mobile-num')}</span>
           </div>
           <div className="flex gap-0">
             <a
@@ -63,16 +66,23 @@ const SectionAccordion = () => {
           </div>
         </div>
         <div
-          id="flush-collapseOne"
-          className={`!visible border-0 ${collapse ? '' : 'hidden'}`}
+          className={`!visible border-0 ${collapse ? '' : 'hidden'} py-3`}
           data-twe-collapse-item
           data-twe-collapse-show={collapse}
           aria-labelledby="flush-headingOne"
           data-twe-parent="#accordionFlushExample"
         >
-          <div className="px-5 py-4">
-            Placeholder content for this accordion, which is intended to demonstrate the
-            <code>.accordion-flush</code> class. This is the first item's accordion body.
+          <div className="flex mb-1">
+            <div className="w-10"></div>
+            <div className="flex grow rounded-md shadow-md bg-[#F7F3F3]">
+              <div className="w-20"></div>
+              <div className="grow">This is phone number</div>
+              <div className="py-1 px-2 flex items-center">
+                <a href="javascript:" className="cursor-pointer">
+                  <img src={RedCrossIcon} className="object-none" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
