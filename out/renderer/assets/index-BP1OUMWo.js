@@ -24614,7 +24614,7 @@ const LayoutWithSidebar = ({ children }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: `transition-all ease-in-out duration-300 absolute bottom-4 ltr:left-3 rtl:right-3 ${collapsed ? "w-10 rounded-full" : "rounded-lg w-56"} h-10  flex items-center justify-center bg-gray-300 dark:bg-gray-700`,
+          className: `transition-all ease-in-out duration-300 absolute bottom-4 ltr:left-3 rtl:right-3 ${collapsed ? "w-10 rounded-full" : "rounded-lg w-56"} h-10  flex items-center justify-center bg-gray-400 dark:bg-gray-700`,
           onClick: () => {
             setCollapsed(!collapsed);
           },
@@ -24898,26 +24898,216 @@ const AddLightIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='23'%20vie
 const EditLightIcon = "data:image/svg+xml,%3csvg%20width='25'%20height='23'%20viewBox='0%200%2025%2023'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_1868'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='1'%20width='24'%20height='22'%3e%3cpath%20d='M0.950439%201.72705H23.084V23H0.950439V1.72705Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1868)'%3e%3cpath%20d='M21.1289%2021.245H2.78528V3.68677H13.7907V1.93176H2.78528C1.77187%201.93176%200.950439%202.71797%200.950439%203.68677V21.245C0.950439%2022.2138%201.77187%2023%202.78528%2023H21.1289C22.1411%2023%2022.9625%2022.2138%2022.9625%2021.245V10.7103H21.1289V21.245Z'%20fill='white'/%3e%3c/g%3e%3cpath%20d='M8.28735%2016.0056H12.149L21.5079%207.04798L17.6171%203.32397L8.28735%2012.2537V16.0056Z'%20fill='white'/%3e%3cmask%20id='mask1_1_1868'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='18'%20y='0'%20width='7'%20height='6'%3e%3cpath%20d='M18.729%200H24.9505V5.89538H18.729V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_1_1868)'%3e%3cpath%20d='M24.2604%201.9318L22.9626%200.689688C22.2457%200.00350255%2021.0853%200.00350255%2020.3695%200.689688L18.915%202.08299L22.8059%205.80584L24.2604%204.4137C24.9773%203.72751%2024.9773%202.61566%2024.2604%201.9318Z'%20fill='white'/%3e%3c/g%3e%3c/svg%3e";
 const CancelLightIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='23'%20viewBox='0%200%2026%2023'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_1_1881'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='5'%20y='6'%20width='16'%20height='12'%3e%3cpath%20d='M5.87927%206.02905H20.4424V17.1941H5.87927V6.02905Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_1_1881)'%3e%3cpath%20d='M13.717%2011.5787L20.3366%206.5186C20.484%206.40551%2020.484%206.2362%2020.3366%206.12311C20.1901%206.01068%2019.9695%206.01068%2019.8221%206.12311L13.2025%2011.1838L6.60701%206.10459C6.46048%205.9915%206.23983%205.9915%206.09244%206.10459C5.94505%206.21769%205.94505%206.38699%206.09244%206.49943L12.6879%2011.5787L6.06831%2016.6394C5.92092%2016.7518%205.92092%2016.9211%206.06831%2017.0342C6.21483%2017.1473%206.46048%2017.1473%206.58288%2017.0342L13.2025%2011.9741L19.7971%2017.0342C19.8712%2017.0904%2019.9695%2017.1096%2020.0669%2017.1096C20.1651%2017.1096%2020.2634%2017.0719%2020.3366%2017.0342C20.484%2016.9211%2020.484%2016.7518%2020.3366%2016.6394L13.717%2011.5787Z'%20fill='white'/%3e%3c/g%3e%3cmask%20id='mask1_1_1881'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='26'%20height='23'%3e%3cpath%20d='M0.539429%200H25.5394V23H0.539429V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_1_1881)'%3e%3cpath%20d='M21.9151%203.39826C19.5397%201.19781%2016.3692%20-0.0105707%2012.999%200.00105974C9.69447%200.0103639%206.53913%201.21991%204.2017%203.36918C1.84025%205.54288%200.539429%208.43067%200.539429%2011.5034C0.539429%2013.4898%201.08428%2015.4007%202.10825%2017.0906C2.4698%2017.6872%203.40022%2017.686%203.76177%2017.0894C3.7643%2017.0824%203.76809%2017.0778%203.77188%2017.072C3.93369%2016.8056%203.93243%2016.4823%203.77188%2016.216C2.92869%2014.8192%202.44831%2013.2119%202.44831%2011.5034C2.44831%2010.1438%202.75297%208.84936%203.30035%207.67238C3.30541%207.59794%203.31299%207.52351%203.32184%207.44791C3.45964%206.34769%204.09298%205.33586%205.0588%204.67177L5.09293%204.64851C5.35334%204.47057%205.64157%204.34264%205.9475%204.27053C7.83236%202.70509%2010.3278%201.75141%2013.0622%201.75607C18.8394%201.76537%2023.5737%206.0802%2023.6381%2011.3941C23.6697%2014.1458%2022.4574%2016.6416%2020.4853%2018.4339C19.9658%2019.5155%2018.8255%2020.2493%2017.5411%2020.3273C16.1758%2020.9192%2014.65%2021.2507%2013.0432%2021.2507C12.0938%2021.2507%2011.1748%2021.1344%2010.2987%2020.9192C9.85881%2020.8099%209.39739%2021.0018%209.20397%2021.3821C9.19765%2021.3949%209.19133%2021.4077%209.18375%2021.4205C8.93724%2021.9078%209.23052%2022.4777%209.79433%2022.6161C10.8411%2022.8731%2011.9308%2023.0057%2013.0432%2023.0057C16.3831%2023.0057%2019.5233%2021.8101%2021.8835%2019.6376C24.2462%2017.4639%2025.547%2014.5761%2025.547%2011.5034C25.547%208.46207%2024.2437%205.55567%2021.9151%203.39826Z'%20fill='white'/%3e%3c/g%3e%3cpath%20d='M20.4854%2018.434C19.6333%2019.2097%2018.6384%2019.8517%2017.5411%2020.3274C18.8255%2020.2494%2019.9658%2019.5156%2020.4854%2018.434Z'%20fill='white'/%3e%3cpath%20d='M5.94769%204.27063C5.64176%204.34274%205.35353%204.47067%205.09311%204.64861L5.05898%204.67187C4.09316%205.33596%203.45982%206.34779%203.32203%207.44802C3.31318%207.52361%203.30559%207.59805%203.30054%207.67248C3.90986%206.36873%204.81879%205.20919%205.94769%204.27063Z'%20fill='white'/%3e%3c/svg%3e";
 const CollapseOffIcon = "data:image/svg+xml,%3csvg%20width='24'%20height='16'%20viewBox='0%200%2024%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.7207%200.457834L0.571295%2012.513C0.0751995%2013.1005%200.0804128%2014.0507%200.582931%2014.6338C1.08443%2015.2005%201.87996%2015.1962%202.37521%2014.624L11.6417%203.61876L21.0283%2014.5216C21.5298%2015.0884%2022.3384%2015.0839%2022.8336%2014.5117C23.3297%2013.9232%2023.3245%2012.973%2022.822%2012.391L12.5269%200.432651C12.0253%20-0.150445%2011.2167%20-0.146009%2010.7207%200.457834Z'%20fill='white'/%3e%3c/svg%3e";
+const SchoolIcon = "data:image/svg+xml,%3csvg%20width='15'%20height='15'%20viewBox='0%200%2015%2015'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3ccircle%20cx='7.5'%20cy='7.5'%20r='2.5'%20fill='%23A4A4A4'/%3e%3cpath%20d='M12.5127%207.48309C12.4743%209.56178%2011.2152%2011.48%209.23025%2012.205C7.21333%2012.9365%204.90734%2012.3208%203.54544%2010.6462C0.667822%207.11107%203.87943%201.67022%208.38253%202.52355C10.7784%202.98579%2012.4678%205.07098%2012.5127%207.48309C12.5387%209.06141%2014.9989%209.06141%2014.9669%207.48309C14.909%204.31996%2012.969%201.52932%209.98857%200.432312C7.06556%20-0.639116%203.62882%200.336051%201.68277%202.74816C-0.263743%205.14771%20-0.565772%208.5801%201.0083%2011.2619C2.62036%2014.0144%205.81945%2015.3937%208.92869%2014.8227C12.4423%2014.1814%2014.909%2010.9797%2014.9669%207.48309C14.9989%205.90478%2012.5387%205.90478%2012.5127%207.48309Z'%20fill='%231F8194'/%3e%3c/svg%3e";
+const CreateSmallIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='24'%20viewBox='0%200%2026%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_477'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='26'%20height='24'%3e%3cpath%20d='M0%200.75H25.3614V23.25H0V0.75Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_477)'%3e%3cpath%20d='M12.6807%200.75C5.68882%200.75%200%205.79698%200%2012C0%2018.203%205.68882%2023.25%2012.6807%2023.25C19.6726%2023.25%2025.3614%2018.203%2025.3614%2012C25.3614%205.79698%2019.6726%200.75%2012.6807%200.75ZM12.6807%2021.7503C6.62059%2021.7503%201.6904%2017.3764%201.6904%2012C1.6904%206.62363%206.62059%202.25048%2012.6807%202.25048C18.7408%202.25048%2023.671%206.62363%2023.671%2012C23.671%2017.3764%2018.7408%2021.7503%2012.6807%2021.7503Z'%20fill='%230E6042'/%3e%3c/g%3e%3cpath%20d='M17.1043%2011.2489H13.5262V8.07455C13.5262%207.66043%2013.1478%207.32471%2012.681%207.32471C12.2143%207.32471%2011.8358%207.66043%2011.8358%208.07455V11.2489H8.2578C7.79102%2011.2489%207.4126%2011.5846%207.4126%2011.9987C7.4126%2012.4129%207.79102%2012.7486%208.2578%2012.7486H11.8358V15.9229C11.8358%2016.3371%2012.2143%2016.6728%2012.681%2016.6728C13.1478%2016.6728%2013.5262%2016.3371%2013.5262%2015.9229V12.7486H17.1043C17.5711%2012.7486%2017.9495%2012.4129%2017.9495%2011.9987C17.9495%2011.5846%2017.5711%2011.2489%2017.1043%2011.2489Z'%20fill='%230E6042'%20fill-opacity='0.9'/%3e%3c/svg%3e";
+const EditSmallIcon = "data:image/svg+xml,%3csvg%20width='25'%20height='24'%20viewBox='0%200%2025%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_485'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='2'%20width='24'%20height='22'%3e%3cpath%20d='M0.950439%202.22705H23.084V23.5H0.950439V2.22705Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_485)'%3e%3cpath%20d='M21.1289%2021.7451H2.78528V4.18689H13.7907V2.43188H2.78528C1.77187%202.43188%200.950439%203.21809%200.950439%204.18689V21.7451C0.950439%2022.7139%201.77187%2023.5001%202.78528%2023.5001H21.1289C22.1411%2023.5001%2022.9625%2022.7139%2022.9625%2021.7451V11.2104H21.1289V21.7451Z'%20fill='%231F8295'/%3e%3c/g%3e%3cpath%20d='M8.28735%2016.5056H12.149L21.5079%207.54798L17.6171%203.82397L8.28735%2012.7537V16.5056Z'%20fill='%231F8295'%20fill-opacity='0.9'/%3e%3cmask%20id='mask1_48_485'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='18'%20y='0'%20width='7'%20height='7'%3e%3cpath%20d='M18.729%200.5H24.9505V6.39538H18.729V0.5Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_48_485)'%3e%3cpath%20d='M24.2604%202.4318L22.9626%201.18969C22.2457%200.503503%2021.0853%200.503503%2020.3695%201.18969L18.915%202.58299L22.8059%206.30584L24.2604%204.9137C24.9773%204.22751%2024.9773%203.11566%2024.2604%202.4318Z'%20fill='%231F8295'%20fill-opacity='0.9'/%3e%3c/g%3e%3c/svg%3e";
+const CancelSmallIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='24'%20viewBox='0%200%2026%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_498'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='5'%20y='6'%20width='16'%20height='12'%3e%3cpath%20d='M5.87939%206.52905H20.4425V17.6941H5.87939V6.52905Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_498)'%3e%3cpath%20d='M13.7173%2012.0787L20.3369%207.0186C20.4843%206.90551%2020.4843%206.7362%2020.3369%206.62311C20.1904%206.51068%2019.9697%206.51068%2019.8223%206.62311L13.2027%2011.6838L6.60725%206.60459C6.46073%206.4915%206.24007%206.4915%206.09268%206.60459C5.94529%206.71769%205.94529%206.88699%206.09268%206.99943L12.6881%2012.0787L6.06855%2017.1394C5.92116%2017.2518%205.92116%2017.4211%206.06855%2017.5342C6.21508%2017.6473%206.46073%2017.6473%206.58312%2017.5342L13.2027%2012.4741L19.7973%2017.5342C19.8714%2017.5904%2019.9697%2017.6096%2020.0671%2017.6096C20.1654%2017.6096%2020.2636%2017.5719%2020.3369%2017.5342C20.4843%2017.4211%2020.4843%2017.2518%2020.3369%2017.1394L13.7173%2012.0787Z'%20fill='%23ED1F24'/%3e%3c/g%3e%3cmask%20id='mask1_48_498'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='26'%20height='24'%3e%3cpath%20d='M0.539551%200.5H25.5395V23.5H0.539551V0.5Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_48_498)'%3e%3cpath%20d='M21.9152%203.89826C19.5399%201.69781%2016.3693%200.489429%2012.9991%200.50106C9.69459%200.510364%206.53925%201.71991%204.20182%203.86918C1.84037%206.04288%200.539551%208.93067%200.539551%2012.0034C0.539551%2013.9898%201.0844%2015.9007%202.10837%2017.5906C2.46992%2018.1872%203.40034%2018.186%203.76189%2017.5894C3.76442%2017.5824%203.76821%2017.5778%203.772%2017.572C3.93382%2017.3056%203.93255%2016.9823%203.772%2016.716C2.92881%2015.3192%202.44843%2013.7119%202.44843%2012.0034C2.44843%2010.6438%202.75309%209.34936%203.30047%208.17238C3.30553%208.09794%203.31312%208.02351%203.32196%207.94791C3.45976%206.84769%204.0931%205.83586%205.05892%205.17177L5.09305%205.14851C5.35347%204.97057%205.6417%204.84264%205.94762%204.77053C7.83248%203.20509%2010.3279%202.25141%2013.0623%202.25607C18.8395%202.26537%2023.5738%206.5802%2023.6383%2011.8941C23.6699%2014.6458%2022.4575%2017.1416%2020.4854%2018.9339C19.9659%2020.0155%2018.8256%2020.7493%2017.5412%2020.8273C16.1759%2021.4192%2014.6501%2021.7507%2013.0433%2021.7507C12.094%2021.7507%2011.1749%2021.6344%2010.2989%2021.4192C9.85893%2021.3099%209.39751%2021.5018%209.20409%2021.8821C9.19777%2021.8949%209.19145%2021.9077%209.18387%2021.9205C8.93736%2022.4078%209.23064%2022.9777%209.79446%2023.1161C10.8412%2023.3731%2011.9309%2023.5057%2013.0433%2023.5057C16.3833%2023.5057%2019.5234%2022.3101%2021.8836%2020.1376C24.2463%2017.9639%2025.5471%2015.0761%2025.5471%2012.0034C25.5471%208.96207%2024.2438%206.05567%2021.9152%203.89826Z'%20fill='%23ED1F24'/%3e%3c/g%3e%3cpath%20d='M20.4855%2018.9338C19.6334%2019.7096%2018.6385%2020.3516%2017.5413%2020.8272C18.8256%2020.7493%2019.9659%2020.0155%2020.4855%2018.9338Z'%20fill='%23ED1F24'/%3e%3cpath%20d='M5.94769%204.77075C5.64176%204.84286%205.35353%204.97079%205.09311%205.14874L5.05898%205.172C4.09316%205.83608%203.45982%206.84792%203.32203%207.94814C3.31318%208.02374%203.30559%208.09817%203.30054%208.1726C3.90986%206.86885%204.81879%205.70931%205.94769%204.77075Z'%20fill='%23ED1F24'/%3e%3c/svg%3e";
+const CollapseOffDark = "data:image/svg+xml,%3csvg%20width='24'%20height='16'%20viewBox='0%200%2024%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.9983%200.936506L0.55236%2012.7357C0.0418139%2013.3106%200.0234054%2014.2607%200.511274%2014.8561C0.998526%2015.4351%201.79392%2015.4505%202.30324%2014.8908L11.8404%204.11935L20.9531%2015.2522C21.4404%2015.8312%2022.2488%2015.8469%2022.7581%2015.2872C23.2687%2014.7111%2023.2871%2013.7611%2022.7992%2013.1668L12.8045%200.956229C12.3176%200.360844%2011.5092%200.34518%2010.9983%200.936506Z'%20fill='%23333333'%20fill-opacity='0.9'/%3e%3c/svg%3e";
+const ClassIcon = "data:image/svg+xml,%3csvg%20width='26'%20height='15'%20viewBox='0%200%2026%2015'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_48_696'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='26'%20height='15'%3e%3cpath%20d='M0%200H26V15H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_48_696)'%3e%3cpath%20d='M25.2084%2013.2022H23.6682C23.4999%2012.0661%2022.9634%209.96015%2021.2462%208.83838C20.8642%208.58854%2020.4182%208.39524%2019.9123%208.26526C21.2556%207.63305%2022.2046%206.11372%2022.2046%204.33442C22.2046%201.98958%2020.5588%200.0878906%2018.5289%200.0878906C16.4989%200.0878906%2014.8531%201.98958%2014.8531%204.33442C14.8531%206.11372%2015.8029%207.63305%2017.1462%208.26526C16.6396%208.39524%2016.1943%208.58854%2015.8123%208.83838C14.0951%209.96015%2013.5579%2012.0661%2013.3903%2013.2022H12.6337C12.4653%2012.0661%2011.9288%209.96015%2010.2116%208.83838C9.82966%208.58854%209.38359%208.39524%208.87774%208.26526C10.2211%207.63305%2011.1701%206.11372%2011.1701%204.33442C11.1701%201.98958%209.52426%200.0878906%207.49432%200.0878906C5.46438%200.0878906%203.81856%201.98958%203.81856%204.33442C3.81856%206.11372%204.7683%207.63305%206.11163%208.26526C5.60506%208.39524%205.15971%208.58854%204.77777%208.83838C3.06052%209.96015%202.52334%2012.0661%202.35569%2013.2022H0.814835C0.386252%2013.2022%200.0385742%2013.6032%200.0385742%2014.0986C0.0385742%2014.5933%200.386252%2014.995%200.814835%2014.995H25.2084C25.637%2014.995%2025.9846%2014.5933%2025.9846%2014.0986C25.9846%2013.6032%2025.637%2013.2022%2025.2084%2013.2022Z'%20fill='%231D8094'/%3e%3c/g%3e%3c/svg%3e";
+const SectionAccordion = (props) => {
+  const [collapse, setCollapse] = reactExports.useState(false);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "accordionFlushExample", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex justify-between", id: "flush-headingOne", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ClassIcon, className: "mr-2" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Accordion Item #1" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-0", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 rtl:border-none dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CreateSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center items-center text-[14px] rtl:border-r rtl:border-gray-700 dark:rtl:border-gray-100 cursor-pointer",
+            onClick: () => setCollapse(!collapse),
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffDark, className: "object-none mx-2" })
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        id: "flush-collapseOne",
+        className: `!visible border-0 ${collapse ? "" : "hidden"}`,
+        "data-twe-collapse-item": true,
+        "data-twe-collapse-show": collapse,
+        "aria-labelledby": "flush-headingOne",
+        "data-twe-parent": "#accordionFlushExample",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-5 py-4", children: [
+          "Placeholder content for this accordion, which is intended to demonstrate the",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("code", { children: ".accordion-flush" }),
+          " class. This is the first item's accordion body."
+        ] })
+      }
+    )
+  ] }) });
+};
+SectionAccordion.defaultProps = {};
+const ClassAccordion = (props) => {
+  const [collapse, setCollapse] = reactExports.useState(false);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "accordionFlushExample", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex justify-between", id: "flush-headingOne", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ClassIcon, className: "mr-2" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Accordion Item #1" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-0", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 rtl:border-none dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CreateSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center items-center text-[14px] rtl:border-r rtl:border-gray-700 dark:rtl:border-gray-100 cursor-pointer",
+            onClick: () => setCollapse(!collapse),
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffDark, className: "object-none mx-2" })
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        id: "flush-collapseOne",
+        className: `!visible border-0 ${collapse ? "" : "hidden"}`,
+        "data-twe-collapse-item": true,
+        "data-twe-collapse-show": collapse,
+        "aria-labelledby": "flush-headingOne",
+        "data-twe-parent": "#accordionFlushExample",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SectionAccordion, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SectionAccordion, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SectionAccordion, {})
+        ]
+      }
+    )
+  ] }) });
+};
+ClassAccordion.defaultProps = {};
+const SchoolAccordion = (props) => {
+  const [collapse, setCollapse] = reactExports.useState(false);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "accordionFlushExample", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex justify-between", id: "flush-headingOne", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: SchoolIcon, className: "mr-2" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Accordion Item #1" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-0", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 rtl:border-none dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CreateSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center items-center text-[14px] rtl:border-r rtl:border-gray-700 dark:rtl:border-gray-100 cursor-pointer",
+            onClick: () => setCollapse(!collapse),
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffDark, className: "object-none mx-2" })
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        id: "flush-collapseOne",
+        className: `!visible border-0 ${collapse ? "" : "hidden"}`,
+        "data-twe-collapse-item": true,
+        "data-twe-collapse-show": collapse,
+        "aria-labelledby": "flush-headingOne",
+        "data-twe-parent": "#accordionFlushExample",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ClassAccordion, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ClassAccordion, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ClassAccordion, {})
+        ]
+      }
+    )
+  ] }) });
+};
+SchoolAccordion.defaultProps = {};
 const Students = () => {
   const ipc = window.electron.ipcRenderer;
-  const [open, setOpen] = reactExports.useState(false);
-  const [waiting, setWaiting] = reactExports.useState(false);
   const {
     students: students2,
     studentGroups,
-    setPage,
+    /* setPage,
     setClassName,
     page,
     perPage,
     order,
-    setOrderBy,
+    setOrderBy, */
+    /* className, */
     reloadData,
-    setSearchBy,
-    className
+    setSearchBy
   } = useStudents();
-  reactExports.useRef(null);
-  reactExports.useState(0);
-  reactExports.useState(false);
   const [openSearchModal, setOpenSearchModal] = reactExports.useState(false);
   const [openDeleteModal, setOpenDeleteModal] = reactExports.useState(false);
   const [deleteId, setDeleteId] = reactExports.useState(void 0);
@@ -24938,13 +25128,6 @@ const Students = () => {
   reactExports.useEffect(() => {
     ipc.on("import-students", (_event, { event }) => {
       console.log("event", event);
-      if (event === "closed") {
-        setOpen(false);
-        setWaiting(false);
-      }
-      if (event === "mounted") {
-        setWaiting(false);
-      }
     });
   }, []);
   reactExports.useEffect(() => {
@@ -25435,45 +25618,48 @@ const Students = () => {
         ] }) })
       ] })
     ] }),
-    !isCreateStudent && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white dark:bg-gray-700 flex-grow rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-base flex", children: [
-        !isSearched && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          FM("students"),
-          " (",
-          studentGroups?.totalStudents || 0,
-          ")"
+    !isCreateStudent && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white dark:bg-gray-700 flex-grow rounded-lg", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-base flex", children: [
+          !isSearched && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            FM("students"),
+            " (",
+            studentGroups?.totalStudents || 0,
+            ")"
+          ] }),
+          " ",
+          renderSearchedBy()
         ] }),
-        " ",
-        renderSearchedBy()
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              href: "javascript:",
+              className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: AddLightIcon, className: "object-none mx-3" })
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              href: "javascript:",
+              className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditLightIcon, className: "object-none mx-3" })
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              href: "javascript:",
+              className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelLightIcon, className: "object-none mx-3" })
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffIcon, className: "object-none mx-3" }) })
+        ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href: "javascript:",
-            className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: AddLightIcon, className: "object-none mx-3" })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href: "javascript:",
-            className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditLightIcon, className: "object-none mx-3" })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href: "javascript:",
-            className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelLightIcon, className: "object-none mx-3" })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffIcon, className: "object-none mx-3" }) })
-      ] })
-    ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SchoolAccordion, {}) })
+    ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       PromptDialog,
       {

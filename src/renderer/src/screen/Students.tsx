@@ -4,7 +4,7 @@ import { ModalTheme } from '@renderer/themes/ModalTheme'
 // import { PaginationTheme } from '@renderer/themes/PaginationTheme'
 // import { themeForTabs } from '@renderer/themes/tabs'
 import { FM } from '@renderer/utils/i18helper'
-import { Button, Label, Modal, Select, TextInput } from 'flowbite-react'
+import { Button, Label, Modal, Select, TextInput, Accordion } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 // import { BiSearchAlt } from 'react-icons/bi'
 // import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
@@ -21,6 +21,7 @@ import EditLightIcon from '@renderer/assets/icons/edit-light.svg'
 import CancelLightIcon from '@renderer/assets/icons/cancel-light.svg'
 import CollapseOffIcon from '@renderer/assets/icons/collapse-off-light.svg'
 import { FaArrowLeft } from 'react-icons/fa'
+import SchoolAccordion from '@renderer/components/SchoolAccordion'
 
 type CreateStudentProps = {
   id?: number
@@ -701,7 +702,7 @@ const Students = () => {
 
       {!isCreateStudent && (
         <div className="bg-white dark:bg-gray-700 flex-grow rounded-lg">
-          <p className="text-sm font-bold mb-0 p-4 flex justify-between items-center border-b dark:border-gray-800">
+          <p className="text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800">
             <div className="text-base flex">
               {!isSearched && (
                 <>
@@ -734,6 +735,9 @@ const Students = () => {
               </a>
             </div>
           </p>
+          <div className="p-4">
+            <SchoolAccordion />
+          </div>
         </div>
       )}
       <PromptDialog
