@@ -24992,7 +24992,7 @@ const SectionAccordion = ({ sectionName, students: students2 }) => {
         children: students2?.map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex mb-1", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex grow rounded-md shadow-md bg-[#F7F3F3]", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-20 px-2", children: student?.studentName }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-40 px-2", children: student?.studentName }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow", children: student?.mobile }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1 px-2 flex items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: RedCrossIcon, className: "object-none" }) }) })
           ] })
@@ -25577,7 +25577,7 @@ const Students = () => {
         }
       )
     ] }) }),
-    isCreateStudent && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white dark:bg-gray-700 rounded-lg p-3 mb-3", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white dark:bg-gray-700 rounded-lg p-3 mb-3", hidden: !isCreateStudent, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-row gap-10 justify-center ", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "basis-1/3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-1 block", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "studentName", value: getFieldLabel("studentName") }),

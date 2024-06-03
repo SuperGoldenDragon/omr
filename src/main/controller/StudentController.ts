@@ -780,7 +780,8 @@ class StudentController {
     // loop through allSections
     for (const cls of allSchools) {
       schools[cls.student_studentSchoolName] = {
-        totalStudents: cls.totalStudents
+        totalStudents: cls.totalStudents,
+        classes: await this.getStudentsBySchool(_event, cls.student_studentSchoolName)
       }
     }
 

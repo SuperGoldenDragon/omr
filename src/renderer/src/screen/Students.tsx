@@ -575,130 +575,129 @@ const Students = () => {
           </div>
         )}
       </div>
-      {isCreateStudent && (
-        <div className="bg-white dark:bg-gray-700 rounded-lg p-3 mb-3">
-          <div className="flex flex-row gap-10 justify-center ">
-            <div className="basis-1/3">
-              <div className="mb-1 block">
-                <Label htmlFor={'studentName'} value={getFieldLabel('studentName')} />
-                <TextInput
-                  value={studentData['studentName']}
-                  onChange={(e) => {
-                    setStudentData({ ...studentData, ['studentName']: e.target.value })
-                    setErrors({ ...errors, ['studentName']: false })
-                  }}
-                  className={`${errors['studentName'] && 'ring-1 ring-red-500 rounded-lg'}`}
-                  id={'studentName'}
-                  type="text"
-                  placeholder={FM('student-name')}
-                />
-              </div>
-            </div>
-            <div className="basis-1/3">
-              <div className="mb-1 block">
-                <Label htmlFor={'studentID'} value={getFieldLabel('studentID')} />
-                <TextInput
-                  value={studentData['studentID']}
-                  onChange={(e) => {
-                    setStudentData({ ...studentData, ['studentID']: e.target.value })
-                    setErrors({ ...errors, ['studentID']: false })
-                  }}
-                  className={`${errors['studentID'] && 'ring-1 ring-red-500 rounded-lg'}`}
-                  id={'studentID'}
-                  type="number"
-                  placeholder={FM('student-id')}
-                />
-              </div>
+
+      <div className="bg-white dark:bg-gray-700 rounded-lg p-3 mb-3" hidden={!isCreateStudent}>
+        <div className="flex flex-row gap-10 justify-center ">
+          <div className="basis-1/3">
+            <div className="mb-1 block">
+              <Label htmlFor={'studentName'} value={getFieldLabel('studentName')} />
+              <TextInput
+                value={studentData['studentName']}
+                onChange={(e) => {
+                  setStudentData({ ...studentData, ['studentName']: e.target.value })
+                  setErrors({ ...errors, ['studentName']: false })
+                }}
+                className={`${errors['studentName'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                id={'studentName'}
+                type="text"
+                placeholder={FM('student-name')}
+              />
             </div>
           </div>
-          <div className="grid grid-cols-6 gap-10 justify-center ">
-            <div className="col-span-2">
-              <div className="mb-1 block">
-                <Label htmlFor={'studentSchoolName'} value={getFieldLabel('studentSchoolName')} />
-                <Select
-                  value={studentData['studentSchoolName']}
-                  id={'studentSchoolName'}
-                  className={`${errors['studentSchoolName'] && 'ring-1 ring-red-500 rounded-lg'}`}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    if (value === 'create-new') {
-                      setCreateField('studentSchoolName')
-                      return
-                    }
-                    setStudentData({ ...studentData, ['studentSchoolName']: value })
-                    setErrors({ ...errors, ['studentSchoolName']: false })
-                  }}
-                >
-                  <option value="" disabled hidden>
-                    {FM('select')}
-                  </option>
-                  <option value="create-new">{FM('create-new-school')}</option>
-                  {renderSelectOptions('studentSchoolName')}
-                  {newFieldValues['studentSchoolName']?.map((value: string) => (
-                    <option key={value}>{value}</option>
-                  ))}
-                </Select>
-              </div>
-            </div>
-            <div className="col-span-2">
-              <div className="mb-1 block">
-                <Label htmlFor={'studentClass'} value={getFieldLabel('studentClass')} />
-                <Select
-                  value={studentData['studentClass']}
-                  id={'studentClass'}
-                  className={`${errors['studentClass'] && 'ring-1 ring-red-500 rounded-lg'}`}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    if (value === 'create-new') {
-                      setCreateField('studentClass')
-                      return
-                    }
-                    setStudentData({ ...studentData, ['studentClass']: value })
-                    setErrors({ ...errors, ['studentClass']: false })
-                  }}
-                >
-                  <option value="" disabled hidden>
-                    {FM('select')}
-                  </option>
-                  <option value="create-new">{FM('create-new-grade')}</option>
-                  {renderSelectOptions('studentClass')}
-                  {newFieldValues['studentClass']?.map((value: string) => (
-                    <option key={value}>{value}</option>
-                  ))}
-                </Select>
-              </div>
-            </div>
-            <div className="col-span-2">
-              <div className="mb-1 block">
-                <Label htmlFor={'studentSection'} value={getFieldLabel('studentSection')} />
-                <Select
-                  value={studentData['studentSection']}
-                  id={'studentSection'}
-                  className={`${errors['studentSection'] && 'ring-1 ring-red-500 rounded-lg'}`}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    if (value === 'create-new') {
-                      setCreateField('studentSection')
-                      return
-                    }
-                    setStudentData({ ...studentData, ['studentSection']: value })
-                    setErrors({ ...errors, ['studentSection']: false })
-                  }}
-                >
-                  <option value="" disabled hidden>
-                    {FM('select')}
-                  </option>
-                  <option value="create-new">{FM('create-new-section')}</option>
-                  {renderSelectOptions('studentSection')}
-                  {newFieldValues['studentSection']?.map((value: string) => (
-                    <option key={value}>{value}</option>
-                  ))}
-                </Select>
-              </div>
+          <div className="basis-1/3">
+            <div className="mb-1 block">
+              <Label htmlFor={'studentID'} value={getFieldLabel('studentID')} />
+              <TextInput
+                value={studentData['studentID']}
+                onChange={(e) => {
+                  setStudentData({ ...studentData, ['studentID']: e.target.value })
+                  setErrors({ ...errors, ['studentID']: false })
+                }}
+                className={`${errors['studentID'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                id={'studentID'}
+                type="number"
+                placeholder={FM('student-id')}
+              />
             </div>
           </div>
         </div>
-      )}
+        <div className="grid grid-cols-6 gap-10 justify-center ">
+          <div className="col-span-2">
+            <div className="mb-1 block">
+              <Label htmlFor={'studentSchoolName'} value={getFieldLabel('studentSchoolName')} />
+              <Select
+                value={studentData['studentSchoolName']}
+                id={'studentSchoolName'}
+                className={`${errors['studentSchoolName'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (value === 'create-new') {
+                    setCreateField('studentSchoolName')
+                    return
+                  }
+                  setStudentData({ ...studentData, ['studentSchoolName']: value })
+                  setErrors({ ...errors, ['studentSchoolName']: false })
+                }}
+              >
+                <option value="" disabled hidden>
+                  {FM('select')}
+                </option>
+                <option value="create-new">{FM('create-new-school')}</option>
+                {renderSelectOptions('studentSchoolName')}
+                {newFieldValues['studentSchoolName']?.map((value: string) => (
+                  <option key={value}>{value}</option>
+                ))}
+              </Select>
+            </div>
+          </div>
+          <div className="col-span-2">
+            <div className="mb-1 block">
+              <Label htmlFor={'studentClass'} value={getFieldLabel('studentClass')} />
+              <Select
+                value={studentData['studentClass']}
+                id={'studentClass'}
+                className={`${errors['studentClass'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (value === 'create-new') {
+                    setCreateField('studentClass')
+                    return
+                  }
+                  setStudentData({ ...studentData, ['studentClass']: value })
+                  setErrors({ ...errors, ['studentClass']: false })
+                }}
+              >
+                <option value="" disabled hidden>
+                  {FM('select')}
+                </option>
+                <option value="create-new">{FM('create-new-grade')}</option>
+                {renderSelectOptions('studentClass')}
+                {newFieldValues['studentClass']?.map((value: string) => (
+                  <option key={value}>{value}</option>
+                ))}
+              </Select>
+            </div>
+          </div>
+          <div className="col-span-2">
+            <div className="mb-1 block">
+              <Label htmlFor={'studentSection'} value={getFieldLabel('studentSection')} />
+              <Select
+                value={studentData['studentSection']}
+                id={'studentSection'}
+                className={`${errors['studentSection'] && 'ring-1 ring-red-500 rounded-lg'}`}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (value === 'create-new') {
+                    setCreateField('studentSection')
+                    return
+                  }
+                  setStudentData({ ...studentData, ['studentSection']: value })
+                  setErrors({ ...errors, ['studentSection']: false })
+                }}
+              >
+                <option value="" disabled hidden>
+                  {FM('select')}
+                </option>
+                <option value="create-new">{FM('create-new-section')}</option>
+                {renderSelectOptions('studentSection')}
+                {newFieldValues['studentSection']?.map((value: string) => (
+                  <option key={value}>{value}</option>
+                ))}
+              </Select>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {!isCreateStudent && (
         <div className="bg-white dark:bg-gray-700 flex-grow rounded-lg">
@@ -742,6 +741,7 @@ const Students = () => {
           </div>
         </div>
       )}
+
       <PromptDialog
         show={createField ? true : false}
         onClose={() => setCreateField('')}
