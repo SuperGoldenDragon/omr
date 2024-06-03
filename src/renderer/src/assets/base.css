@@ -49,3 +49,7 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 .bg-license-screen {
   background: conic-gradient(from -1.64deg at 52.89% 52.66%, #9FE6EA -34.2deg, #A5E3E7 85.25deg, #F0DAC2 153.64deg, #F7E3CD 280.49deg, #9FE6EA 325.8deg, #A5E3E7 445.25deg)
 }
+
+.section-shadow {
+  box-shadow: -3px 3px #1F8194;
+}
