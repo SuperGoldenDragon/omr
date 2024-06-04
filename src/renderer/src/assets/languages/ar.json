@@ -85,5 +85,10 @@
   "enter-license" : "إدخال رخصة",
   "submit" : "إرسال",
   "name" : "اسم الطالب",
-  "mobile-num" : "رقم جوال الطالب"
+  "mobile-num" : "رقم جوال الطالب",
+  "success" : "نجاح",
+  "failed" : "فشل",
+  "deleted-student-successfully": "تم حذف الطالب بنجاح",
+  "delete-student-failed": "فشل حذف الطالب",
+  "edit-student": "تحرير الطالب"
 }

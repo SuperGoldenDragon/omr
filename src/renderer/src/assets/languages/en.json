@@ -87,5 +87,10 @@
   "enter-license" : "Enter License",
   "submit" : "Submit",
   "name" : "Name",
-  "mobile-num" : "Mobile No."
+  "mobile-num" : "Mobile No.",
+  "success" : "Success",
+  "failed" : "Failed",
+  "deleted-student-successfully": "Deleted a student successfully",
+  "delete-student-failed": "Deleting a student is failed",
+  "edit-student": "Edit Student"
 }

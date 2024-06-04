@@ -7,7 +7,13 @@ import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
 import { useEffect, useState } from 'react'
 import ClassAccordion from './ClassAccordion'
 
-const SchoolAccordion = ({ schoolName }: { schoolName: string }) => {
+const SchoolAccordion = ({
+  schoolName,
+  setEditStudent
+}: {
+  schoolName: string
+  setEditStudent: any
+}) => {
   const ipc = window.electron.ipcRenderer
 
   const [classesObj, setClassesObj] = useState<any>({})
@@ -17,14 +23,18 @@ const SchoolAccordion = ({ schoolName }: { schoolName: string }) => {
 
   useEffect(() => {
     if (schoolName) {
-      ipc.invoke('getStudentsBySchool', schoolName).then((result) => {
-        setClassesObj(result || {})
-      })
+      load()
     }
   }, [schoolName])
 
+  const load = () => {
+    ipc.invoke('getStudentsBySchool', schoolName).then((result) => {
+      setClassesObj(result || {})
+    })
+  }
+
   return (
-    <div id="accordionFlushExample">
+    <div>
       <div className="rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
         <div className="mb-0 flex">
           <div
@@ -79,6 +89,8 @@ const SchoolAccordion = ({ schoolName }: { schoolName: string }) => {
               key={index}
               classNameStr={classNameStr}
               sections={classesObj[classNameStr] || {}}
+              setEditStudent={setEditStudent}
+              reload={load}
             />
           ))}
         </div>
@@ -88,7 +100,8 @@ const SchoolAccordion = ({ schoolName }: { schoolName: string }) => {
 }
 
 SchoolAccordion.defaultProps = {
-  schoolName: ''
+  schoolName: '',
+  setEditStudent: () => {}
 }
 
 export default SchoolAccordion

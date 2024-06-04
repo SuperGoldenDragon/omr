@@ -8,6 +8,8 @@ import Students from './screen/Students'
 import License from './screen/License'
 import { StudentsProvider } from './context/Students'
 import Committee from './screen/Committee'
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import Tailwind from 'primereact/passthrough/tailwind';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -16,27 +18,29 @@ function App(): JSX.Element {
 
   const [isActivated, setIsActivated] = useState<boolean>(false)
   return (
-    <Flowbite>
-      <HashRouter>
-        {isActivated ? (
-          <LayoutWithSidebar>
-            <StudentsProvider>
-              <Routes>
-                <Route path="/" element={<Exams />} />
-                <Route
-                  path="/settings"
-                  element={<Settings onDeactivate={() => setIsActivated(false)} />}
-                />
-                <Route path="/committee" element={<Committee />} />
-                <Route path="/students" element={<Students />} />
-              </Routes>
-            </StudentsProvider>
-          </LayoutWithSidebar>
-        ) : (
-          <License onActivate={() => setIsActivated(true)} />
-        )}
-      </HashRouter>
-    </Flowbite>
+    <PrimeReactProvider value={{ unstyled : true, pt: Tailwind }}>
+      <Flowbite>
+        <HashRouter>
+          {isActivated ? (
+            <LayoutWithSidebar>
+              <StudentsProvider>
+                <Routes>
+                  <Route path="/" element={<Exams />} />
+                  <Route
+                    path="/settings"
+                    element={<Settings onDeactivate={() => setIsActivated(false)} />}
+                  />
+                  <Route path="/committee" element={<Committee />} />
+                  <Route path="/students" element={<Students />} />
+                </Routes>
+              </StudentsProvider>
+            </LayoutWithSidebar>
+          ) : (
+            <License onActivate={() => setIsActivated(true)} />
+          )}
+        </HashRouter>
+      </Flowbite>
+    </PrimeReactProvider>
   )
 }
 

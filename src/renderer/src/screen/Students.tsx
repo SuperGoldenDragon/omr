@@ -6,14 +6,10 @@ import { ModalTheme } from '@renderer/themes/ModalTheme'
 import { FM } from '@renderer/utils/i18helper'
 import { Button, Label, Modal, Select, TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
-// import { BiSearchAlt } from 'react-icons/bi'
-// import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
-// import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi'
-// import { GrNotes } from 'react-icons/gr'
 import PromptDialog from '@renderer/components/PromptDialog'
 import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
 import ImportStudentIcon from '@renderer/assets/icons/import-student.svg'
-// import EditIcon from '@renderer/assets/icons/edit.svg'
+import EditIcon from '@renderer/assets/icons/edit.svg'
 import SaveIcon from '@renderer/assets/icons/create-round.svg'
 import CancelIcon from '@renderer/assets/icons/cancel.svg'
 import AddLightIcon from '@renderer/assets/icons/add-light.svg'
@@ -52,8 +48,6 @@ const Students = () => {
 
   // const [openModal, setOpenModal] = useState(false)
   const [openSearchModal, setOpenSearchModal] = useState(false)
-  const [openDeleteModal, setOpenDeleteModal] = useState(false)
-  const [deleteId, setDeleteId] = useState<number | undefined>(undefined)
   const [studentData, setStudentData] = useState<CreateStudentProps>({
     studentName: '',
     studentID: '',
@@ -71,6 +65,8 @@ const Students = () => {
   const [newFieldValues, setNewFieldValues] = useState<any>({})
 
   const [isCreateStudent, setIsCreateStudent] = useState<boolean>(false)
+
+  const [editStudent, setEditStudent] = useState<any>(null)
 
   useEffect(() => {
     ipc.on('import-students', (_event, { event }) => {
@@ -106,6 +102,24 @@ const Students = () => {
       setCreateLabel(getFieldLabel('studentSection'))
     }
   }, [createField])
+
+  useEffect(() => {
+    if (editStudent) {
+      const { studentName, studentID, studentClass, studentSection, studentSchoolName } =
+        editStudent
+      // set values from student to edit
+      setStudentData({ studentName, studentID, studentClass, studentSection, studentSchoolName })
+    } else {
+      // set inital valuse
+      setStudentData({
+        studentName: '',
+        studentID: 0,
+        studentClass: '',
+        studentSection: '',
+        studentSchoolName: ''
+      })
+    }
+  }, [editStudent])
 
   // render select options
   const renderSelectOptions = (field: string) => {
@@ -184,7 +198,10 @@ const Students = () => {
     }
 
     ipc
-      .invoke('addStudent', studentData)
+      .invoke(editStudent ? 'updateStudent' : 'addStudent', {
+        ...studentData,
+        id: editStudent?.id
+      })
       .then((data) => {
         console.log('data', data)
         reloadData()
@@ -200,13 +217,16 @@ const Students = () => {
             (value: any) => value != studentData.studentSection
           )
         })
-        setStudentData({
-          studentName: '',
-          studentID: 0,
-          studentClass: '',
-          studentSection: '',
-          studentSchoolName: ''
-        })
+        // if is create mode
+        if (!editStudent) {
+          setStudentData({
+            studentName: '',
+            studentID: 0,
+            studentClass: '',
+            studentSection: '',
+            studentSchoolName: ''
+          })
+        }
       })
       .catch((err) => {
         console.log('err', err)
@@ -261,29 +281,6 @@ const Students = () => {
         console.log('err', err)
       })
   } */
-
-  // open delete modal
-  /* const handleDeleteModal = (id: number) => {
-    setOpenDeleteModal(true)
-    setDeleteId(id)
-  } */
-
-  // delete student
-  const deleteStudent = () => {
-    if (deleteId) {
-      ipc
-        .invoke('deleteStudent', deleteId)
-        .then((data) => {
-          console.log('data', data)
-          reloadData()
-          setOpenDeleteModal(false)
-          setDeleteId(undefined)
-        })
-        .catch((err) => {
-          console.log('err', err)
-        })
-    }
-  }
 
   // delete all students
   /* const deleteAllStudents = () => {
@@ -463,43 +460,6 @@ const Students = () => {
     return <span className="ml-0 flex flex-1">Searched By: {re}</span>
   }
 
-  // render delete modal
-  const renderDeleteModal = () => {
-    const student = students?.students.find((student) => student.id === deleteId)
-    return (
-      <Modal
-        popup
-        theme={ModalTheme}
-        size={'sm'}
-        show={openDeleteModal}
-        onClose={() => {
-          setOpenDeleteModal(false)
-        }}
-      >
-        <Modal.Header className="py-3"></Modal.Header>
-        <Modal.Body className="pt-5 text-center">
-          <div className="">{FM('delete-student-message')}</div>
-          <p className="mt-4">{student?.studentName}</p>
-          <p> {student?.studentID}</p>
-        </Modal.Body>
-        <Modal.Footer className="justify-center py-3 px-4">
-          <Button
-            color={'failure'}
-            className="rtl:ml-2"
-            onClick={() => {
-              deleteStudent()
-            }}
-          >
-            {FM('delete')}
-          </Button>
-          <Button color="gray" onClick={() => setOpenDeleteModal(false)}>
-            {FM('cancel')}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    )
-  }
-
   const isSearched =
     Object.keys(searchedBy).filter((field) => {
       return searchedBy[field]
@@ -526,11 +486,10 @@ const Students = () => {
   return (
     <div className="p-2 flex flex-col h-screen">
       {renderSearchModal()}
-      {renderDeleteModal()}
       <div>
-        {isCreateStudent ? (
+        <div hidden={!isCreateStudent}>
           <div className="flex py-4">
-            <div className="grow-0 h-full items-center py-4">
+            <div className="grow-0 items-center py-4">
               <a
                 href="javascript:"
                 className="flex items-center text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer"
@@ -563,7 +522,44 @@ const Students = () => {
               </a>
             </div>
           </div>
-        ) : (
+        </div>
+        <div hidden={!editStudent}>
+          <div className="flex py-4">
+            <div className="grow-0 items-center py-4">
+              <a
+                href="javascript:"
+                className="flex items-center text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-gray-200 cursor-pointer"
+                onClick={() => setEditStudent(null)}
+              >
+                <FaArrowLeft className="mr-2" />
+                <span className="font-semibold">{FM('edit-student')}</span>
+              </a>
+            </div>
+            <div className="flex justify-center grow">
+              <a
+                href="javascript:"
+                className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
+                onClick={saveStudent}
+              >
+                <div className="mb-2 flex justify-center">
+                  <img src={EditIcon} />
+                </div>
+                <div className="text-center font-semibold">{FM('save')}</div>
+              </a>
+              <a
+                href="javascript:"
+                className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
+                onClick={() => setEditStudent(null)}
+              >
+                <div className="mb-2 flex justify-center">
+                  <img src={CancelIcon} />
+                </div>
+                <div className="text-center font-semibold">{FM('cancel')}</div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div hidden={isCreateStudent || editStudent != null}>
           <div className="flex justify-center py-4">
             <a
               href="javascript:"
@@ -586,10 +582,12 @@ const Students = () => {
               <div className="text-center font-semibold">{FM('import-students')}</div>
             </a>
           </div>
-        )}
+        </div>
       </div>
-
-      <div className="bg-white dark:bg-gray-700 rounded-lg p-3 mb-3" hidden={!isCreateStudent}>
+      <div
+        className="bg-white dark:bg-gray-700 rounded-lg p-3 mb-3"
+        hidden={!isCreateStudent && !editStudent}
+      >
         <div className="flex flex-row gap-10 justify-center ">
           <div className="basis-1/3">
             <div className="mb-1 block">
@@ -711,8 +709,7 @@ const Students = () => {
           </div>
         </div>
       </div>
-
-      {!isCreateStudent && (
+      {!isCreateStudent && !editStudent && (
         <div className="bg-white dark:bg-gray-700 rounded-lg flex-1 flex flex-col h-0 p-1">
           <p className="text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800">
             <div className="text-base flex">
@@ -751,12 +748,16 @@ const Students = () => {
             className={`p-4 flex-1 h-0 overflow-auto ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
           >
             {Object.keys(studentGroups?.schools || {}).map((schoolName: string, index: number) => (
-              <SchoolAccordion key={index} schoolName={schoolName} />
+              <SchoolAccordion
+                key={index}
+                schoolName={schoolName}
+                setEditStudent={setEditStudent}
+              />
             ))}
           </div>
         </div>
       )}
-
+      {editStudent && <div className="bg-white dark:bg-gray-700 rounded-lg flex-1 p-1 h-0"></div>}
       <PromptDialog
         show={createField ? true : false}
         onClose={() => setCreateField('')}

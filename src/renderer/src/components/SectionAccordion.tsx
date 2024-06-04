@@ -5,30 +5,33 @@ import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
 import UserHomeIcon from '@renderer/assets/icons/user-home.svg'
 import ExchangeIcon from '@renderer/assets/icons/exchange.svg'
 import RedCrossIcon from '@renderer/assets/icons/red-cross.svg'
-import { useEffect, useState } from 'react'
+import { useState, useRef } from 'react'
 import { FM } from '@renderer/utils/i18helper'
-import { Modal, Button, Toast } from 'flowbite-react'
+import { Modal, Button } from 'flowbite-react'
 import { ModalTheme } from '@renderer/themes/ModalTheme'
-import { GoQuestion } from 'react-icons/go'
+import { GoQuestion, GoCheck } from 'react-icons/go'
+import { Toast } from 'primereact/toast'
+import { IoIosCloseCircleOutline } from "react-icons/io"
 
 const SectionAccordion = ({
   sectionName,
   students,
-  reload
+  reload,
+  setEditStudent
 }: {
   sectionName: string
   students: any
   reload: any
+  setEditStudent: any
 }) => {
   const ipc = window.electron.ipcRenderer
+  const deleteResultToast = useRef(null)
   const [needDeleteStudent, setNeedDeleteStudent] = useState<any>(null)
-  const [deleteResult, setDeleteResult] = useState<string | undefined>(undefined)
   const [collapse, setCollapse] = useState<boolean>(false)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
+  const rtl: boolean = document.body.getAttribute('dir') == 'rtl'
 
-  useEffect(() => {
-    if (deleteResult) setDeleteResult(undefined)
-  }, [deleteResult])
+  console.log(document.body)
 
   const deleteStudent = () => {
     // if no user selected to delete
@@ -38,12 +41,24 @@ const SectionAccordion = ({
       .then((data) => {
         console.log('deleted data', data)
         setNeedDeleteStudent(null)
+        deleteResultToast.current?.show({
+          icon: <GoCheck className="mr-2 rtl:ml-3" size={30} />,
+          severity: 'success',
+          summary: FM('success'),
+          detail: FM('deleted-student-successfully'),
+          life: 2000
+        })
         reload()
-        setDeleteResult('success')
       })
       .catch((err) => {
-        setDeleteResult('failed')
         console.log('err', err)
+        deleteResultToast.current?.show({
+          icon: <IoIosCloseCircleOutline className="mr-2 rtl:ml-3" size={30} />,
+          severity: 'error',
+          summary: FM('failed'),
+          detail: FM('delete-student-failed'),
+          life: 2000
+        })
       })
   }
 
@@ -85,16 +100,10 @@ const SectionAccordion = ({
     )
   }
 
-  const renderDeleteResultToast = () => {
-    return <Toast hidden={!deleteResult}>
-      
-    </Toast>
-  }
-
   return (
     <>
       {renderDeleteModal()}
-      {renderDeleteResultToast()}
+      <Toast ref={deleteResultToast} position={rtl ? 'top-left' : 'top-right'} />
       <div className="py-1">
         <div className="rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
           <div className="mb-0 flex">
@@ -160,8 +169,13 @@ const SectionAccordion = ({
               <div className="flex mb-1" key={index}>
                 <div className="w-10"></div>
                 <div className="flex grow rounded-md shadow-md bg-[#F7F3F3] dark:bg-gray-600">
-                  <div className="w-80 px-2">{student?.studentName}</div>
-                  <div className="grow dark:text-gray-100">{student?.mobile}</div>
+                  <div
+                    className="grow cursor-pointer"
+                    onClick={() => setEditStudent && setEditStudent(student)}
+                  >
+                    <div className="w-80 px-2">{student?.studentName}</div>
+                    <div className="grow dark:text-gray-100">{student?.mobile}</div>
+                  </div>
                   <div className="py-1 px-2 flex items-center">
                     <a
                       href="javascript:"
@@ -184,7 +198,8 @@ const SectionAccordion = ({
 SectionAccordion.defaultProps = {
   sectionName: '',
   students: [],
-  reload: () => {}
+  reload: () => {},
+  setEditStudent: () => {}
 }
 
 export default SectionAccordion
