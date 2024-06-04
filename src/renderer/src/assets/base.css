@@ -80,7 +80,7 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 
 /* Customize scrollbar */
 .overflow-y-auto-dark::-webkit-scrollbar {
-  width: 9px; /* Width of the scrollbar */
+  width: 9px!important; /* Width of the scrollbar */
 }
 
 /* Customize scrollbar track */

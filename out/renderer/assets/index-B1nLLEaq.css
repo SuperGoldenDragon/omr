@@ -1398,9 +1398,6 @@ input[type="range"]::-ms-fill-lower {
 .w-4 {
   width: 1rem;
 }
-.w-40 {
-  width: 10rem;
-}
 .w-5 {
   width: 1.25rem;
 }
@@ -3199,7 +3196,7 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 }
 /* Customize scrollbar */
 .overflow-y-auto-dark::-webkit-scrollbar {
-  width: 9px; /* Width of the scrollbar */
+  width: 9px!important; /* Width of the scrollbar */
 }
 /* Customize scrollbar track */
 .overflow-y-auto-dark::-webkit-scrollbar-track {
@@ -3208,7 +3205,7 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 }
 /* Customize scrollbar thumb */
 .overflow-y-auto-dark::-webkit-scrollbar-thumb {
-  background-color: red; /* Color of the scrollbar thumb */
+  background-color: #888; /* Color of the scrollbar thumb */
   border-radius: 12px; /* Radius of the scrollbar thumb */
 }
 /* Customize scrollbar thumb on hover */
