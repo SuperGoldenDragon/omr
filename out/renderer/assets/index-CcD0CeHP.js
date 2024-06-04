@@ -30922,7 +30922,7 @@ const Students = () => {
     editStudent && /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: `bg-white dark:bg-gray-700 rounded-lg flex-1 p-1 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
+        className: `bg-white dark:bg-gray-700 rounded-lg flex-1 p-2 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
         children: studentGroups?.schools[editStudent.studentSchoolName].classes[editStudent.studentClass][editStudent.studentSection].map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           StudentRow,
           {
