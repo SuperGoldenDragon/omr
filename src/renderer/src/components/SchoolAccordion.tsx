@@ -4,34 +4,23 @@ import EditSmallIcon from '@renderer/assets/icons/edit-green-small.svg'
 import CancelSmallIcon from '@renderer/assets/icons/cancel-red-small.svg'
 import CollapseOffDark from '@renderer/assets/icons/collapse-off-dark.svg'
 import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import ClassAccordion from './ClassAccordion'
 
 const SchoolAccordion = ({
   schoolName,
-  setEditStudent
+  setEditStudent,
+  classes,
+  reload
 }: {
   schoolName: string
   setEditStudent: any
+  classes: any
+  reload: any
 }) => {
-  const ipc = window.electron.ipcRenderer
-
-  const [classesObj, setClassesObj] = useState<any>({})
   const [collapse, setCollapse] = useState<boolean>(false)
   // get dark mode for change
   const darkMode: boolean = document.documentElement.classList.contains('dark')
-
-  useEffect(() => {
-    if (schoolName) {
-      load()
-    }
-  }, [schoolName])
-
-  const load = () => {
-    ipc.invoke('getStudentsBySchool', schoolName).then((result) => {
-      setClassesObj(result || {})
-    })
-  }
 
   return (
     <div>
@@ -84,13 +73,13 @@ const SchoolAccordion = ({
           aria-labelledby="flush-headingOne"
           data-twe-parent="#accordionFlushExample"
         >
-          {Object.keys(classesObj).map((classNameStr, index) => (
+          {Object.keys(classes).map((classNameStr, index) => (
             <ClassAccordion
               key={index}
               classNameStr={classNameStr}
-              sections={classesObj[classNameStr] || {}}
+              sections={classes[classNameStr] || {}}
               setEditStudent={setEditStudent}
-              reload={load}
+              reload={reload}
             />
           ))}
         </div>
@@ -101,7 +90,9 @@ const SchoolAccordion = ({
 
 SchoolAccordion.defaultProps = {
   schoolName: '',
-  setEditStudent: () => {}
+  setEditStudent: () => {},
+  classes: {},
+  reload: () => {}
 }
 
 export default SchoolAccordion

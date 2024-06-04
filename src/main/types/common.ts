@@ -20,6 +20,7 @@ export type groupedStudents = {
   schools: {
     [key: string]: {
       totalStudents: number
+      classes: any[]
     }
   }
   sections: {

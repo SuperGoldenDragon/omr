@@ -18,6 +18,7 @@ import SchoolAccordion from '@renderer/components/SchoolAccordion'
 import { Toast } from 'primereact/toast'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
 import { GoCheck } from 'react-icons/go'
+import StudentRow from '@renderer/components/StudentRow'
 
 type CreateStudentProps = {
   id?: number
@@ -33,7 +34,6 @@ const Students = () => {
   const rtl: boolean = document.body.getAttribute('dir') == 'rtl'
   const toastRef = useRef(null)
   const {
-    students,
     studentGroups,
     /* setPage,
     setClassName,
@@ -246,68 +246,6 @@ const Students = () => {
         })
       })
   }
-
-  // edit student
-  /* const editStudent = () => {
-    console.log('studentData', studentData)
-
-    // verify data and set errors
-    const errors: Record<string, boolean> = {}
-    const fields = Object.keys(studentData)
-
-    // check if all fields are filled
-    fields.forEach((field) => {
-      // check if field is empty
-      if (!studentData[field]) {
-        errors[field] = true
-      }
-
-      // check if studentID is number
-      if (field === 'studentID' && isNaN(Number(studentData[field]))) {
-        errors[field] = true
-      }
-    })
-
-    // check if there are any errors
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors)
-      return
-    }
-
-    ipc
-      .invoke('updateStudent', studentData)
-      .then((data) => {
-        console.log('data', data)
-        reloadData()
-
-        // send data to main process
-        setOpenModal(false)
-
-        setStudentData({
-          studentName: '',
-          studentID: 0,
-          studentSchoolName: '',
-          studentClass: '',
-          studentSection: ''
-        })
-      })
-      .catch((err) => {
-        console.log('err', err)
-      })
-  } */
-
-  // delete all students
-  /* const deleteAllStudents = () => {
-    ipc
-      .invoke('removeAllStudents')
-      .then((data) => {
-        console.log('data', data)
-        reloadData()
-      })
-      .catch((err) => {
-        console.log('err', err)
-      })
-  } */
 
   // handle search
   const handleSearch = () => {
@@ -724,55 +662,72 @@ const Students = () => {
           </div>
         </div>
       </div>
-      {!isCreateStudent && !editStudent && (
-        <div className="bg-white dark:bg-gray-700 rounded-lg flex-1 flex flex-col h-0 p-1">
-          <p className="text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800">
-            <div className="text-base flex">
-              {!isSearched && (
-                <>
-                  {FM('students')} ({studentGroups?.totalStudents || 0})
-                </>
-              )}{' '}
-              {renderSearchedBy()}
-            </div>
-            <div className="ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]">
-              <a
-                href="javascript:"
-                className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
-              >
-                <img src={AddLightIcon} className="object-none mx-3" />
-              </a>
-              <a
-                href="javascript:"
-                className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
-              >
-                <img src={EditLightIcon} className="object-none mx-3" />
-              </a>
-              <a
-                href="javascript:"
-                className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
-              >
-                <img src={CancelLightIcon} className="object-none mx-3" />
-              </a>
-              <a href="javascript:" className="h-9 w-9 flex justify-center cursor-pointer">
-                <img src={CollapseOffIcon} className="object-none mx-3" />
-              </a>
-            </div>
-          </p>
-          <div
-            className={`p-4 flex-1 h-0 overflow-auto ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
-          >
-            {Object.keys(studentGroups?.schools || {}).map((schoolName: string, index: number) => (
-              <SchoolAccordion
-                key={index}
-                schoolName={schoolName}
-                setEditStudent={setEditStudent}
-              />
-            ))}
+      <div
+        className={`bg-white dark:bg-gray-700 rounded-lg flex-1 flex flex-col h-0 p-1 ${(isCreateStudent || editStudent) && 'hidden'}`}
+      >
+        <p className="text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800">
+          <div className="text-base flex">
+            {!isSearched && (
+              <>
+                {FM('students')} ({studentGroups?.totalStudents || 0})
+              </>
+            )}{' '}
+            {renderSearchedBy()}
           </div>
+          <div className="ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]">
+            <a
+              href="javascript:"
+              className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
+            >
+              <img src={AddLightIcon} className="object-none mx-3" />
+            </a>
+            <a
+              href="javascript:"
+              className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
+            >
+              <img src={EditLightIcon} className="object-none mx-3" />
+            </a>
+            <a
+              href="javascript:"
+              className="h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer"
+            >
+              <img src={CancelLightIcon} className="object-none mx-3" />
+            </a>
+            <a href="javascript:" className="h-9 w-9 flex justify-center cursor-pointer">
+              <img src={CollapseOffIcon} className="object-none mx-3" />
+            </a>
+          </div>
+        </p>
+        <div
+          className={`p-4 flex-1 h-0 overflow-auto ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
+        >
+          {Object.keys(studentGroups?.schools || {}).map((schoolName: string, index: number) => (
+            <SchoolAccordion
+              key={index}
+              schoolName={schoolName}
+              classes={studentGroups?.schools[schoolName]?.classes}
+              setEditStudent={setEditStudent}
+              reload={reloadData}
+            />
+          ))}
+        </div>
+      </div>
+      {editStudent && (
+        <div
+          className={`bg-white dark:bg-gray-700 rounded-lg flex-1 p-2 h-0 overflow-auto ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
+        >
+          {studentGroups?.schools[editStudent.studentSchoolName].classes[editStudent.studentClass][
+            editStudent.studentSection
+          ].map((student: any, index: number) => (
+            <StudentRow
+              key={index}
+              student={student}
+              reload={reloadData}
+              setEditStudent={setEditStudent}
+            />
+          ))}
         </div>
       )}
-      {editStudent && <div className="bg-white dark:bg-gray-700 rounded-lg flex-1 p-1 h-0"></div>}
       <PromptDialog
         show={createField ? true : false}
         onClose={() => setCreateField('')}

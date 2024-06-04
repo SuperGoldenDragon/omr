@@ -7,7 +7,17 @@ import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
 import { useState } from 'react'
 import SectionAccordion from './SectionAccordion'
 
-const ClassAccordion = ({ classNameStr, sections, setEditStudent, reload }: { classNameStr: string; sections: any ; setEditStudent: any; reload: any}) => {
+const ClassAccordion = ({
+  classNameStr,
+  sections,
+  setEditStudent,
+  reload
+}: {
+  classNameStr: string
+  sections: any
+  setEditStudent: any
+  reload: any
+}) => {
   const [collapse, setCollapse] = useState<boolean>(false)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 

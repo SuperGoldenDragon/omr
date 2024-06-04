@@ -29896,25 +29896,22 @@ Toast.displayName = "Toast";
 function IoIosCloseCircleOutline(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 512 512" }, "child": [{ "tag": "path", "attr": { "d": "M331.3 308.7L278.6 256l52.7-52.7c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-52.7-52.7c-6.2-6.2-15.6-7.1-22.6 0-7.1 7.1-6 16.6 0 22.6l52.7 52.7-52.7 52.7c-6.7 6.7-6.4 16.3 0 22.6 6.4 6.4 16.4 6.2 22.6 0l52.7-52.7 52.7 52.7c6.2 6.2 16.4 6.2 22.6 0 6.3-6.2 6.3-16.4 0-22.6z" }, "child": [] }, { "tag": "path", "attr": { "d": "M256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256s-18.7 93.3-52.7 127.3S304.1 436 256 436c-48.1 0-93.3-18.7-127.3-52.7S76 304.1 76 256s18.7-93.3 52.7-127.3S207.9 76 256 76m0-28C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z" }, "child": [] }] })(props);
 }
-const SectionAccordion = ({
-  sectionName,
-  students: students2,
-  reload,
-  setEditStudent
+const StudentRow = ({
+  student,
+  setEditStudent,
+  reload
 }) => {
   const ipc = window.electron.ipcRenderer;
-  const deleteResultToast = reactExports.useRef(null);
-  const [needDeleteStudent, setNeedDeleteStudent] = reactExports.useState(null);
-  const [collapse, setCollapse] = reactExports.useState(false);
-  const darkMode = document.documentElement.classList.contains("dark");
+  const toastRef = reactExports.useRef(null);
+  const [showDelete, setShowDelete] = reactExports.useState(false);
   const rtl = document.body.getAttribute("dir") == "rtl";
   const deleteStudent = () => {
-    if (!needDeleteStudent)
+    if (!showDelete)
       return;
-    ipc.invoke("deleteStudent", needDeleteStudent?.id).then((data) => {
+    ipc.invoke("deleteStudent", student?.id).then((data) => {
       console.log("deleted data", data);
-      setNeedDeleteStudent(null);
-      deleteResultToast.current?.show({
+      setShowDelete(false);
+      toastRef.current?.show({
         icon: /* @__PURE__ */ jsxRuntimeExports.jsx(GoCheck, { className: "mr-2 rtl:ml-3", size: 30 }),
         severity: "success",
         summary: FM("success"),
@@ -29924,7 +29921,7 @@ const SectionAccordion = ({
       reload();
     }).catch((err) => {
       console.log("err", err);
-      deleteResultToast.current?.show({
+      toastRef.current?.show({
         icon: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosCloseCircleOutline, { className: "mr-2 rtl:ml-3", size: 30 }),
         severity: "error",
         summary: FM("failed"),
@@ -29940,19 +29937,19 @@ const SectionAccordion = ({
         popup: true,
         theme: ModalTheme,
         size: "sm",
-        show: needDeleteStudent != null,
+        show: showDelete,
         onClose: () => {
-          setNeedDeleteStudent(null);
+          setShowDelete(false);
         },
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Modal.Header, { className: "py-3" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "pt-5 text-center", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center my-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(GoQuestion, { size: 80, className: "text-red-700" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "", children: FM("delete-student-message") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4", children: needDeleteStudent?.studentName }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4", children: student?.studentName }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
               " ",
-              needDeleteStudent?.studentID
+              student?.studentID
             ] })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Footer, { className: "justify-center py-3 px-4", children: [
@@ -29967,116 +29964,135 @@ const SectionAccordion = ({
                 children: FM("delete")
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "gray", onClick: () => setNeedDeleteStudent(null), children: FM("cancel") })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "gray", onClick: () => setShowDelete(false), children: FM("cancel") })
           ] })
         ]
       }
     );
   };
+  if (!student)
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     renderDeleteModal(),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Toast, { ref: deleteResultToast, position: rtl ? "top-left" : "top-right" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "div",
-          {
-            className: "flex items-center grow cursor-pointer",
-            onClick: () => setCollapse(!collapse),
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mr-2 text-[11px] px-[3.5px] font-bold py-[2px] border border-[#1F8194] section-shadow", children: sectionName || "" }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-80 px-2", hidden: !collapse, children: FM("name") }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { hidden: !collapse, children: FM("mobile-num") })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-0", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: "javascript:",
-              className: "h-8 w-10 flex justify-center border-r border-gray-700 rtl:border-none dark:border-gray-500 cursor-pointer",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: UserHomeIcon, className: "object-none mx-2" })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: "javascript:",
-              className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ExchangeIcon, className: "object-none mx-2" })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: "javascript:",
-              className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditSmallIcon, className: "object-none mx-2" })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: "javascript:",
-              className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelSmallIcon, className: "object-none mx-2" })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: "javascript:",
-              className: "h-8 w-10 flex justify-center items-center text-[14px] rtl:border-r rtl:border-gray-700 dark:rtl:border-gray-100 cursor-pointer",
-              onClick: () => setCollapse(!collapse),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "img",
-                {
-                  src: darkMode ? CollapseOffIcon : CollapseOffDark,
-                  className: `${collapse ? "rotate-0" : "rotate-[-180deg]"} object-none mx-2 transition-transform duration-800 ease-in-out motion-reduce:transition-none`
-                }
-              )
-            }
-          )
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Toast, { ref: toastRef, position: rtl ? "top-left" : "top-right" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex mb-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex grow rounded-md shadow-md bg-[#F7F3F3] dark:bg-gray-600", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          className: `!visible border-0 ${collapse ? "" : "hidden"} py-3`,
-          "data-twe-collapse-item": true,
-          "data-twe-collapse-show": collapse,
-          "aria-labelledby": "flush-headingOne",
-          "data-twe-parent": "#accordionFlushExample",
-          children: students2?.map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex mb-1", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex grow rounded-md shadow-md bg-[#F7F3F3] dark:bg-gray-600", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                "div",
-                {
-                  className: "grow cursor-pointer",
-                  onClick: () => setEditStudent && setEditStudent(student),
-                  children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-80 px-2", children: student?.studentName }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow dark:text-gray-100", children: student?.mobile })
-                  ]
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1 px-2 flex items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "a",
-                {
-                  href: "javascript:",
-                  className: "cursor-pointer",
-                  onClick: () => setNeedDeleteStudent(student),
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: RedCrossIcon, className: "object-none" })
-                }
-              ) })
-            ] })
-          ] }, index2))
+          className: "grow cursor-pointer",
+          onClick: () => setEditStudent && setEditStudent(student),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-80 px-2", children: student?.studentName }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow dark:text-gray-100", children: student?.mobile })
+          ]
         }
-      )
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1 px-2 flex items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer", onClick: () => setShowDelete(true), children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: RedCrossIcon, className: "object-none" }) }) })
     ] }) })
   ] });
+};
+StudentRow.defaultProps = {
+  student: null,
+  setEditStudent: () => {
+  },
+  reload: () => {
+  }
+};
+const SectionAccordion = ({
+  sectionName,
+  students: students2,
+  reload,
+  setEditStudent
+}) => {
+  const [collapse, setCollapse] = reactExports.useState(false);
+  const darkMode = document.documentElement.classList.contains("dark");
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: "flex items-center grow cursor-pointer",
+          onClick: () => setCollapse(!collapse),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mr-2 text-[11px] px-[3.5px] font-bold py-[2px] border border-[#1F8194] section-shadow", children: sectionName || "" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-80 px-2", hidden: !collapse, children: FM("name") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { hidden: !collapse, children: FM("mobile-num") })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-0", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 rtl:border-none dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: UserHomeIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ExchangeIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center border-r border-gray-700 dark:border-gray-500 cursor-pointer",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelSmallIcon, className: "object-none mx-2" })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: "javascript:",
+            className: "h-8 w-10 flex justify-center items-center text-[14px] rtl:border-r rtl:border-gray-700 dark:rtl:border-gray-100 cursor-pointer",
+            onClick: () => setCollapse(!collapse),
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: darkMode ? CollapseOffIcon : CollapseOffDark,
+                className: `${collapse ? "rotate-0" : "rotate-[-180deg]"} object-none mx-2 transition-transform duration-800 ease-in-out motion-reduce:transition-none`
+              }
+            )
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: `!visible border-0 ${collapse ? "" : "hidden"} py-3`,
+        "data-twe-collapse-item": true,
+        "data-twe-collapse-show": collapse,
+        "aria-labelledby": "flush-headingOne",
+        "data-twe-parent": "#accordionFlushExample",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow", children: students2?.map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            StudentRow,
+            {
+              student,
+              reload,
+              setEditStudent
+            },
+            index2
+          )) })
+        ] })
+      }
+    )
+  ] }) }) });
 };
 SectionAccordion.defaultProps = {
   sectionName: "",
@@ -30086,7 +30102,12 @@ SectionAccordion.defaultProps = {
   setEditStudent: () => {
   }
 };
-const ClassAccordion = ({ classNameStr, sections, setEditStudent, reload }) => {
+const ClassAccordion = ({
+  classNameStr,
+  sections,
+  setEditStudent,
+  reload
+}) => {
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
@@ -30176,22 +30197,12 @@ ClassAccordion.defaultProps = {
 };
 const SchoolAccordion = ({
   schoolName,
-  setEditStudent
+  setEditStudent,
+  classes: classes2,
+  reload
 }) => {
-  const ipc = window.electron.ipcRenderer;
-  const [classesObj, setClassesObj] = reactExports.useState({});
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
-  reactExports.useEffect(() => {
-    if (schoolName) {
-      load();
-    }
-  }, [schoolName]);
-  const load = () => {
-    ipc.invoke("getStudentsBySchool", schoolName).then((result) => {
-      setClassesObj(result || {});
-    });
-  };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -30255,13 +30266,13 @@ const SchoolAccordion = ({
         "data-twe-collapse-show": collapse,
         "aria-labelledby": "flush-headingOne",
         "data-twe-parent": "#accordionFlushExample",
-        children: Object.keys(classesObj).map((classNameStr, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        children: Object.keys(classes2).map((classNameStr, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           ClassAccordion,
           {
             classNameStr,
-            sections: classesObj[classNameStr] || {},
+            sections: classes2[classNameStr] || {},
             setEditStudent,
-            reload: load
+            reload
           },
           index2
         ))
@@ -30272,6 +30283,9 @@ const SchoolAccordion = ({
 SchoolAccordion.defaultProps = {
   schoolName: "",
   setEditStudent: () => {
+  },
+  classes: {},
+  reload: () => {
   }
 };
 const Students = () => {
@@ -30280,7 +30294,6 @@ const Students = () => {
   const rtl = document.body.getAttribute("dir") == "rtl";
   const toastRef = reactExports.useRef(null);
   const {
-    students: students2,
     studentGroups,
     /* setPage,
     setClassName,
@@ -30404,7 +30417,7 @@ const Students = () => {
         icon: /* @__PURE__ */ jsxRuntimeExports.jsx(GoCheck, { className: "mr-2 rtl:ml-3", size: 30 }),
         severity: "success",
         summary: FM("success"),
-        detail: FM("deleted-student-successfully"),
+        detail: FM("saved-student-successfully"),
         life: 2e3
       });
       reloadData();
@@ -30434,7 +30447,7 @@ const Students = () => {
         icon: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosCloseCircleOutline, { className: "mr-2 rtl:ml-3", size: 30 }),
         severity: "error",
         summary: FM("failed"),
-        detail: FM("delete-student-failed"),
+        detail: FM("save-student-failed"),
         life: 2e3
       });
     });
@@ -30843,62 +30856,84 @@ const Students = () => {
         ]
       }
     ),
-    !isCreateStudent && !editStudent && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white dark:bg-gray-700 rounded-lg flex-1 flex flex-col h-0 p-1", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-base flex", children: [
-          !isSearched && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-            FM("students"),
-            " (",
-            studentGroups?.totalStudents || 0,
-            ")"
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: `bg-white dark:bg-gray-700 rounded-lg flex-1 flex flex-col h-0 p-1 ${(isCreateStudent || editStudent) && "hidden"}`,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm font-bold mb-2 p-4 flex justify-between items-center border-b dark:border-gray-800", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-base flex", children: [
+              !isSearched && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                FM("students"),
+                " (",
+                studentGroups?.totalStudents || 0,
+                ")"
+              ] }),
+              " ",
+              renderSearchedBy()
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "a",
+                {
+                  href: "javascript:",
+                  className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: AddLightIcon, className: "object-none mx-3" })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "a",
+                {
+                  href: "javascript:",
+                  className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditLightIcon, className: "object-none mx-3" })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "a",
+                {
+                  href: "javascript:",
+                  className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelLightIcon, className: "object-none mx-3" })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffIcon, className: "object-none mx-3" }) })
+            ] })
           ] }),
-          " ",
-          renderSearchedBy()
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ml-2 bg-[#1F8295] flex rounded-t-[16px] p-[5px]", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
+            "div",
             {
-              href: "javascript:",
-              className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: AddLightIcon, className: "object-none mx-3" })
+              className: `p-4 flex-1 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
+              children: Object.keys(studentGroups?.schools || {}).map((schoolName, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                SchoolAccordion,
+                {
+                  schoolName,
+                  classes: studentGroups?.schools[schoolName]?.classes,
+                  setEditStudent,
+                  reload: reloadData
+                },
+                index2
+              ))
             }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: "javascript:",
-              className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditLightIcon, className: "object-none mx-3" })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: "javascript:",
-              className: "h-9 w-9 flex justify-center border-r border-gray-700 cursor-pointer",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CancelLightIcon, className: "object-none mx-3" })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "h-9 w-9 flex justify-center cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CollapseOffIcon, className: "object-none mx-3" }) })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: `p-4 flex-1 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
-          children: Object.keys(studentGroups?.schools || {}).map((schoolName, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            SchoolAccordion,
-            {
-              schoolName,
-              setEditStudent
-            },
-            index2
-          ))
-        }
-      )
-    ] }),
-    editStudent && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white dark:bg-gray-700 rounded-lg flex-1 p-1 h-0" }),
+          )
+        ]
+      }
+    ),
+    editStudent && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: `bg-white dark:bg-gray-700 rounded-lg flex-1 p-1 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
+        children: studentGroups?.schools[editStudent.studentSchoolName].classes[editStudent.studentClass][editStudent.studentSection].map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          StudentRow,
+          {
+            student,
+            reload: reloadData,
+            setEditStudent
+          },
+          index2
+        ))
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       PromptDialog,
       {
