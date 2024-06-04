@@ -24238,7 +24238,9 @@ const en = {
   failed: failed$1,
   "deleted-student-successfully": "Deleted a student successfully",
   "delete-student-failed": "Deleting a student is failed",
-  "edit-student": "Edit Student"
+  "edit-student": "Edit Student",
+  "saved-student-successfully": "Saved a student successfully",
+  "save-student-failed": "Saving a student is failed"
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24361,7 +24363,9 @@ const ar = {
   failed,
   "deleted-student-successfully": "تم حذف الطالب بنجاح",
   "delete-student-failed": "فشل حذف الطالب",
-  "edit-student": "تحرير الطالب"
+  "edit-student": "تحرير الطالب",
+  "saved-student-successfully": "تم إنقاذ الطالب بنجاح",
+  "save-student-failed": "فشل إنقاذ الطالب"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -29904,7 +29908,6 @@ const SectionAccordion = ({
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
   const rtl = document.body.getAttribute("dir") == "rtl";
-  console.log(document.body);
   const deleteStudent = () => {
     if (!needDeleteStudent)
       return;
@@ -30274,6 +30277,8 @@ SchoolAccordion.defaultProps = {
 const Students = () => {
   const ipc = window.electron.ipcRenderer;
   const darkMode = document.documentElement.classList.contains("dark");
+  const rtl = document.body.getAttribute("dir") == "rtl";
+  const toastRef = reactExports.useRef(null);
   const {
     students: students2,
     studentGroups,
@@ -30394,7 +30399,14 @@ const Students = () => {
       ...studentData,
       id: editStudent?.id
     }).then((data) => {
-      console.log("data", data);
+      console.log("saved student", data);
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(GoCheck, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "success",
+        summary: FM("success"),
+        detail: FM("deleted-student-successfully"),
+        life: 2e3
+      });
       reloadData();
       setNewFieldValues({
         studentSchoolName: newFieldValues.studentSchoolName?.filter(
@@ -30418,6 +30430,13 @@ const Students = () => {
       }
     }).catch((err) => {
       console.log("err", err);
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosCloseCircleOutline, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "error",
+        summary: FM("failed"),
+        detail: FM("delete-student-failed"),
+        life: 2e3
+      });
     });
   };
   const handleSearch = () => {
@@ -30589,6 +30608,7 @@ const Students = () => {
     ipc.invoke("import-students");
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-2 flex flex-col h-screen", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Toast, { ref: toastRef, position: rtl ? "top-left" : "top-right" }),
     renderSearchModal(),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { hidden: !isCreateStudent, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [

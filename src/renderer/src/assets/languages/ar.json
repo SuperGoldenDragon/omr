@@ -90,5 +90,7 @@
   "failed" : "فشل",
   "deleted-student-successfully": "تم حذف الطالب بنجاح",
   "delete-student-failed": "فشل حذف الطالب",
-  "edit-student": "تحرير الطالب"
+  "edit-student": "تحرير الطالب",
+  "saved-student-successfully" : "تم إنقاذ الطالب بنجاح",
+  "save-student-failed": "فشل إنقاذ الطالب"
 }

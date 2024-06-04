@@ -31,8 +31,6 @@ const SectionAccordion = ({
   const darkMode: boolean = document.documentElement.classList.contains('dark')
   const rtl: boolean = document.body.getAttribute('dir') == 'rtl'
 
-  console.log(document.body)
-
   const deleteStudent = () => {
     // if no user selected to delete
     if (!needDeleteStudent) return

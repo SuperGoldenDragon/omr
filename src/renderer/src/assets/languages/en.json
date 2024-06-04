@@ -92,5 +92,7 @@
   "failed" : "Failed",
   "deleted-student-successfully": "Deleted a student successfully",
   "delete-student-failed": "Deleting a student is failed",
-  "edit-student": "Edit Student"
+  "edit-student": "Edit Student",
+  "saved-student-successfully" : "Saved a student successfully",
+  "save-student-failed": "Saving a student is failed"
 }

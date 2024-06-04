@@ -1,11 +1,8 @@
 import { useStudents } from '@renderer/context/Students'
-// import { buttonGroupTheme } from '@renderer/themes/ButtonGroupTheme'
 import { ModalTheme } from '@renderer/themes/ModalTheme'
-// import { PaginationTheme } from '@renderer/themes/PaginationTheme'
-// import { themeForTabs } from '@renderer/themes/tabs'
 import { FM } from '@renderer/utils/i18helper'
 import { Button, Label, Modal, Select, TextInput } from 'flowbite-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import PromptDialog from '@renderer/components/PromptDialog'
 import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
 import ImportStudentIcon from '@renderer/assets/icons/import-student.svg'
@@ -18,6 +15,9 @@ import CancelLightIcon from '@renderer/assets/icons/cancel-light.svg'
 import CollapseOffIcon from '@renderer/assets/icons/collapse-off-light.svg'
 import { FaArrowLeft } from 'react-icons/fa'
 import SchoolAccordion from '@renderer/components/SchoolAccordion'
+import { Toast } from 'primereact/toast'
+import { IoIosCloseCircleOutline } from 'react-icons/io'
+import { GoCheck } from 'react-icons/go'
 
 type CreateStudentProps = {
   id?: number
@@ -30,8 +30,8 @@ type CreateStudentProps = {
 const Students = () => {
   const ipc = window.electron.ipcRenderer
   const darkMode = document.documentElement.classList.contains('dark')
-  // const [open, setOpen] = useState(false)
-  // const [waiting, setWaiting] = useState(false)
+  const rtl: boolean = document.body.getAttribute('dir') == 'rtl'
+  const toastRef = useRef(null)
   const {
     students,
     studentGroups,
@@ -203,7 +203,14 @@ const Students = () => {
         id: editStudent?.id
       })
       .then((data) => {
-        console.log('data', data)
+        console.log('saved student', data)
+        toastRef.current?.show({
+          icon: <GoCheck className="mr-2 rtl:ml-3" size={30} />,
+          severity: 'success',
+          summary: FM('success'),
+          detail: FM('saved-student-successfully'),
+          life: 2000
+        })
         reloadData()
         // remove new values after create a new student
         setNewFieldValues({
@@ -230,6 +237,13 @@ const Students = () => {
       })
       .catch((err) => {
         console.log('err', err)
+        toastRef.current?.show({
+          icon: <IoIosCloseCircleOutline className="mr-2 rtl:ml-3" size={30} />,
+          severity: 'error',
+          summary: FM('failed'),
+          detail: FM('save-student-failed'),
+          life: 2000
+        })
       })
   }
 
@@ -485,6 +499,7 @@ const Students = () => {
 
   return (
     <div className="p-2 flex flex-col h-screen">
+      <Toast ref={toastRef} position={rtl ? 'top-left' : 'top-right'} />
       {renderSearchModal()}
       <div>
         <div hidden={!isCreateStudent}>
