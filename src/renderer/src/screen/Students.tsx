@@ -35,6 +35,7 @@ const Students = () => {
   const toastRef: React.RefObject<Toast> = useRef(null)
   const {
     studentGroups,
+    setStudentGroups,
     /* setPage,
     setClassName,
     page,
@@ -99,6 +100,10 @@ const Students = () => {
     })
 
     reloadData()
+
+    return () => {
+      setStudentGroups({ totalStudents: 0, schools: {}, grades: {}, sections: {} })
+    }
   }, [])
 
   useEffect(() => {

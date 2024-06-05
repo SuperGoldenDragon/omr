@@ -24729,6 +24729,8 @@ const StudentsContext = reactExports.createContext({
   reloadData: () => {
   },
   setSearchBy: () => {
+  },
+  setStudentGroups: () => {
   }
 });
 const useStudents = () => reactExports.useContext(StudentsContext);
@@ -24779,6 +24781,7 @@ const StudentsProvider = ({ children }) => {
         getStudentGroups,
         studentGroups,
         getStudentList,
+        setStudentGroups,
         setClassName,
         setPage,
         setPerPage,
@@ -30319,6 +30322,7 @@ const Students = () => {
   const toastRef = reactExports.useRef(null);
   const {
     studentGroups,
+    setStudentGroups,
     /* setPage,
     setClassName,
     page,
@@ -30354,8 +30358,7 @@ const Students = () => {
     ipc.on("xlsx-filename", (_event, filename) => {
       if (!filename)
         return;
-      ipc.invoke("loadStudentsFromXlsx", filename).then((students2) => {
-      });
+      ipc.invoke("loadStudentsFromXlsx", filename);
     });
     ipc.on("import-progress", (_event, val) => {
       if (val == totalLoadStudents) {
@@ -30367,6 +30370,9 @@ const Students = () => {
       }
     });
     reloadData();
+    return () => {
+      setStudentGroups({ totalStudents: 0, schools: {}, grades: {}, sections: {} });
+    };
   }, []);
   reactExports.useEffect(() => {
     if (!createField)

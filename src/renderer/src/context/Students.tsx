@@ -18,6 +18,7 @@ export const StudentsContext = createContext<{
   setOrderBy?: (orderBy?: string, type?: 'ASC' | 'DESC') => void
   reloadData: () => void
   setSearchBy?: (searchBy: { [key: string]: string | number }) => void
+  setStudentGroups: (studentGroup: groupedStudents) => void
 }>({
   students: undefined,
   page: 1,
@@ -33,7 +34,8 @@ export const StudentsContext = createContext<{
   order: undefined,
   setOrderBy: () => {},
   reloadData: () => {},
-  setSearchBy: () => {}
+  setSearchBy: () => {},
+  setStudentGroups: () => {}
 })
 
 // create a custom hook to consume the students context
@@ -112,7 +114,7 @@ export const StudentsProvider = ({ children }: { children: JSX.Element }) => {
         getStudentGroups,
         studentGroups,
         getStudentList,
-
+        setStudentGroups,
         setClassName,
         setPage,
         setPerPage,
