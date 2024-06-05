@@ -1101,7 +1101,12 @@ class StudentController {
 
   getStudentsBySection = async (_event: IpcMainInvokeEvent, _arg: any): Promise<any> => {
     console.log('getStudentsBySection', _arg)
-    const students = await this.student.find({ where: _arg })
+    const { page, pageSize, studentSchoolName, studentClass, studentSection } = _arg
+    const students = await this.student.find({
+      where: { studentSchoolName, studentClass, studentSection },
+      skip: (page - 1) * pageSize,
+      take: pageSize
+    })
     return students
   }
 }

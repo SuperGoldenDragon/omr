@@ -1,7 +1,16 @@
 import { useStudents } from '@renderer/context/Students'
 import { ModalTheme } from '@renderer/themes/ModalTheme'
 import { FM } from '@renderer/utils/i18helper'
-import { Button, Label, Modal, Progress, Select, TextInput, Spinner } from 'flowbite-react'
+import {
+  Button,
+  Label,
+  Modal,
+  Progress,
+  Select,
+  TextInput,
+  Spinner,
+  Pagination
+} from 'flowbite-react'
 import React, { useEffect, useState, useRef } from 'react'
 import PromptDialog from '@renderer/components/PromptDialog'
 import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
@@ -69,6 +78,9 @@ const Students = () => {
   const [editStudent, setEditStudent] = useState<any>(null)
   const [studentsOfEditSection, setStudentsOfEditSection] = useState<any>([])
   const [loadingStudents, setLoadingStudents] = useState<boolean>(false)
+  const [page, setPage] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(40)
+  const [countStudents, setCountStudents] = useState<number>(0)
 
   const [totalLoadStudents, setTotalLoadStudents] = useState<number>(0)
   const [currentLoadedStudents, setCurrentLoadedStudents] = useState<number>(0)
@@ -130,12 +142,23 @@ const Students = () => {
         editStudent
       // set values from student to edit
       setStudentData({ studentName, studentID, studentClass, studentSection, studentSchoolName })
+      setPage(1)
       setLoadingStudents(true)
+      ipc
+        .invoke('getSectionssBySchoolAndClass', { studentSchoolName, studentClass })
+        .then((sections) => {
+          sections.map((section) => {
+            if (section.student_studentSection == studentSection)
+              setCountStudents(section.totalStudents)
+          })
+        })
       ipc
         .invoke('getStudentsBySection', {
           studentSchoolName,
           studentClass,
-          studentSection
+          studentSection,
+          page: 1,
+          pageSize
         })
         .then((students) => {
           setLoadingStudents(false)
@@ -156,6 +179,31 @@ const Students = () => {
       })
     }
   }, [editStudent])
+
+  useEffect(() => {
+    if (editStudent) {
+      const { studentName, studentID, studentClass, studentSection, studentSchoolName } =
+        editStudent
+      // set values from student to edit
+      setStudentData({ studentName, studentID, studentClass, studentSection, studentSchoolName })
+      setLoadingStudents(true)
+      ipc
+        .invoke('getStudentsBySection', {
+          studentSchoolName,
+          studentClass,
+          studentSection,
+          page,
+          pageSize
+        })
+        .then((students) => {
+          setLoadingStudents(false)
+          setStudentsOfEditSection(students)
+        })
+        .catch(() => {
+          setLoadingStudents(false)
+        })
+    }
+  }, [page])
 
   // render select options
   const renderSelectOptions = (field: string) => {
@@ -764,6 +812,16 @@ const Students = () => {
               setEditStudent={setEditStudent}
             />
           ))}
+          <div className="flex justify-center py-1">
+            <Pagination
+              currentPage={page}
+              totalPages={Math.ceil(countStudents / pageSize)}
+              onPageChange={(page) => setPage(page)}
+              previousLabel={FM('previous')}
+              nextLabel={FM('next')}
+              showIcons
+            />
+          </div>
         </div>
       )}
       <PromptDialog

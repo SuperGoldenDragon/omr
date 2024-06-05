@@ -6,6 +6,7 @@ import UserHomeIcon from '@renderer/assets/icons/user-home.svg'
 import ExchangeIcon from '@renderer/assets/icons/exchange.svg'
 import { useEffect, useState } from 'react'
 import { FM } from '@renderer/utils/i18helper'
+import { Pagination } from 'flowbite-react'
 import StudentRow from './StudentRow'
 import Loading from './Loading'
 
@@ -14,18 +15,22 @@ const SectionAccordion = ({
   classNameStr,
   sectionName,
   reload,
-  setEditStudent
+  setEditStudent,
+  countStudents
 }: {
   schoolName: string
   classNameStr: string
   sectionName: string
   reload: any
   setEditStudent: any
+  countStudents: number
 }) => {
   const ipc = window.electron.ipcRenderer
   const [loading, setLoading] = useState<boolean>(false)
   const [students, setStudents] = useState<any>([])
   const [collapse, setCollapse] = useState<boolean>(false)
+  const [page, setPage] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(40)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
   useEffect(() => {
@@ -44,10 +49,16 @@ const SectionAccordion = ({
     }
   }, [collapse])
 
+  useEffect(() => {
+    loadStudents()
+  }, [page])
+
   const loadStudents = () => {
     setLoading(true)
     ipc
       .invoke('getStudentsBySection', {
+        page,
+        pageSize,
         studentSchoolName: schoolName,
         studentClass: classNameStr,
         studentSection: sectionName
@@ -138,6 +149,16 @@ const SectionAccordion = ({
                 ))}
               </div>
             </div>
+            <div className="flex justify-center">
+              <Pagination
+                currentPage={page}
+                totalPages={Math.ceil(countStudents / pageSize)}
+                onPageChange={(page) => setPage(page)}
+                previousLabel={FM('previous')}
+                nextLabel={FM('next')}
+                showIcons
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -149,6 +170,7 @@ SectionAccordion.defaultProps = {
   schoolName: '',
   classNameStr: '',
   sectionName: '',
+  countStudents: 0,
   reload: () => {},
   setEditStudent: () => {}
 }

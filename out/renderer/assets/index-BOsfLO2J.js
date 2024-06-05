@@ -19125,7 +19125,7 @@ const PaginationComponent = ({
   ] });
 };
 PaginationComponent.displayName = "Pagination";
-Object.assign(PaginationComponent, {
+const Pagination = Object.assign(PaginationComponent, {
   Button: PaginationButton
 });
 const Progress = ({
@@ -30084,12 +30084,15 @@ const SectionAccordion = ({
   classNameStr,
   sectionName,
   reload,
-  setEditStudent
+  setEditStudent,
+  countStudents
 }) => {
   const ipc = window.electron.ipcRenderer;
   const [loading2, setLoading] = reactExports.useState(false);
   const [students2, setStudents] = reactExports.useState([]);
   const [collapse, setCollapse] = reactExports.useState(false);
+  const [page, setPage] = reactExports.useState(1);
+  const [pageSize, setPageSize] = reactExports.useState(20);
   const darkMode = document.documentElement.classList.contains("dark");
   reactExports.useEffect(() => {
     ipc.on("saved_student", (_event, args) => {
@@ -30106,9 +30109,14 @@ const SectionAccordion = ({
       setStudents([]);
     }
   }, [collapse]);
+  reactExports.useEffect(() => {
+    loadStudents();
+  }, [page]);
   const loadStudents = () => {
     setLoading(true);
     ipc.invoke("getStudentsBySection", {
+      page,
+      pageSize,
       studentSchoolName: schoolName,
       studentClass: classNameStr,
       studentSection: sectionName
@@ -30185,7 +30193,7 @@ const SectionAccordion = ({
           )
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
           className: `!visible border-0 ${collapse ? "" : "hidden"} py-3`,
@@ -30193,18 +30201,28 @@ const SectionAccordion = ({
           "data-twe-collapse-show": collapse,
           "aria-labelledby": "flush-headingOne",
           "data-twe-parent": "#accordionFlushExample",
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow", children: students2?.map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              StudentRow,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grow", children: students2?.map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                StudentRow,
+                {
+                  student,
+                  reload,
+                  setEditStudent
+                },
+                index2
+              )) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Pagination,
               {
-                student,
-                reload,
-                setEditStudent
-              },
-              index2
-            )) })
-          ] })
+                currentPage: page,
+                totalPages: Math.ceil(countStudents / pageSize),
+                onPageChange: (page2) => setPage(page2)
+              }
+            ) })
+          ]
         }
       )
     ] }) })
@@ -30214,6 +30232,7 @@ SectionAccordion.defaultProps = {
   schoolName: "",
   classNameStr: "",
   sectionName: "",
+  countStudents: 0,
   reload: () => {
   },
   setEditStudent: () => {
@@ -30322,6 +30341,7 @@ const ClassAccordion = ({
           SectionAccordion,
           {
             sectionName: section2.student_studentSection,
+            countStudents: section2.totalStudents,
             schoolName,
             classNameStr,
             setEditStudent,
@@ -30492,6 +30512,9 @@ const Students = () => {
   const [editStudent, setEditStudent] = reactExports.useState(null);
   const [studentsOfEditSection, setStudentsOfEditSection] = reactExports.useState([]);
   const [loadingStudents, setLoadingStudents] = reactExports.useState(false);
+  const [page, setPage] = reactExports.useState(1);
+  const [pageSize, setPageSize] = reactExports.useState(40);
+  const [countStudents, setCountStudents] = reactExports.useState(0);
   const [totalLoadStudents, setTotalLoadStudents] = reactExports.useState(0);
   const [currentLoadedStudents, setCurrentLoadedStudents] = reactExports.useState(0);
   reactExports.useEffect(() => {
@@ -30537,11 +30560,20 @@ const Students = () => {
     if (editStudent) {
       const { studentName, studentID, studentClass, studentSection, studentSchoolName } = editStudent;
       setStudentData({ studentName, studentID, studentClass, studentSection, studentSchoolName });
+      setPage(1);
       setLoadingStudents(true);
+      ipc.invoke("getSectionssBySchoolAndClass", { studentSchoolName, studentClass }).then((sections) => {
+        sections.map((section2) => {
+          if (section2.student_studentSection == studentSection)
+            setCountStudents(section2.totalStudents);
+        });
+      });
       ipc.invoke("getStudentsBySection", {
         studentSchoolName,
         studentClass,
-        studentSection
+        studentSection,
+        page: 1,
+        pageSize
       }).then((students2) => {
         setLoadingStudents(false);
         setStudentsOfEditSection(students2);
@@ -30559,6 +30591,25 @@ const Students = () => {
       });
     }
   }, [editStudent]);
+  reactExports.useEffect(() => {
+    if (editStudent) {
+      const { studentName, studentID, studentClass, studentSection, studentSchoolName } = editStudent;
+      setStudentData({ studentName, studentID, studentClass, studentSection, studentSchoolName });
+      setLoadingStudents(true);
+      ipc.invoke("getStudentsBySection", {
+        studentSchoolName,
+        studentClass,
+        studentSection,
+        page,
+        pageSize
+      }).then((students2) => {
+        setLoadingStudents(false);
+        setStudentsOfEditSection(students2);
+      }).catch(() => {
+        setLoadingStudents(false);
+      });
+    }
+  }, [page]);
   const renderSelectOptions = (field) => {
     const schoolOptions = Object.keys(studentGroups?.schools || {});
     const gradeOptions = Object.keys(studentGroups?.grades || {});
@@ -31130,7 +31181,15 @@ const Students = () => {
               setEditStudent
             },
             index2
-          ))
+          )),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Pagination,
+            {
+              currentPage: page,
+              totalPages: Math.ceil(countStudents / pageSize),
+              onPageChange: (page2) => setPage(page2)
+            }
+          ) })
         ]
       }
     ),
@@ -31417,28 +31476,38 @@ const Committee = () => {
     ] });
   };
   const renderDeleteCommitteeModal = () => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal, { theme: ModalTheme, show: deleteCommittee != null, onClose: () => setDeleteCommittee(null), size: "sm", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Modal.Header, {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "pt-5 text-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center my-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(GoQuestion, { size: 80, className: "text-red-700" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "", children: FM("delete-committee-message") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4", children: deleteCommittee?.committeeName })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Footer, { className: "justify-center py-3 px-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Button,
-          {
-            color: "failure",
-            className: "rtl:ml-2",
-            onClick: () => {
-              deleteSelectedCommittee();
-            },
-            children: FM("delete")
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "gray", onClick: () => setDeleteCommittee(null), children: FM("cancel") })
-      ] })
-    ] });
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      Modal,
+      {
+        popup: true,
+        theme: ModalTheme,
+        show: deleteCommittee != null,
+        onClose: () => setDeleteCommittee(null),
+        size: "sm",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Modal.Header, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "pt-5 text-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center my-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(GoQuestion, { size: 80, className: "text-red-700" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "", children: FM("delete-committee-message") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4", children: deleteCommittee?.committeeName })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Footer, { className: "justify-center py-3 px-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Button,
+              {
+                color: "failure",
+                className: "rtl:ml-2",
+                onClick: () => {
+                  deleteSelectedCommittee();
+                },
+                children: FM("delete")
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "gray", onClick: () => setDeleteCommittee(null), children: FM("cancel") })
+          ] })
+        ]
+      }
+    );
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     renderCreateCommitteeModal(),

@@ -108,6 +108,7 @@ const ClassAccordion = ({
             <SectionAccordion
               key={index}
               sectionName={section.student_studentSection}
+              countStudents={section.totalStudents}
               schoolName={schoolName}
               classNameStr={classNameStr}
               setEditStudent={setEditStudent}
