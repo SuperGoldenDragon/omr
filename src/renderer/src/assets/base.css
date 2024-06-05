@@ -56,7 +56,7 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 
 /* Customize scrollbar */
 .overflow-y-auto-light::-webkit-scrollbar {
-  width: 9px; /* Width of the scrollbar */
+  width: 7px; /* Width of the scrollbar */
 }
 
 /* Customize scrollbar track */
@@ -80,18 +80,18 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 
 /* Customize scrollbar */
 .overflow-y-auto-dark::-webkit-scrollbar {
-  width: 9px!important; /* Width of the scrollbar */
+  width: 7px!important; /* Width of the scrollbar */
 }
 
 /* Customize scrollbar track */
 .overflow-y-auto-dark::-webkit-scrollbar-track {
-  background-color: #f1f1f1; /* Color of the scrollbar track */
+  background-color: #333; /* Color of the scrollbar track */
   border-radius: 12px;
 }
 
 /* Customize scrollbar thumb */
 .overflow-y-auto-dark::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color of the scrollbar thumb */
+  background-color: #444; /* Color of the scrollbar thumb */
   border-radius: 12px; /* Radius of the scrollbar thumb */
 }
 

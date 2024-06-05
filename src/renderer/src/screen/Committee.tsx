@@ -15,6 +15,7 @@ import { GoCheck } from 'react-icons/go'
 const Committee = () => {
   const ipc = window.electron.ipcRenderer
   const toastRef: React.RefObject<Toast> = useRef(null)
+  const darkMode = document.documentElement.classList.contains('dark')
   const rtl = document.body.getAttribute('dir') == 'rtl'
   const [openCreate, setOpenCreate] = useState<boolean>(false)
   const [noOfCommitte, setNoOfCommitte] = useState<number>(0)
@@ -186,7 +187,7 @@ const Committee = () => {
             </div>
           </div>
         </div>
-        <div className="mb-2 rounded-lg bg-white dark:bg-gray-700 p-3">
+        <div className="mb-2 rounded-lg bg-white dark:bg-gray-700 p-3 h-0 flex-1 flex flex-col">
           <div className="flex">
             <div className="basis-1/5 px-1">
               <div className="text-md font-bold text-gray-900 dark:text-gray-100 mb-1">Total</div>
@@ -205,39 +206,43 @@ const Committee = () => {
               <div className="text-center font-bold">Complete ({140})</div>
             </div>
           </div>
-          {committess.map((committee: any, index: number) => (
-            <div className={`rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`} key={index}>
-              <div className="basis-1/5 flex items-center">
-                <img src={EditIcon} className="object-none mx-3" />
-                <div className="border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center">
-                  {committee?.committeeName}
+          <div
+            className={`h-0 flex-1 overflow-auto pr-2 ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
+          >
+            {committess.map((committee: any, index: number) => (
+              <div className={`rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`} key={index}>
+                <div className="basis-1/5 flex items-center">
+                  <img src={EditIcon} className="object-none mx-3" />
+                  <div className="border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center">
+                    {committee?.committeeName}
+                  </div>
+                </div>
+                <div className="basis-1/5">
+                  <div className="text-center font-semibold">assecf fklsefef</div>
+                  <div className="text-center font-semibold">14 from</div>
+                </div>
+                <div className="basis-1/5">
+                  <div className="text-center font-semibold">assecf fklsefef</div>
+                  <div className="text-center font-semibold">14 from</div>
+                </div>
+                <div className="basis-1/5">
+                  <div className="text-center font-semibold">assecf fklsefef</div>
+                  <div className="text-center font-semibold">14 from</div>
+                </div>
+                <div className="basis-1/5 flex items-center">
+                  <Button gradientDuoTone="greenToBlue" size="sm" className="mr-auto">
+                    Complete {43}
+                  </Button>
+                  <a href="javascript:" className="cursor-pointer mx-2">
+                    <IoCloseOutline size={24} className="text-red-400" />
+                  </a>
+                  <a href="javascript:" className="cursor-pointer mx-2">
+                    <IoIosArrowDown size={24} className="text-gray-700 dark:text-gray-200" />
+                  </a>
                 </div>
               </div>
-              <div className="basis-1/5">
-                <div className="text-center font-semibold">assecf fklsefef</div>
-                <div className="text-center font-semibold">14 from</div>
-              </div>
-              <div className="basis-1/5">
-                <div className="text-center font-semibold">assecf fklsefef</div>
-                <div className="text-center font-semibold">14 from</div>
-              </div>
-              <div className="basis-1/5">
-                <div className="text-center font-semibold">assecf fklsefef</div>
-                <div className="text-center font-semibold">14 from</div>
-              </div>
-              <div className="basis-1/5 flex items-center">
-                <Button gradientDuoTone="greenToBlue" size="sm" className="mr-auto">
-                  Complete {43}
-                </Button>
-                <a href="javascript:" className="cursor-pointer mx-2">
-                  <IoCloseOutline size={24} className="text-red-400" />
-                </a>
-                <a href="javascript:" className="cursor-pointer mx-2">
-                  <IoIosArrowDown size={24} className="text-gray-700 dark:text-gray-200" />
-                </a>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </>

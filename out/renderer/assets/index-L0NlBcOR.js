@@ -31054,6 +31054,7 @@ function IoCloseOutline(props) {
 const Committee = () => {
   const ipc = window.electron.ipcRenderer;
   const toastRef = reactExports.useRef(null);
+  const darkMode = document.documentElement.classList.contains("dark");
   const rtl = document.body.getAttribute("dir") == "rtl";
   const [openCreate, setOpenCreate] = reactExports.useState(false);
   const [noOfCommitte, setNoOfCommitte] = reactExports.useState(0);
@@ -31214,7 +31215,7 @@ const Committee = () => {
           )
         ] })
       ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2 rounded-lg bg-white dark:bg-gray-700 p-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2 rounded-lg bg-white dark:bg-gray-700 p-3 h-0 flex-1 flex flex-col", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 px-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-md font-bold text-gray-900 dark:text-gray-100 mb-1", children: "Total" }),
@@ -31245,32 +31246,38 @@ const Committee = () => {
             ] })
           ] })
         ] }),
-        committess.map((committee2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon, className: "object-none mx-3" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: committee2?.committeeName })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { gradientDuoTone: "greenToBlue", size: "sm", className: "mr-auto", children: [
-              "Complete ",
-              43
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosArrowDown, { size: 24, className: "text-gray-700 dark:text-gray-200" }) })
-          ] })
-        ] }, index2))
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: `h-0 flex-1 overflow-auto pr-2 ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
+            children: committess.map((committee2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon, className: "object-none mx-3" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: committee2?.committeeName })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { gradientDuoTone: "greenToBlue", size: "sm", className: "mr-auto", children: [
+                  "Complete ",
+                  43
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosArrowDown, { size: 24, className: "text-gray-700 dark:text-gray-200" }) })
+              ] })
+            ] }, index2))
+          }
+        )
       ] })
     ] })
   ] });
