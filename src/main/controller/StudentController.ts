@@ -4,6 +4,7 @@ import { Like, Repository } from 'typeorm'
 import { AppDataSource } from '..'
 import { Student } from '../entities/Student'
 import { StudentList, groupedStudents, importFileInfoProps } from '../types/common'
+import { Worker } from 'worker_threads'
 import fs from 'fs'
 import xlsx from 'xlsx'
 
@@ -1038,6 +1039,38 @@ class StudentController {
         return
       })
     )
+    // return students
+  }
+
+  insertStudents = (_event: IpcMainInvokeEvent, students: any): any => {
+    const worker = new Worker('./src/main/workers/ImportExcelWorker.tsx', {
+      workerData: students // Send data to the worker thread
+    })
+    // Receive messages from the worker thread
+    worker.on('message', (message: any) => {
+      _event.sender.send('import-progress', message)
+    })
+    // const nStudents = students?.length
+    // let current = 0
+    // return Promise.all(
+    //   students.map((arg: any) => {
+    //     try {
+    //       const student = new Student()
+    //       student.studentSchoolName = arg.studentSchoolName
+    //       student.studentClass = arg.studentClass
+    //       student.studentSection = arg.studentSection
+    //       student.studentName = arg.studentName
+    //       student.studentID = Number(arg.studentID)
+    //       if (isNaN(student.studentID)) return
+    //       current++
+    //       _event.sender.send('import-progress', current)
+    //       return this.student.save(student)
+    //     } catch (e) {
+    //       console.log(e)
+    //     }
+    //     return
+    //   })
+    // )
   }
 }
 

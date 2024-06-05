@@ -3,6 +3,7 @@ const electron = require("electron");
 const index = require("./index.js");
 const ExcelJS = require("exceljs");
 const typeorm = require("typeorm");
+const worker_threads = require("worker_threads");
 const fs = require("fs");
 const xlsx = require("xlsx");
 class SettingController {
@@ -597,6 +598,15 @@ class StudentController {
       })
     );
   };
+  insertStudents = (_event, students) => {
+    const worker = new worker_threads.Worker("./src/main/workers/ImportExcelWorker.tsx", {
+      workerData: students
+      // Send data to the worker thread
+    });
+    worker.on("message", (message) => {
+      _event.sender.send("import-progress", message);
+    });
+  };
 }
 const StudentController$1 = new StudentController();
 class CommitteeController {
@@ -608,27 +618,20 @@ class CommitteeController {
     this.student = index.AppDataSource.manager.getRepository(index.Student);
   }
   // create committee
-  async createCommittee(_event, arg) {
+  createCommittee = async (_event, arg) => {
+    const created = [];
     if (arg.noOfCommittee > 0) {
-      const allGrades = await this.student.createQueryBuilder("student").select("student.studentClass").addSelect("COUNT(student.studentClass)", "totalStudents").groupBy("student.studentClass").getRawMany();
-      const grades = {};
-      for (const grade of allGrades) {
-        const students = await this.student.find({
-          where: { studentClass: grade.student_studentClass }
-        });
-        grades[grade.student_studentClass] = {
-          totalStudents: grade.totalStudents,
-          students
-        };
-      }
       for (let i = 0; i < arg.noOfCommittee; i++) {
         const committee = new index.Committee();
         committee.committeeName = `${arg.committeeNamePrefix} ${i + 1}`;
-        await this.committee.save(committee);
+        committee.deleteAllCommittee = arg.deletePrevious;
+        committee.distributeEqualStudent = arg.distributeStudents;
+        committee.classroomCommittee = arg.classroomCommittee;
+        created.push(await this.committee.save(committee));
       }
     }
-    return await this.committee.find();
-  }
+    return created;
+  };
   // add committee
   async addCommittee(_event, arg) {
     const committee = new index.Committee();
@@ -669,9 +672,9 @@ class CommitteeController {
     return await this.committee.find();
   }
   // get all committees
-  async getCommittees() {
+  getCommittees = async () => {
     return await this.committee.find();
-  }
+  };
   // assign students to committee
   //   async assignStudentsToCommittee() {
   //     // group students by class and get count
@@ -749,9 +752,10 @@ const CommitteeController$1 = new CommitteeController();
   electron.ipcMain.handle("deleteStudent", StudentController$1.deleteStudent),
   electron.ipcMain.handle("removeAllStudents", StudentController$1.removeAllStudents),
   electron.ipcMain.handle("loadStudentsFromXlsx", StudentController$1.loadStudentsFromXlsx),
+  electron.ipcMain.handle("insertStudents", StudentController$1.insertStudents),
   // committee
   electron.ipcMain.handle("getCommittees", CommitteeController$1.getCommittees),
-  electron.ipcMain.handle("addCommittee", CommitteeController$1.createCommittee),
+  electron.ipcMain.handle("createCommittee", CommitteeController$1.createCommittee),
   electron.ipcMain.handle("deleteCommittee", CommitteeController$1.deleteCommittee),
   electron.ipcMain.handle("removeAllCommittees", CommitteeController$1.removeAllCommittees)
 ];

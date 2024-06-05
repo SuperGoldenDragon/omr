@@ -19128,6 +19128,39 @@ PaginationComponent.displayName = "Pagination";
 Object.assign(PaginationComponent, {
   Button: PaginationButton
 });
+const Progress = ({
+  className,
+  color = "cyan",
+  labelProgress = false,
+  labelText = false,
+  progress,
+  progressLabelPosition = "inside",
+  size = "md",
+  textLabel = "progressbar",
+  textLabelPosition = "inside",
+  theme: customTheme = {},
+  ...props
+}) => {
+  const id2 = reactExports.useId();
+  const theme2 = mergeDeep(getTheme().progress, customTheme);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: id2, "aria-label": textLabel, "aria-valuenow": progress, role: "progressbar", ...props, children: [
+    (textLabel && labelText && textLabelPosition === "outside" || progress > 0 && labelProgress && progressLabelPosition === "outside") && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: theme2.label, "data-testid": "flowbite-progress-outer-label-container", children: [
+      textLabel && labelText && textLabelPosition === "outside" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "data-testid": "flowbite-progress-outer-text-label", children: textLabel }),
+      labelProgress && progressLabelPosition === "outside" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { "data-testid": "flowbite-progress-outer-progress-label", children: [
+        progress,
+        "%"
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: twMerge(theme2.base, theme2.size[size], className), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: `${progress}%` }, className: twMerge(theme2.bar, theme2.color[color], theme2.size[size]), children: [
+      textLabel && labelText && textLabelPosition === "inside" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "data-testid": "flowbite-progress-inner-text-label", children: textLabel }),
+      progress > 0 && labelProgress && progressLabelPosition === "inside" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { "data-testid": "flowbite-progress-inner-progress-label", children: [
+        progress,
+        "%"
+      ] })
+    ] }) })
+  ] }) });
+};
+Progress.displayName = "Progress";
 const Radio = reactExports.forwardRef(
   ({ className, theme: customTheme = {}, ...props }, ref) => {
     const theme2 = mergeDeep(getTheme().radio, customTheme);
@@ -21549,7 +21582,7 @@ const SidebarTheme = {
   },
   item: {
     base: "flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700",
-    active: "bg-gray-200 dark:bg-gray-700",
+    active: "bg-[#248596] text-white hover:bg-[#248596] text-white",
     collapsed: {
       insideCollapse: "group w-full pl-8 transition duration-75",
       noIcon: "font-bold"
@@ -21558,8 +21591,8 @@ const SidebarTheme = {
       base: "flex-1 whitespace-nowrap px-3"
     },
     icon: {
-      base: "h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white",
-      active: "text-gray-700 dark:text-gray-100"
+      base: "h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-white dark:text-gray-400 dark:group-hover:text-white",
+      active: "text-white dark:text-gray-100"
     },
     label: "",
     listItem: ""
@@ -24189,7 +24222,7 @@ const en = {
   "student-name": "Student Name",
   "student-id": "Student ID",
   "create-committee": "Create",
-  "assign-students": "Assign",
+  "assign-students": "Assign Students",
   "export": "Export",
   "im-using-template": "I'm using template file to import students",
   "importing-students-from-excel-file-is-easy-just-follow-the-steps-below": "Importing students from excel file is easy. Just follow the steps below",
@@ -24240,7 +24273,16 @@ const en = {
   "delete-student-failed": "Deleting a student is failed",
   "edit-student": "Edit Student",
   "saved-student-successfully": "Saved a student successfully",
-  "save-student-failed": "Saving a student is failed"
+  "save-student-failed": "Saving a student is failed",
+  "examination-committees": "Examination Committees",
+  "add-committees": "Add Committees",
+  "number-committees": "Number of Committees",
+  "start-by-deleting-previous": "Start Over by Deleting Previous Committees",
+  "distribute-student-committee": "Distribute the number of students among committees",
+  "classrooms-committees": "classrooms are committees",
+  "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more",
+  "create-committees-success": "Created committees are successfully",
+  "create-committees-failed": "Creating committees is successfully"
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24365,7 +24407,15 @@ const ar = {
   "delete-student-failed": "فشل حذف الطالب",
   "edit-student": "تحرير الطالب",
   "saved-student-successfully": "تم إنقاذ الطالب بنجاح",
-  "save-student-failed": "فشل إنقاذ الطالب"
+  "save-student-failed": "فشل إنقاذ الطالب",
+  "add-committees": "إضافة لجان",
+  "number-committees": "عدد اللجان",
+  "start-by-deleting-previous": "البدء من جديد بحذف اللجان السابقة",
+  "distribute-student-committee": "توزيع أعداد الطلاب على اللجان",
+  "classrooms-committees": "الفصول الدراسية هي لجان",
+  "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد",
+  "create-committees-success": "اللجان التي تم إنشاؤها بنجاح",
+  "create-committees-failed": "تم إنشاء اللجان بنجاح"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -24696,6 +24746,8 @@ const StudentsContext = reactExports.createContext({
   reloadData: () => {
   },
   setSearchBy: () => {
+  },
+  setStudentGroups: () => {
   }
 });
 const useStudents = () => reactExports.useContext(StudentsContext);
@@ -24720,16 +24772,8 @@ const StudentsProvider = ({ children }) => {
     });
   };
   reactExports.useEffect(() => {
-    getStudentList();
   }, [page, perPage, className, order, searchBy]);
   reactExports.useEffect(() => {
-    ipc.on("import-students", (_event, { event: event2 }) => {
-      if (event2 === "imported") {
-        getStudentGroups();
-        setPage(1);
-      }
-    });
-    getStudentGroups();
   }, []);
   const setOrderBy = (order2, type) => {
     if (order2) {
@@ -24742,7 +24786,6 @@ const StudentsProvider = ({ children }) => {
     setPage(1);
     setOrderBy(void 0);
     getStudentGroups();
-    getStudentList();
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     StudentsContext.Provider,
@@ -24755,6 +24798,7 @@ const StudentsProvider = ({ children }) => {
         getStudentGroups,
         studentGroups,
         getStudentList,
+        setStudentGroups,
         setClassName,
         setPage,
         setPerPage,
@@ -29893,6 +29937,9 @@ var Toast = /* @__PURE__ */ reactExports.memo(/* @__PURE__ */ reactExports.forwa
   });
 }));
 Toast.displayName = "Toast";
+function IoIosArrowDown(props) {
+  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 512 512" }, "child": [{ "tag": "path", "attr": { "d": "M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z" }, "child": [] }] })(props);
+}
 function IoIosCloseCircleOutline(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 512 512" }, "child": [{ "tag": "path", "attr": { "d": "M331.3 308.7L278.6 256l52.7-52.7c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-52.7-52.7c-6.2-6.2-15.6-7.1-22.6 0-7.1 7.1-6 16.6 0 22.6l52.7 52.7-52.7 52.7c-6.7 6.7-6.4 16.3 0 22.6 6.4 6.4 16.4 6.2 22.6 0l52.7-52.7 52.7 52.7c6.2 6.2 16.4 6.2 22.6 0 6.3-6.2 6.3-16.4 0-22.6z" }, "child": [] }, { "tag": "path", "attr": { "d": "M256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256s-18.7 93.3-52.7 127.3S304.1 436 256 436c-48.1 0-93.3-18.7-127.3-52.7S76 304.1 76 256s18.7-93.3 52.7-127.3S207.9 76 256 76m0-28C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z" }, "child": [] }] })(props);
 }
@@ -30295,6 +30342,7 @@ const Students = () => {
   const toastRef = reactExports.useRef(null);
   const {
     studentGroups,
+    setStudentGroups,
     /* setPage,
     setClassName,
     page,
@@ -30321,6 +30369,8 @@ const Students = () => {
   const [newFieldValues, setNewFieldValues] = reactExports.useState({});
   const [isCreateStudent, setIsCreateStudent] = reactExports.useState(false);
   const [editStudent, setEditStudent] = reactExports.useState(null);
+  const [totalLoadStudents, setTotalLoadStudents] = reactExports.useState(0);
+  const [currentLoadedStudents, setCurrentLoadedStudents] = reactExports.useState(0);
   reactExports.useEffect(() => {
     ipc.on("import-students", (_event, { event: event2 }) => {
       console.log("event", event2);
@@ -30328,10 +30378,21 @@ const Students = () => {
     ipc.on("xlsx-filename", (_event, filename) => {
       if (!filename)
         return;
-      ipc.invoke("loadStudentsFromXlsx", filename).then(() => {
-        reloadData();
-      });
+      ipc.invoke("loadStudentsFromXlsx", filename);
     });
+    ipc.on("import-progress", (_event, val) => {
+      if (val == totalLoadStudents) {
+        setCurrentLoadedStudents(val);
+        setTimeout(() => {
+          setCurrentLoadedStudents(0);
+          setTotalLoadStudents(0);
+        }, 1e3);
+      }
+    });
+    reloadData();
+    return () => {
+      setStudentGroups({ totalStudents: 0, schools: {}, grades: {}, sections: {} });
+    };
   }, []);
   reactExports.useEffect(() => {
     if (!createField)
@@ -30922,7 +30983,7 @@ const Students = () => {
     editStudent && /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: `bg-white dark:bg-gray-700 rounded-lg flex-1 p-1 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
+        className: `bg-white dark:bg-gray-700 rounded-lg flex-1 p-2 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
         children: studentGroups?.schools[editStudent.studentSchoolName].classes[editStudent.studentClass][editStudent.studentSection].map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           StudentRow,
           {
@@ -30943,7 +31004,15 @@ const Students = () => {
         title: createTitle,
         label: createLabel
       }
-    )
+    ),
+    totalLoadStudents > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed bg-transparent flex justify-center items-center left-0 z-[100] h-screen w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-slate-800/80 rounded-lg w-[300px] px-4 py-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Progress, { progress: 45 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center pt-2", children: [
+        "Loading...(",
+        `${currentLoadedStudents}/${totalLoadStudents}`,
+        ")"
+      ] })
+    ] }) })
   ] });
 };
 const Flight1 = "" + new URL("flight-1-7Yf4RcSt.png", import.meta.url).href;
@@ -30976,30 +31045,235 @@ License.defaultProps = {
     return;
   }
 };
-function distributeStudents(totalStudents, numGroups) {
-  const groupSizes = [];
-  const initialGroupSize = Math.ceil(totalStudents / numGroups);
-  for (let i = 0; i < numGroups; i++) {
-    if (i < totalStudents % numGroups) {
-      groupSizes.push(initialGroupSize + 1);
-    } else {
-      groupSizes.push(initialGroupSize);
-    }
-  }
-  return groupSizes;
+const CreateIcon = "data:image/svg+xml,%3csvg%20width='30'%20height='30'%20viewBox='0%200%2030%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_114_1475'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='30'%20height='30'%3e%3cpath%20d='M0%200H30V30H0V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_114_1475)'%3e%3cpath%20d='M15%200C6.72931%200%200%206.72931%200%2015C0%2023.2707%206.72931%2030%2015%2030C23.2707%2030%2030%2023.2707%2030%2015C30%206.72931%2023.2707%200%2015%200ZM15%2028.0004C7.8315%2028.0004%201.99958%2022.1685%201.99958%2015C1.99958%207.8315%207.8315%202.00063%2015%202.00063C22.1685%202.00063%2028.0004%207.8315%2028.0004%2015C28.0004%2022.1685%2022.1685%2028.0004%2015%2028.0004Z'%20fill='%231F8295'/%3e%3c/g%3e%3cpath%20d='M20.2328%2013.9986H16.0003V9.76609C16.0003%209.21393%2015.5526%208.7663%2015.0005%208.7663C14.4483%208.7663%2014.0007%209.21393%2014.0007%209.76609V13.9986H9.76822C9.21607%2013.9986%208.76843%2014.4462%208.76843%2014.9983C8.76843%2015.5505%209.21607%2015.9981%209.76822%2015.9981H14.0007V20.2306C14.0007%2020.7828%2014.4483%2021.2304%2015.0005%2021.2304C15.5526%2021.2304%2016.0003%2020.7828%2016.0003%2020.2306V15.9981H20.2328C20.7849%2015.9981%2021.2325%2015.5505%2021.2325%2014.9983C21.2325%2014.4462%2020.7849%2013.9986%2020.2328%2013.9986Z'%20fill='%231F8295'/%3e%3c/svg%3e";
+const StudentGroupIcon = "" + new URL("student-group-DDuQfWLW.svg", import.meta.url).href;
+const ExportIcon = "data:image/svg+xml,%3csvg%20width='40'%20height='28'%20viewBox='0%200%2040%2028'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_114_1507'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='0'%20y='2'%20width='26'%20height='27'%3e%3cpath%20d='M0%202.1026H25.8227V28.0001H0V2.1026Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_114_1507)'%3e%3cpath%20d='M23.5417%2025.8634H2.14067V4.48816H14.9804V2.35162H2.14067C0.95834%202.35162%200%203.30875%200%204.48816V25.8634C0%2027.0428%200.95834%2027.9999%202.14067%2027.9999H23.5417C24.7226%2027.9999%2025.681%2027.0428%2025.681%2025.8634V13.0385H23.5417V25.8634Z'%20fill='%231F8295'/%3e%3c/g%3e%3cmask%20id='mask1_114_1507'%20style='mask-type:luminance'%20maskUnits='userSpaceOnUse'%20x='10'%20y='0'%20width='30'%20height='16'%3e%3cpath%20d='M10%200H40V16H10V0Z'%20fill='white'/%3e%3c/mask%3e%3cg%20mask='url(%23mask1_114_1507)'%3e%3cpath%20d='M35.6181%206.42583L27.9498%201.17606C27.6627%200.975548%2027.2708%200.943649%2026.9488%201.09403C26.6218%201.24214%2026.4171%201.54518%2026.4171%201.87557V4.50046H23.5415C17.7278%204.50046%2013%208.8183%2013%2014.125C13%2014.5306%2013.307%2014.8838%2013.7389%2014.9772C13.8113%2014.9932%2013.8862%2015%2013.9585%2015C14.3155%2015%2014.65%2014.8177%2014.8147%2014.5169L15.0419%2014.1068C16.5122%2011.4204%2019.4677%209.75023%2022.7552%209.75023H26.4171V12.3751C26.4171%2012.7055%2026.6218%2013.0086%2026.9463%2013.1567C27.2708%2013.307%2027.6602%2013.2751%2027.9498%2013.0746L35.6181%207.82486C35.8577%207.6608%2036%207.40105%2036%207.12534C36%206.84964%2035.8577%206.58989%2035.6181%206.42583Z'%20fill='%231F8295'/%3e%3c/g%3e%3c/svg%3e";
+function IoCloseOutline(props) {
+  return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 512 512" }, "child": [{ "tag": "path", "attr": { "fill": "none", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "32", "d": "M368 368 144 144m224 0L144 368" }, "child": [] }] })(props);
 }
 const Committee = () => {
-  reactExports.useState(false);
-  reactExports.useState(false);
-  reactExports.useState(false);
+  const ipc = window.electron.ipcRenderer;
+  const toastRef = reactExports.useRef(null);
+  const rtl = document.body.getAttribute("dir") == "rtl";
+  const [openCreate, setOpenCreate] = reactExports.useState(false);
+  const [noOfCommitte, setNoOfCommitte] = reactExports.useState(0);
+  const [deletePrevious, setDeletePrevious] = reactExports.useState(false);
+  const [distributeStudents, setDistributeStudents] = reactExports.useState(false);
+  const [classroomCommittee, setClassroomCommittee] = reactExports.useState(false);
+  const [committess, setCommittess] = reactExports.useState([]);
   reactExports.useEffect(() => {
-    const totalStudents = 1015;
-    const numGroups = 9;
-    const groupSizes = distributeStudents(totalStudents, numGroups);
-    console.log("Group sizes:", groupSizes);
+    loadCommittees();
+    return () => {
+      setCommittess([]);
+    };
   }, []);
-  reactExports.useState(null);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Committee" }) }) });
+  const loadCommittees = () => {
+    ipc.invoke("getCommittees").then((committess2) => {
+      setCommittess(committess2 || []);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+  const addCommitte = () => {
+    if (noOfCommitte <= 0)
+      return;
+    ipc.invoke("createCommittee", {
+      committeeNamePrefix: "Committee",
+      noOfCommittee: noOfCommitte,
+      deletePrevious,
+      distributeStudents,
+      classroomCommittee
+    }).then(() => {
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(GoCheck, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "success",
+        summary: FM("success"),
+        detail: FM("create-committees-success"),
+        life: 2e3
+      });
+      loadCommittees();
+      setOpenCreate(false);
+    }).catch((err) => {
+      console.log(err);
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosCloseCircleOutline, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "error",
+        summary: FM("failed"),
+        detail: FM("create-committees-failed"),
+        life: 2e3
+      });
+    });
+  };
+  const renderCreateCommitteeModal = () => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Modal, { theme: ModalTheme, show: openCreate, onClose: () => setOpenCreate(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "px-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3 border-b-2 border-gray-600 dark:border-gray-200 text-center text-xl font-bold", children: FM("examination-committees") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center gap-2 items-center mb-2 py-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: FM("number-committees") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "number",
+            className: "outline-none focus:outline-none border-0 ring-0 focus:ring-0 focus:border-0 bg-gray-300 dark:bg-gray-600 rounded-lg w-20 py-1 text-sm text-center",
+            min: 0,
+            value: noOfCommitte,
+            onChange: (e) => setNoOfCommitte(Number(e.target.value))
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "deleting-previous", children: FM("start-by-deleting-previous") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox,
+          {
+            id: "deleting-previous",
+            checked: deletePrevious,
+            onChange: (e) => setDeletePrevious(e.target.checked)
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "distribute-student", children: FM("distribute-student-committee") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox,
+          {
+            id: "distribute-student",
+            checked: distributeStudents,
+            onChange: (e) => setDistributeStudents(e.target.checked)
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "classroom-committee", children: FM("classrooms-committees") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox,
+          {
+            id: "classroom-committee",
+            checked: classroomCommittee,
+            onChange: (e) => setClassroomCommittee(e.target.checked)
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-end  py-2 border-b-2 border-gray-600 dark:border-gray-200", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "sm", className: "rtl:ml-2 mr-2", onClick: addCommitte, children: FM("add-committees") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "failure", size: "sm", onClick: () => setOpenCreate(false), children: FM("cancel") })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3", children: FM("add-committees-description") })
+    ] }) });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    renderCreateCommitteeModal(),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Toast, { ref: toastRef, position: rtl ? "top-left" : "top-right" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-screen p-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "items-center py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-700 dark:text-white font-semibold", children: FM("examination-committees") }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center grow", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              onClick: () => setOpenCreate(true),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CreateIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("add-committee") })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: StudentGroupIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("assign-students") })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ExportIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("export") })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("edit") })
+              ]
+            }
+          )
+        ] })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2 rounded-lg bg-white dark:bg-gray-700 p-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 px-1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-md font-bold text-gray-900 dark:text-gray-100 mb-1", children: "Total" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-md font-bold text-gray-900 dark:text-gray-100", children: "422" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "القول المتوسط" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
+              "Complete (",
+              140,
+              ")"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "الثاني المتوسط" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
+              "Complete (",
+              140,
+              ")"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "الأحد المتوسط" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
+              "Complete (",
+              140,
+              ")"
+            ] })
+          ] })
+        ] }),
+        committess.map((committee2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon, className: "object-none mx-3" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: committee2?.committeeName })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { gradientDuoTone: "greenToBlue", size: "sm", className: "mr-auto", children: [
+              "Complete ",
+              43
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosArrowDown, { size: 24, className: "text-gray-700 dark:text-gray-200" }) })
+          ] })
+        ] }, index2))
+      ] })
+    ] })
+  ] });
 };
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr))

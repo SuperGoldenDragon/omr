@@ -47,4 +47,5 @@ export type CreateCommitteeInput = {
   noOfCommittee: number
   deletePrevious: boolean
   distributeStudents: boolean
+  classroomCommittee: boolean
 }

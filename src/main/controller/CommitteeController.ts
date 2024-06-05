@@ -17,43 +17,20 @@ class CommitteeController {
   }
 
   // create committee
-  async createCommittee(_event: IpcMainInvokeEvent, arg: CreateCommitteeInput) {
+  createCommittee = async (_event: IpcMainInvokeEvent, arg: CreateCommitteeInput) => {
+    const created = <any>[]
     if (arg.noOfCommittee > 0) {
-      // group students by class and get count
-      const allGrades = await this.student
-        .createQueryBuilder('student')
-        .select('student.studentClass')
-        .addSelect('COUNT(student.studentClass)', 'totalStudents')
-        .groupBy('student.studentClass')
-        .getRawMany()
-
-      // group students by allGrades
-      const grades = {}
-
-      // loop through allGrades
-
-      for (const grade of allGrades) {
-        // get students by grade
-        const students = await this.student.find({
-          where: { studentClass: grade.student_studentClass }
-        })
-
-        // group students by class and get count
-        grades[grade.student_studentClass] = {
-          totalStudents: grade.totalStudents,
-          students
-        }
-      }
-
       for (let i = 0; i < arg.noOfCommittee; i++) {
         // create committee
         const committee = new Committee()
         committee.committeeName = `${arg.committeeNamePrefix} ${i + 1}`
-        await this.committee.save(committee)
+        committee.deleteAllCommittee = arg.deletePrevious
+        committee.distributeEqualStudent = arg.distributeStudents
+        committee.classroomCommittee = arg.classroomCommittee
+        created.push(await this.committee.save(committee))
       }
     }
-
-    return await this.committee.find()
+    return created
   }
 
   // add committee
@@ -133,7 +110,7 @@ class CommitteeController {
   }
 
   // get all committees
-  async getCommittees() {
+  getCommittees = async () => {
     return await this.committee.find()
   }
 

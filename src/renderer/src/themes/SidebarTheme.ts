@@ -47,7 +47,7 @@ export const SidebarTheme = {
   },
   item: {
     base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700',
-    active: 'bg-gray-200 dark:bg-gray-700',
+    active: 'bg-[#248596] text-white hover:bg-[#248596] text-white',
     collapsed: {
       insideCollapse: 'group w-full pl-8 transition duration-75',
       noIcon: 'font-bold'
@@ -56,8 +56,8 @@ export const SidebarTheme = {
       base: 'flex-1 whitespace-nowrap px-3'
     },
     icon: {
-      base: 'h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white',
-      active: 'text-gray-700 dark:text-gray-100'
+      base: 'h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-white dark:text-gray-400 dark:group-hover:text-white',
+      active: 'text-white dark:text-gray-100'
     },
     label: '',
     listItem: ''
