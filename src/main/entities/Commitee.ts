@@ -37,6 +37,9 @@ export class Committee {
   @Column('boolean', { nullable: true })
   deleteAllCommittee!: boolean
 
+  @Column('boolean', { nullable: true })
+  classroomCommittee!: boolean
+
   // insert created and updated date
   @BeforeInsert()
   insertCreated() {

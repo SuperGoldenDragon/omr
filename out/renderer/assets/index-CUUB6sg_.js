@@ -24280,7 +24280,9 @@ const en = {
   "start-by-deleting-previous": "Start Over by Deleting Previous Committees",
   "distribute-student-committee": "Distribute the number of students among committees",
   "classrooms-committees": "classrooms are committees",
-  "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more"
+  "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more",
+  "create-committees-success": "Created committees are successfully",
+  "create-committees-failed": "Creating committees is successfully"
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24411,7 +24413,9 @@ const ar = {
   "start-by-deleting-previous": "البدء من جديد بحذف اللجان السابقة",
   "distribute-student-committee": "توزيع أعداد الطلاب على اللجان",
   "classrooms-committees": "الفصول الدراسية هي لجان",
-  "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد"
+  "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد",
+  "create-committees-success": "اللجان التي تم إنشاؤها بنجاح",
+  "create-committees-failed": "تم إنشاء اللجان بنجاح"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -31048,7 +31052,58 @@ function IoCloseOutline(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 512 512" }, "child": [{ "tag": "path", "attr": { "fill": "none", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "32", "d": "M368 368 144 144m224 0L144 368" }, "child": [] }] })(props);
 }
 const Committee = () => {
+  const ipc = window.electron.ipcRenderer;
+  const toastRef = reactExports.useRef(null);
+  const rtl = document.body.getAttribute("dir") == "rtl";
   const [openCreate, setOpenCreate] = reactExports.useState(false);
+  const [noOfCommitte, setNoOfCommitte] = reactExports.useState(0);
+  const [deletePrevious, setDeletePrevious] = reactExports.useState(false);
+  const [distributeStudents, setDistributeStudents] = reactExports.useState(false);
+  const [classroomCommittee, setClassroomCommittee] = reactExports.useState(false);
+  const [committess, setCommittess] = reactExports.useState([]);
+  reactExports.useEffect(() => {
+    loadCommittees();
+    return () => {
+      setCommittess([]);
+    };
+  }, []);
+  const loadCommittees = () => {
+    ipc.invoke("getCommittees").then((committess2) => {
+      setCommittess(committess2 || []);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+  const addCommitte = () => {
+    if (noOfCommitte <= 0)
+      return;
+    ipc.invoke("createCommittee", {
+      committeeNamePrefix: "Committee",
+      noOfCommittee: noOfCommitte,
+      deletePrevious,
+      distributeStudents,
+      classroomCommittee
+    }).then(() => {
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(GoCheck, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "success",
+        summary: FM("success"),
+        detail: FM("create-committees-success"),
+        life: 2e3
+      });
+      loadCommittees();
+      setOpenCreate(false);
+    }).catch((err) => {
+      console.log(err);
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosCloseCircleOutline, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "error",
+        summary: FM("failed"),
+        detail: FM("create-committees-failed"),
+        life: 2e3
+      });
+    });
+  };
   const renderCreateCommitteeModal = () => {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Modal, { theme: ModalTheme, show: openCreate, onClose: () => setOpenCreate(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "px-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3 border-b-2 border-gray-600 dark:border-gray-200 text-center text-xl font-bold", children: FM("examination-committees") }),
@@ -31059,24 +31114,47 @@ const Committee = () => {
           {
             type: "number",
             className: "outline-none focus:outline-none border-0 ring-0 focus:ring-0 focus:border-0 bg-gray-300 dark:bg-gray-600 rounded-lg w-20 py-1 text-sm text-center",
-            min: 0
+            min: 0,
+            value: noOfCommitte,
+            onChange: (e) => setNoOfCommitte(Number(e.target.value))
           }
         )
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "deleting-previous", children: FM("start-by-deleting-previous") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Checkbox, { id: "deleting-previous" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox,
+          {
+            id: "deleting-previous",
+            checked: deletePrevious,
+            onChange: (e) => setDeletePrevious(e.target.checked)
+          }
+        )
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "distribute-student", children: FM("distribute-student-committee") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Checkbox, { id: "distribute-student" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox,
+          {
+            id: "distribute-student",
+            checked: distributeStudents,
+            onChange: (e) => setDistributeStudents(e.target.checked)
+          }
+        )
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "classroom-committee", children: FM("classrooms-committees") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Checkbox, { id: "classroom-committee" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox,
+          {
+            id: "classroom-committee",
+            checked: classroomCommittee,
+            onChange: (e) => setClassroomCommittee(e.target.checked)
+          }
+        )
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-end  py-2 border-b-2 border-gray-600 dark:border-gray-200", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "sm", className: "rtl:ml-2 mr-2", children: FM("add-committees") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "sm", className: "rtl:ml-2 mr-2", onClick: addCommitte, children: FM("add-committees") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "failure", size: "sm", onClick: () => setOpenCreate(false), children: FM("cancel") })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3", children: FM("add-committees-description") })
@@ -31084,6 +31162,7 @@ const Committee = () => {
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     renderCreateCommitteeModal(),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Toast, { ref: toastRef, position: rtl ? "top-left" : "top-right" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-screen p-2", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "items-center py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-700 dark:text-white font-semibold", children: FM("examination-committees") }) }),
@@ -31166,10 +31245,10 @@ const Committee = () => {
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`, children: [
+        committess.map((committee2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon, className: "object-none mx-3" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: "Committee 1" })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: committee2?.committeeName })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
@@ -31191,7 +31270,7 @@ const Committee = () => {
             /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosArrowDown, { size: 24, className: "text-gray-700 dark:text-gray-200" }) })
           ] })
-        ] })
+        ] }, index2))
       ] })
     ] })
   ] });

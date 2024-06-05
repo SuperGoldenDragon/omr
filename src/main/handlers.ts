@@ -24,7 +24,7 @@ export const handler = [
 
   // committee
   ipcMain.handle('getCommittees', CommitteeController.getCommittees),
-  ipcMain.handle('addCommittee', CommitteeController.createCommittee),
+  ipcMain.handle('createCommittee', CommitteeController.createCommittee),
   ipcMain.handle('deleteCommittee', CommitteeController.deleteCommittee),
   ipcMain.handle('removeAllCommittees', CommitteeController.removeAllCommittees)
 ]

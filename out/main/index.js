@@ -1160,6 +1160,7 @@ exports.Committee = class Committee {
   updated_at;
   distributeEqualStudent;
   deleteAllCommittee;
+  classroomCommittee;
   insertCreated() {
     this.created_at = luxon.DateTime.local().toJSDate();
     this.updated_at = luxon.DateTime.local().toJSDate();
@@ -1189,6 +1190,9 @@ __decorateClass$1([
 __decorateClass$1([
   typeorm.Column("boolean", { nullable: true })
 ], exports.Committee.prototype, "deleteAllCommittee", 2);
+__decorateClass$1([
+  typeorm.Column("boolean", { nullable: true })
+], exports.Committee.prototype, "classroomCommittee", 2);
 __decorateClass$1([
   typeorm.BeforeInsert()
 ], exports.Committee.prototype, "insertCreated", 1);
@@ -1344,7 +1348,7 @@ function createWindow() {
 electron.app.whenReady().then(async () => {
   AppDataSource.initialize().then(async () => {
     console.log("Data Source has been initialized!");
-    await Promise.resolve().then(() => require("./handlers-C3fmvFBl.js"));
+    await Promise.resolve().then(() => require("./handlers-BtKRXamx.js"));
     const setting = AppDataSource.manager.getRepository(exports.Setting);
     const existingSetting = await setting.findOne({ where: { id: 1 } });
     if (!existingSetting) {

@@ -101,5 +101,7 @@
   "start-by-deleting-previous": "Start Over by Deleting Previous Committees",
   "distribute-student-committee": "Distribute the number of students among committees",
   "classrooms-committees": "classrooms are committees",
-  "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more"
+  "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more",
+  "create-committees-success": "Created committees are successfully",
+  "create-committees-failed": "Creating committees is successfully"
 }

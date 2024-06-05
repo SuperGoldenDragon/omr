@@ -98,5 +98,7 @@
   "start-by-deleting-previous": "البدء من جديد بحذف اللجان السابقة",
   "distribute-student-committee": "توزيع أعداد الطلاب على اللجان",
   "classrooms-committees": "الفصول الدراسية هي لجان",
-  "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد"
+  "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد",
+  "create-committees-success": "اللجان التي تم إنشاؤها بنجاح",
+  "create-committees-failed": "تم إنشاء اللجان بنجاح"
 }
