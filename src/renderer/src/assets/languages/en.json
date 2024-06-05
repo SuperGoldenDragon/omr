@@ -43,7 +43,7 @@
   "student-name": "Student Name",
   "student-id": "Student ID",
   "create-committee": "Create",
-  "assign-students": "Assign",
+  "assign-students": "Assign Students",
   "export": "Export",
   "im-using-template": "I'm using template file to import students",
   "importing-students-from-excel-file-is-easy-just-follow-the-steps-below": "Importing students from excel file is easy. Just follow the steps below",
@@ -94,5 +94,6 @@
   "delete-student-failed": "Deleting a student is failed",
   "edit-student": "Edit Student",
   "saved-student-successfully" : "Saved a student successfully",
-  "save-student-failed": "Saving a student is failed"
+  "save-student-failed": "Saving a student is failed",
+  "examination-committees": "Examination Committees"
 }

@@ -85,7 +85,6 @@ export const StudentsProvider = ({ children }: { children: JSX.Element }) => {
     //     setPage(1)
     //   }
     // })
-
     // getStudentGroups()
   }, [])
 
