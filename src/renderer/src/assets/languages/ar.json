@@ -106,5 +106,6 @@
   "alphabetically": "أبجديا",
   "record": "سِجِلّ",
   "randomly": "بشكل عشوائي",
-  "number-student-assign": "عدد الطلاب وتوزيعهم على اللجان"
+  "number-student-assign": "عدد الطلاب وتوزيعهم على اللجان",
+  "loading" : "تحميل..."
 }

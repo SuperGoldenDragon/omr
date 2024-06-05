@@ -4,23 +4,34 @@ import EditSmallIcon from '@renderer/assets/icons/edit-green-small.svg'
 import CancelSmallIcon from '@renderer/assets/icons/cancel-red-small.svg'
 import CollapseOffDark from '@renderer/assets/icons/collapse-off-dark.svg'
 import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ClassAccordion from './ClassAccordion'
 
 const SchoolAccordion = ({
   schoolName,
   setEditStudent,
-  classes,
   reload
 }: {
   schoolName: string
   setEditStudent: any
-  classes: any
   reload: any
 }) => {
   const [collapse, setCollapse] = useState<boolean>(false)
+  const [classes, setClasses] = useState<any>([])
+  const ipc = window.electron.ipcRenderer
   // get dark mode for change
   const darkMode: boolean = document.documentElement.classList.contains('dark')
+
+  useEffect(() => {
+    // if open this school
+    if (collapse) {
+      ipc.invoke('getClassesBySchool', schoolName).then((classes) => {
+        setClasses(classes)
+      })
+    } else {
+      setClasses([])
+    }
+  }, [collapse])
 
   return (
     <div>
@@ -73,11 +84,11 @@ const SchoolAccordion = ({
           aria-labelledby="flush-headingOne"
           data-twe-parent="#accordionFlushExample"
         >
-          {Object.keys(classes).map((classNameStr, index) => (
+          {classes.map((classRow, index) => (
             <ClassAccordion
               key={index}
-              classNameStr={classNameStr}
-              sections={classes[classNameStr] || {}}
+              classNameStr={classRow.student_studentClass}
+              schoolName={schoolName}
               setEditStudent={setEditStudent}
               reload={reload}
             />
@@ -91,7 +102,6 @@ const SchoolAccordion = ({
 SchoolAccordion.defaultProps = {
   schoolName: '',
   setEditStudent: () => {},
-  classes: {},
   reload: () => {}
 }
 

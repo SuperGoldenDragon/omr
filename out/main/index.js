@@ -1348,7 +1348,7 @@ function createWindow() {
 electron.app.whenReady().then(async () => {
   AppDataSource.initialize().then(async () => {
     console.log("Data Source has been initialized!");
-    await Promise.resolve().then(() => require("./handlers-BtKRXamx.js"));
+    await Promise.resolve().then(() => require("./handlers-XQo0ygW7.js"));
     const setting = AppDataSource.manager.getRepository(exports.Setting);
     const existingSetting = await setting.findOne({ where: { id: 1 } });
     if (!existingSetting) {

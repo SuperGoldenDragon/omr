@@ -4,26 +4,55 @@ import CollapseOffDark from '@renderer/assets/icons/collapse-off-dark.svg'
 import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
 import UserHomeIcon from '@renderer/assets/icons/user-home.svg'
 import ExchangeIcon from '@renderer/assets/icons/exchange.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FM } from '@renderer/utils/i18helper'
 import StudentRow from './StudentRow'
+import Loading from './Loading'
 
 const SectionAccordion = ({
+  schoolName,
+  classNameStr,
   sectionName,
-  students,
   reload,
   setEditStudent
 }: {
+  schoolName: string
+  classNameStr: string
   sectionName: string
-  students: any
   reload: any
   setEditStudent: any
 }) => {
+  const ipc = window.electron.ipcRenderer
+  const [loading, setLoading] = useState<boolean>(false)
+  const [students, setStudents] = useState<any>([])
   const [collapse, setCollapse] = useState<boolean>(false)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
+  useEffect(() => {
+    if (collapse) {
+      setLoading(true)
+      ipc
+        .invoke('getStudentsBySection', {
+          studentSchoolName: schoolName,
+          studentClass: classNameStr,
+          studentSection: sectionName
+        })
+        .then((students) => {
+          console.log(students)
+          setLoading(false)
+          setStudents(students)
+        })
+        .catch(() => {
+          setLoading(false)
+        })
+    } else {
+      setStudents([])
+    }
+  }, [collapse])
+
   return (
     <>
+      {loading && <Loading />}
       <div className="py-1">
         <div className="rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
           <div className="mb-0 flex">
@@ -106,8 +135,9 @@ const SectionAccordion = ({
 }
 
 SectionAccordion.defaultProps = {
+  schoolName: '',
+  classNameStr: '',
   sectionName: '',
-  students: [],
   reload: () => {},
   setEditStudent: () => {}
 }

@@ -724,7 +724,6 @@ const Students = () => {
             <SchoolAccordion
               key={index}
               schoolName={schoolName}
-              classes={studentGroups?.schools[schoolName]?.classes}
               setEditStudent={setEditStudent}
               reload={reloadData}
             />

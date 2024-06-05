@@ -4,22 +4,40 @@ import EditSmallIcon from '@renderer/assets/icons/edit-green-small.svg'
 import CancelSmallIcon from '@renderer/assets/icons/cancel-red-small.svg'
 import CollapseOffDark from '@renderer/assets/icons/collapse-off-dark.svg'
 import CollapseOffLight from '@renderer/assets/icons/collapse-off-light.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SectionAccordion from './SectionAccordion'
 
 const ClassAccordion = ({
+  schoolName,
   classNameStr,
-  sections,
   setEditStudent,
   reload
 }: {
+  schoolName: string
   classNameStr: string
-  sections: any
   setEditStudent: any
   reload: any
 }) => {
+  const ipc = window.electron.ipcRenderer
+  const [sections, setSections] = useState<any>([])
   const [collapse, setCollapse] = useState<boolean>(false)
   const darkMode: boolean = document.documentElement.classList.contains('dark')
+
+  useEffect(() => {
+    if (collapse) {
+      ipc
+        .invoke('getSectionssBySchoolAndClass', {
+          studentSchoolName: schoolName,
+          studentClass: classNameStr
+        })
+        .then((sections) => {
+          console.log(sections)
+          setSections(sections)
+        })
+    } else {
+      setSections([])
+    }
+  }, [collapse])
 
   return (
     <div className="py-1">
@@ -72,11 +90,12 @@ const ClassAccordion = ({
           aria-labelledby="flush-headingOne"
           data-twe-parent="#accordionFlushExample"
         >
-          {Object.keys(sections).map((sectionName, index) => (
+          {sections.map((section, index) => (
             <SectionAccordion
               key={index}
-              sectionName={sectionName}
-              students={sections[sectionName] || []}
+              sectionName={section.student_studentSection}
+              schoolName={schoolName}
+              classNameStr={classNameStr}
               setEditStudent={setEditStudent}
               reload={reload}
             />
@@ -88,8 +107,8 @@ const ClassAccordion = ({
 }
 
 ClassAccordion.defaultProps = {
+  schoolName: '',
   classNameStr: '',
-  sections: {},
   setEditStudent: () => {},
   reload: () => {}
 }

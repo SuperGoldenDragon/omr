@@ -425,8 +425,8 @@ class StudentController {
     const schools = {};
     for (const cls of allSchools) {
       schools[cls.student_studentSchoolName] = {
-        totalStudents: cls.totalStudents,
-        classes: await this.getStudentsBySchool(_event, cls.student_studentSchoolName)
+        totalStudents: cls.totalStudents
+        /* classes: await this.getStudentsBySchool(_event, cls.student_studentSchoolName) */
       };
     }
     const sections = {};
@@ -607,6 +607,21 @@ class StudentController {
       _event.sender.send("import-progress", message);
     });
   };
+  getClassesBySchool = async (_event, schoolName) => {
+    console.log("getClassesBySchool", schoolName);
+    const allGrades = await this.student.createQueryBuilder("student").select("student.studentClass").where({ studentSchoolName: schoolName }).addSelect("COUNT(student.studentSection)", "totalSections").groupBy("student.studentClass").getRawMany();
+    return allGrades;
+  };
+  getSectionssBySchoolAndClass = async (_event, _arg) => {
+    console.log("getSectionssBySchoolAndClass", _arg);
+    const allSections = await this.student.createQueryBuilder("student").select("student.studentSection").where(_arg).addSelect("COUNT(student.studentName)", "totalStudents").groupBy("student.studentSection").getRawMany();
+    return allSections;
+  };
+  getStudentsBySection = async (_event, _arg) => {
+    console.log("getStudentsBySection", _arg);
+    const students = await this.student.find({ where: _arg });
+    return students;
+  };
 }
 const StudentController$1 = new StudentController();
 class CommitteeController {
@@ -747,6 +762,9 @@ const CommitteeController$1 = new CommitteeController();
   electron.ipcMain.handle("getStudents", StudentController$1.getStudents),
   electron.ipcMain.handle("getStudentGroups", StudentController$1.getStudentGroups),
   electron.ipcMain.handle("getStudentsBySchool", StudentController$1.getStudentsBySchool),
+  electron.ipcMain.handle("getClassesBySchool", StudentController$1.getClassesBySchool),
+  electron.ipcMain.handle("getSectionssBySchoolAndClass", StudentController$1.getSectionssBySchoolAndClass),
+  electron.ipcMain.handle("getStudentsBySection", StudentController$1.getStudentsBySection),
   electron.ipcMain.handle("addStudent", StudentController$1.addStudent),
   electron.ipcMain.handle("updateStudent", StudentController$1.updateStudent),
   electron.ipcMain.handle("deleteStudent", StudentController$1.deleteStudent),

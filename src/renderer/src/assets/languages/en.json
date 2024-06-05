@@ -109,5 +109,6 @@
   "alphabetically": "Alphabetically",
   "record": "Record",
   "randomly": "Randomly",
-  "number-student-assign": "Number of Students and Assign Them to Committees"
+  "number-student-assign": "Number of Students and Assign Them to Committees",
+  "loading" : "Loading..."
 }

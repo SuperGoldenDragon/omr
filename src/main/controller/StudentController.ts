@@ -783,8 +783,8 @@ class StudentController {
     // loop through allSections
     for (const cls of allSchools) {
       schools[cls.student_studentSchoolName] = {
-        totalStudents: cls.totalStudents,
-        classes: await this.getStudentsBySchool(_event, cls.student_studentSchoolName)
+        totalStudents: cls.totalStudents
+        /* classes: await this.getStudentsBySchool(_event, cls.student_studentSchoolName) */
       }
     }
 
@@ -1071,6 +1071,38 @@ class StudentController {
     //     return
     //   })
     // )
+  }
+
+  getClassesBySchool = async (_event: IpcMainInvokeEvent, schoolName: string): Promise<any> => {
+    console.log('getClassesBySchool', schoolName)
+    const allGrades = await this.student
+      .createQueryBuilder('student')
+      .select('student.studentClass')
+      .where({ studentSchoolName: schoolName })
+      .addSelect('COUNT(student.studentSection)', 'totalSections')
+      .groupBy('student.studentClass')
+      .getRawMany()
+
+    return allGrades
+  }
+
+  getSectionssBySchoolAndClass = async (_event: IpcMainInvokeEvent, _arg: any): Promise<any> => {
+    console.log('getSectionssBySchoolAndClass', _arg)
+    const allSections = await this.student
+      .createQueryBuilder('student')
+      .select('student.studentSection')
+      .where(_arg)
+      .addSelect('COUNT(student.studentName)', 'totalStudents')
+      .groupBy('student.studentSection')
+      .getRawMany()
+
+    return allSections
+  }
+
+  getStudentsBySection = async (_event: IpcMainInvokeEvent, _arg: any): Promise<any> => {
+    console.log('getStudentsBySection', _arg)
+    const students = await this.student.find({ where: _arg })
+    return students
   }
 }
 
