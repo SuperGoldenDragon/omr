@@ -2164,6 +2164,9 @@ input[type="range"]::-ms-fill-lower {
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -2665,6 +2668,10 @@ input[type="range"]::-ms-fill-lower {
 .border-gray-700 {
   --tw-border-opacity: 1;
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
+.border-gray-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
 }
 .border-gray-900 {
   --tw-border-opacity: 1;
@@ -3404,6 +3411,10 @@ input[type="range"]::-ms-fill-lower {
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 .px-2 {
   padding-left: 0.5rem;
@@ -4332,7 +4343,7 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 }
 /* Customize scrollbar track */
 .overflow-y-auto-dark::-webkit-scrollbar-track {
-  background-color: #222; /* Color of the scrollbar track */
+  background-color: #333; /* Color of the scrollbar track */
   border-radius: 12px;
 }
 /* Customize scrollbar thumb */
@@ -5013,6 +5024,10 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 .focus\:border-cyan-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(6 182 212 / var(--tw-border-opacity));
+}
+.focus\:border-gray-800:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
 }
 .focus\:border-green-500:focus {
   --tw-border-opacity: 1;
@@ -7253,6 +7268,9 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
+.rtl\:border-0:where([dir="rtl"], [dir="rtl"] *) {
+  border-width: 0px;
+}
 .rtl\:border-r:where([dir="rtl"], [dir="rtl"] *) {
   border-right-width: 1px;
 }
@@ -7262,6 +7280,12 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 .rtl\:border-gray-700:where([dir="rtl"], [dir="rtl"] *) {
   --tw-border-opacity: 1;
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
+.rtl\:p-0:where([dir="rtl"], [dir="rtl"] *) {
+  padding: 0px;
+}
+.rtl\:pl-2:where([dir="rtl"], [dir="rtl"] *) {
+  padding-left: 0.5rem;
 }
 .peer:checked ~ .rtl\:peer-checked\:after\:-translate-x-full:where([dir="rtl"], [dir="rtl"] *)::after {
   content: var(--tw-content);

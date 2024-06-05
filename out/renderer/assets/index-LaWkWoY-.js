@@ -24177,6 +24177,9 @@ const submit$1 = "Submit";
 const name$1 = "Name";
 const success$1 = "Success";
 const failed$1 = "Failed";
+const alphabetically$1 = "Alphabetically";
+const record$1 = "Record";
+const randomly$1 = "Randomly";
 const en = {
   exams: exams$1,
   committees: committees$1,
@@ -24282,7 +24285,13 @@ const en = {
   "classrooms-committees": "classrooms are committees",
   "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more",
   "create-committees-success": "Created committees are successfully",
-  "create-committees-failed": "Creating committees is successfully"
+  "create-committees-failed": "Creating committees is successfully",
+  "sort-by-section": "Sort by sections",
+  "start-seating-for-stages": "Starting  Seating Number for Stages",
+  alphabetically: alphabetically$1,
+  record: record$1,
+  randomly: randomly$1,
+  "number-student-assign": "Number of Students and Assign Them to Committees"
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24313,6 +24322,9 @@ const submit = "إرسال";
 const name = "اسم الطالب";
 const success = "نجاح";
 const failed = "فشل";
+const alphabetically = "أبجديا";
+const record = "سِجِلّ";
+const randomly = "بشكل عشوائي";
 const ar = {
   exams,
   committees,
@@ -24415,7 +24427,13 @@ const ar = {
   "classrooms-committees": "الفصول الدراسية هي لجان",
   "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد",
   "create-committees-success": "اللجان التي تم إنشاؤها بنجاح",
-  "create-committees-failed": "تم إنشاء اللجان بنجاح"
+  "create-committees-failed": "تم إنشاء اللجان بنجاح",
+  "sort-by-section": "الترتيب حسب الأقسام",
+  "start-seating-for-stages": "بدء رقم الجلوس للمراحل",
+  alphabetically,
+  record,
+  randomly,
+  "number-student-assign": "عدد الطلاب وتوزيعهم على اللجان"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -30378,7 +30396,9 @@ const Students = () => {
     ipc.on("xlsx-filename", (_event, filename) => {
       if (!filename)
         return;
-      ipc.invoke("loadStudentsFromXlsx", filename);
+      ipc.invoke("loadStudentsFromXlsx", filename).then(() => {
+        reloadData();
+      });
     });
     ipc.on("import-progress", (_event, val) => {
       if (val == totalLoadStudents) {
@@ -31057,6 +31077,7 @@ const Committee = () => {
   const darkMode = document.documentElement.classList.contains("dark");
   const rtl = document.body.getAttribute("dir") == "rtl";
   const [openCreate, setOpenCreate] = reactExports.useState(false);
+  const [openAssign, setOpenAssign] = reactExports.useState(false);
   const [noOfCommitte, setNoOfCommitte] = reactExports.useState(0);
   const [deletePrevious, setDeletePrevious] = reactExports.useState(false);
   const [distributeStudents, setDistributeStudents] = reactExports.useState(false);
@@ -31161,8 +31182,89 @@ const Committee = () => {
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3", children: FM("add-committees-description") })
     ] }) });
   };
+  const renderAssignStudentModal = () => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal, { theme: ModalTheme, show: openAssign, onClose: () => setOpenAssign(false), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "p-3", onClick: () => setOpenAssign(false), children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24 }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "p-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3 border-b-2 border-gray-600 text-center text-xl font-bold", children: FM("start-seating-for-stages") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center py-1", children: "Starting  Seating Number for Stages" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-3 mb-1 px-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: " القول المتوسط" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "number",
+              className: "focus:ring-0 py-1 text-sm bg-gray-200 outline-none border-0 w-20 border-b border-gray-800 focus:border-gray-800 rounded-t-lg",
+              min: 0
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Checkbox,
+              {
+                checked: deletePrevious,
+                onChange: (e) => setDeletePrevious(e.target.checked)
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { children: FM("sort-by-section") })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-3 mb-1 px-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: " القول المتوسط" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "number",
+              className: "focus:ring-0 py-1 text-sm bg-gray-200 outline-none border-0 w-20 border-b border-gray-800 focus:border-gray-800 rounded-t-lg",
+              min: 0
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Checkbox,
+              {
+                checked: deletePrevious,
+                onChange: (e) => setDeletePrevious(e.target.checked)
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { children: FM("sort-by-section") })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-3 mb-1 px-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: " القول المتوسط" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "number",
+              className: "focus:ring-0 py-1 text-sm bg-gray-200 outline-none border-0 w-20 border-b border-gray-800 focus:border-gray-800 rounded-t-lg",
+              min: 0
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Checkbox,
+              {
+                checked: deletePrevious,
+                onChange: (e) => setDeletePrevious(e.target.checked)
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { children: FM("sort-by-section") })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-10 py-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(Button.Group, { className: "mb-2 w-full", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "basis-1/3", children: FM("alphabetically") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { outline: true, className: "basis-1/3", children: FM("record") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { outline: true, className: "basis-1/3", children: FM("randomly") })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "w-full", children: FM("number-student-assign") })
+        ] })
+      ] })
+    ] });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     renderCreateCommitteeModal(),
+    renderAssignStudentModal(),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Toast, { ref: toastRef, position: rtl ? "top-left" : "top-right" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-screen p-2", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
@@ -31185,6 +31287,7 @@ const Committee = () => {
             {
               href: "javascript:",
               className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              onClick: () => setOpenAssign(true),
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: StudentGroupIcon }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("assign-students") })
@@ -31249,11 +31352,11 @@ const Committee = () => {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: `h-0 flex-1 overflow-auto pr-2 ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
+            className: `h-0 flex-1 overflow-auto pr-2 rtl:p-0 rtl:pl-2 ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
             children: committess.map((committee2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon, className: "object-none mx-3" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: committee2?.committeeName })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l rtl:border-0 rtl:border-r px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: committee2?.committeeName })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),

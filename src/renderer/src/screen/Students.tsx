@@ -86,7 +86,9 @@ const Students = () => {
 
     ipc.on('xlsx-filename', (_event, filename: string) => {
       if (!filename) return
-      ipc.invoke('loadStudentsFromXlsx', filename)
+      ipc.invoke('loadStudentsFromXlsx', filename).then(() => {
+        reloadData()
+      })
     })
 
     ipc.on('import-progress', (_event, val) => {

@@ -18,6 +18,7 @@ const Committee = () => {
   const darkMode = document.documentElement.classList.contains('dark')
   const rtl = document.body.getAttribute('dir') == 'rtl'
   const [openCreate, setOpenCreate] = useState<boolean>(false)
+  const [openAssign, setOpenAssign] = useState<boolean>(false)
   const [noOfCommitte, setNoOfCommitte] = useState<number>(0)
   const [deletePrevious, setDeletePrevious] = useState<boolean>(false)
   const [distributeStudents, setDistributeStudents] = useState<boolean>(false)
@@ -131,9 +132,94 @@ const Committee = () => {
     )
   }
 
+  const renderAssignStudentModal = () => {
+    return (
+      <Modal theme={ModalTheme} show={openAssign} onClose={() => setOpenAssign(false)}>
+        <div className="flex justify-end">
+          <a href="javascript:" className="p-3 cursor-pointer" onClick={() => setOpenAssign(false)}>
+            <IoCloseOutline size={24} />
+          </a>
+        </div>
+        <Modal.Body className="p-4">
+          <div className="py-3 border-b-2 border-gray-600 text-center text-xl font-bold">
+            {FM('start-seating-for-stages')}
+          </div>
+          <div className="text-center py-1">{'Starting  Seating Number for Stages'}</div>
+          <div className="grid grid-cols-3 mb-1 px-4">
+            <div> القول المتوسط</div>
+            <div>
+              <input
+                type="number"
+                className="focus:ring-0 py-1 text-sm bg-gray-200 outline-none border-0 w-20 border-b border-gray-800 focus:border-gray-800 rounded-t-lg"
+                min={0}
+              />
+            </div>
+            <div className="flex justify-between">
+              <Checkbox
+                id="sort-section-1"
+                checked={deletePrevious}
+                onChange={(e) => setDeletePrevious(e.target.checked)}
+              />
+              <Label htmlFor="sort-section-1">{FM('sort-by-section')}</Label>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 mb-1 px-4">
+            <div> القول المتوسط</div>
+            <div>
+              <input
+                type="number"
+                className="focus:ring-0 py-1 text-sm bg-gray-200 outline-none border-0 w-20 border-b border-gray-800 focus:border-gray-800 rounded-t-lg"
+                min={0}
+              />
+            </div>
+            <div className="flex justify-between">
+              <Checkbox
+                id="sort-section-2"
+                checked={deletePrevious}
+                onChange={(e) => setDeletePrevious(e.target.checked)}
+              />
+              <Label htmlFor="sort-section-2">{FM('sort-by-section')}</Label>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 mb-1 px-4">
+            <div> القول المتوسط</div>
+            <div>
+              <input
+                type="number"
+                className="focus:ring-0 py-1 text-sm bg-gray-200 outline-none border-0 w-20 border-b border-gray-800 focus:border-gray-800 rounded-t-lg"
+                min={0}
+              />
+            </div>
+            <div className="flex justify-between">
+              <Checkbox
+                id="sort-section-3"
+                checked={deletePrevious}
+                onChange={(e) => setDeletePrevious(e.target.checked)}
+              />
+              <Label htmlFor="sort-section-3">{FM('sort-by-section')}</Label>
+            </div>
+          </div>
+          <div className="px-10 py-2">
+            <Button.Group className="mb-2 w-full">
+              <Button className="basis-1/3">{FM('alphabetically')}</Button>
+              <Button outline className="basis-1/3">
+                {FM('record')}
+              </Button>
+              <Button outline className="basis-1/3">
+                {FM('randomly')}
+              </Button>
+            </Button.Group>
+            <Button className="w-full">{FM('number-student-assign')}</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
+    )
+  }
+
   return (
     <>
       {renderCreateCommitteeModal()}
+      {renderAssignStudentModal()}
       <Toast ref={toastRef} position={rtl ? 'top-left' : 'top-right'} />
       <div className="flex flex-col h-screen p-2">
         <div>
@@ -157,7 +243,7 @@ const Committee = () => {
               <a
                 href="javascript:"
                 className="hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700"
-                // onClick={saveStudent}
+                onClick={() => setOpenAssign(true)}
               >
                 <div className="mb-2 flex justify-center">
                   <img src={StudentGroupIcon} />
@@ -207,13 +293,13 @@ const Committee = () => {
             </div>
           </div>
           <div
-            className={`h-0 flex-1 overflow-auto pr-2 ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
+            className={`h-0 flex-1 overflow-auto pr-2 rtl:p-0 rtl:pl-2 ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
           >
             {committess.map((committee: any, index: number) => (
               <div className={`rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`} key={index}>
                 <div className="basis-1/5 flex items-center">
                   <img src={EditIcon} className="object-none mx-3" />
-                  <div className="border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center">
+                  <div className="border-l rtl:border-0 rtl:border-r px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center">
                     {committee?.committeeName}
                   </div>
                 </div>

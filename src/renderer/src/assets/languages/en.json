@@ -103,5 +103,11 @@
   "classrooms-committees": "classrooms are committees",
   "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more",
   "create-committees-success": "Created committees are successfully",
-  "create-committees-failed": "Creating committees is successfully"
+  "create-committees-failed": "Creating committees is successfully",
+  "sort-by-section": "Sort by sections",
+  "start-seating-for-stages": "Starting  Seating Number for Stages",
+  "alphabetically": "Alphabetically",
+  "record": "Record",
+  "randomly": "Randomly",
+  "number-student-assign": "Number of Students and Assign Them to Committees"
 }
