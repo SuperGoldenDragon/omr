@@ -46,8 +46,8 @@ export const SidebarTheme = {
     }
   },
   item: {
-    base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-[#5EBECF] hover:text-white dark:text-white dark:hover:bg-gray-700',
-    active: 'bg-[#248596] text-white',
+    base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700',
+    active: 'bg-[#248596] text-white hover:bg-[#248596] text-white',
     collapsed: {
       insideCollapse: 'group w-full pl-8 transition duration-75',
       noIcon: 'font-bold'

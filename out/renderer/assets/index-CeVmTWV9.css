@@ -4801,9 +4801,9 @@ html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 .hover\:border-transparent:hover {
   border-color: transparent;
 }
-.hover\:bg-\[\#5EBECF\]:hover {
+.hover\:bg-\[\#248596\]:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(94 190 207 / var(--tw-bg-opacity));
+  background-color: rgb(36 133 150 / var(--tw-bg-opacity));
 }
 .hover\:bg-black:hover {
   --tw-bg-opacity: 1;
