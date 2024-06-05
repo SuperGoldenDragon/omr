@@ -364,7 +364,7 @@ var Reflect;
         case 5:
           return input;
       }
-      var hint = PreferredType === 3 ? "string" : PreferredType === 5 ? "number" : "default";
+      var hint = "string";
       var exoticToPrim = GetMethod(input, toPrimitiveSymbol);
       if (exoticToPrim !== void 0) {
         var result = exoticToPrim.call(input, hint);
@@ -372,10 +372,11 @@ var Reflect;
           throw new TypeError();
         return result;
       }
-      return OrdinaryToPrimitive(input, hint === "default" ? "number" : hint);
+      return OrdinaryToPrimitive(input);
     }
     function OrdinaryToPrimitive(O, hint) {
-      if (hint === "string") {
+      var valueOf, result;
+      {
         var toString_1 = O.toString;
         if (IsCallable(toString_1)) {
           var result = toString_1.call(O);
@@ -385,19 +386,6 @@ var Reflect;
         var valueOf = O.valueOf;
         if (IsCallable(valueOf)) {
           var result = valueOf.call(O);
-          if (!IsObject(result))
-            return result;
-        }
-      } else {
-        var valueOf = O.valueOf;
-        if (IsCallable(valueOf)) {
-          var result = valueOf.call(O);
-          if (!IsObject(result))
-            return result;
-        }
-        var toString_2 = O.toString;
-        if (IsCallable(toString_2)) {
-          var result = toString_2.call(O);
           if (!IsObject(result))
             return result;
         }
@@ -411,11 +399,7 @@ var Reflect;
       return "" + argument;
     }
     function ToPropertyKey(argument) {
-      var key = ToPrimitive(
-        argument,
-        3
-        /* String */
-      );
+      var key = ToPrimitive(argument);
       if (IsSymbol(key))
         return key;
       return ToString(key);
