@@ -24,20 +24,34 @@ const ClassAccordion = ({
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
   useEffect(() => {
+    ipc.on('saved_student', (_event, args) => {
+      const student = args?.student
+      if (!student) return
+      if (schoolName == student.studentSchoolName && classNameStr == student.studentClass) {
+        loadSections()
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     if (collapse) {
-      ipc
-        .invoke('getSectionssBySchoolAndClass', {
-          studentSchoolName: schoolName,
-          studentClass: classNameStr
-        })
-        .then((sections) => {
-          console.log(sections)
-          setSections(sections)
-        })
+      loadSections()
     } else {
       setSections([])
     }
   }, [collapse])
+
+  const loadSections = () => {
+    ipc
+      .invoke('getSectionssBySchoolAndClass', {
+        studentSchoolName: schoolName,
+        studentClass: classNameStr
+      })
+      .then((sections) => {
+        console.log(sections)
+        setSections(sections)
+      })
+  }
 
   return (
     <div className="py-1">

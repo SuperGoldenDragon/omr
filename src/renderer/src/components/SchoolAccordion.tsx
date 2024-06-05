@@ -23,15 +23,29 @@ const SchoolAccordion = ({
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
   useEffect(() => {
+    ipc.on('saved_student', (_event, args) => {
+      const student = args?.student
+      if (!student) return
+      if (schoolName == student.studentSchoolName) {
+        loadClasses()
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     // if open this school
     if (collapse) {
-      ipc.invoke('getClassesBySchool', schoolName).then((classes) => {
-        setClasses(classes)
-      })
+      loadClasses()
     } else {
       setClasses([])
     }
   }, [collapse])
+
+  const loadClasses = () => {
+    ipc.invoke('getClassesBySchool', schoolName).then((classes) => {
+      setClasses(classes)
+    })
+  }
 
   return (
     <div>

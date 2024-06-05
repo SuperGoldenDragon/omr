@@ -30107,7 +30107,6 @@ const SectionAccordion = ({
       studentClass: classNameStr,
       studentSection: sectionName
     }).then((students22) => {
-      console.log(students22);
       setLoading(false);
       setStudents(students22);
     }).catch(() => {
@@ -30225,18 +30224,31 @@ const ClassAccordion = ({
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
   reactExports.useEffect(() => {
+    ipc.on("saved_student", (_event, args) => {
+      const student = args?.student;
+      if (!student)
+        return;
+      if (schoolName == student.studentSchoolName && classNameStr == student.studentClass) {
+        loadSections();
+      }
+    });
+  }, []);
+  reactExports.useEffect(() => {
     if (collapse) {
-      ipc.invoke("getSectionssBySchoolAndClass", {
-        studentSchoolName: schoolName,
-        studentClass: classNameStr
-      }).then((sections2) => {
-        console.log(sections2);
-        setSections(sections2);
-      });
+      loadSections();
     } else {
       setSections([]);
     }
   }, [collapse]);
+  const loadSections = () => {
+    ipc.invoke("getSectionssBySchoolAndClass", {
+      studentSchoolName: schoolName,
+      studentClass: classNameStr
+    }).then((sections2) => {
+      console.log(sections2);
+      setSections(sections2);
+    });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
