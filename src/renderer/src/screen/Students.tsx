@@ -1,7 +1,7 @@
 import { useStudents } from '@renderer/context/Students'
 import { ModalTheme } from '@renderer/themes/ModalTheme'
 import { FM } from '@renderer/utils/i18helper'
-import { Button, Label, Modal, Progress, Select, TextInput } from 'flowbite-react'
+import { Button, Label, Modal, Progress, Select, TextInput, Spinner } from 'flowbite-react'
 import React, { useEffect, useState, useRef } from 'react'
 import PromptDialog from '@renderer/components/PromptDialog'
 import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
@@ -67,6 +67,8 @@ const Students = () => {
 
   const [isCreateStudent, setIsCreateStudent] = useState<boolean>(false)
   const [editStudent, setEditStudent] = useState<any>(null)
+  const [studentsOfEditSection, setStudentsOfEditSection] = useState<any>([])
+  const [loadingStudents, setLoadingStudents] = useState<boolean>(false)
 
   const [totalLoadStudents, setTotalLoadStudents] = useState<number>(0)
   const [currentLoadedStudents, setCurrentLoadedStudents] = useState<number>(0)
@@ -128,7 +130,22 @@ const Students = () => {
         editStudent
       // set values from student to edit
       setStudentData({ studentName, studentID, studentClass, studentSection, studentSchoolName })
+      setLoadingStudents(true)
+      ipc
+        .invoke('getStudentsBySection', {
+          studentSchoolName,
+          studentClass,
+          studentSection
+        })
+        .then((students) => {
+          setLoadingStudents(false)
+          setStudentsOfEditSection(students)
+        })
+        .catch(() => {
+          setLoadingStudents(false)
+        })
     } else {
+      setStudentsOfEditSection([])
       // set inital valuse
       setStudentData({
         studentName: '',
@@ -734,9 +751,12 @@ const Students = () => {
         <div
           className={`bg-white dark:bg-gray-700 rounded-lg flex-1 p-2 h-0 overflow-auto ${darkMode ? 'overflow-y-auto-dark' : 'overflow-y-auto-light'}`}
         >
-          {studentGroups?.schools[editStudent.studentSchoolName].classes[editStudent.studentClass][
-            editStudent.studentSection
-          ].map((student: any, index: number) => (
+          {loadingStudents && (
+            <div className="text-center">
+              <Spinner aria-label="Center-aligned spinner example" />
+            </div>
+          )}
+          {studentsOfEditSection.map((student: any, index: number) => (
             <StudentRow
               key={index}
               student={student}

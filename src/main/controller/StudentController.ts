@@ -852,7 +852,7 @@ class StudentController {
 
     // save student
     await this.student.save(student)
-
+    _event.sender.send('saved_student', { mode: 'insert', student })
     // return student
     return student
   }
@@ -870,7 +870,7 @@ class StudentController {
     student.studentSection = arg.studentSection
     student.studentName = arg.studentName
     student.studentID = arg.studentID
-
+    _event.sender.send('saved_student', { mode: 'update', student })
     // save student and return
     return this.student.save(student)
   }

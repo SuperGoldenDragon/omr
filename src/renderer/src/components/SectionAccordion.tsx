@@ -29,26 +29,49 @@ const SectionAccordion = ({
   const darkMode: boolean = document.documentElement.classList.contains('dark')
 
   useEffect(() => {
+    ipc.on('save_student', (_event, args) => {
+      const student = args?.student
+      const mode = args?.mode
+      if (!student || !collapse) return
+      if (
+        student.studentSchoolName == schoolName &&
+        student.studentClass == classNameStr &&
+        student.studentSection == sectionName
+      ) {
+        if (mode == 'update') {
+          setStudents(students.map((row) => (row.id == student.id ? student : row)))
+        } else if (mode == 'insert') {
+          setStudents(students.concat(student))
+        }
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     if (collapse) {
-      setLoading(true)
-      ipc
-        .invoke('getStudentsBySection', {
-          studentSchoolName: schoolName,
-          studentClass: classNameStr,
-          studentSection: sectionName
-        })
-        .then((students) => {
-          console.log(students)
-          setLoading(false)
-          setStudents(students)
-        })
-        .catch(() => {
-          setLoading(false)
-        })
+      loadStudents()
     } else {
       setStudents([])
     }
   }, [collapse])
+
+  const loadStudents = () => {
+    setLoading(true)
+    ipc
+      .invoke('getStudentsBySection', {
+        studentSchoolName: schoolName,
+        studentClass: classNameStr,
+        studentSection: sectionName
+      })
+      .then((students) => {
+        console.log(students)
+        setLoading(false)
+        setStudents(students)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
+  }
 
   return (
     <>

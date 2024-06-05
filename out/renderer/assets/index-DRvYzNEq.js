@@ -30448,6 +30448,8 @@ const Students = () => {
   const [newFieldValues, setNewFieldValues] = reactExports.useState({});
   const [isCreateStudent, setIsCreateStudent] = reactExports.useState(false);
   const [editStudent, setEditStudent] = reactExports.useState(null);
+  const [studentsOfEditSection, setStudentsOfEditSection] = reactExports.useState([]);
+  const [loadingStudents, setLoadingStudents] = reactExports.useState(false);
   const [totalLoadStudents, setTotalLoadStudents] = reactExports.useState(0);
   const [currentLoadedStudents, setCurrentLoadedStudents] = reactExports.useState(0);
   reactExports.useEffect(() => {
@@ -30493,7 +30495,19 @@ const Students = () => {
     if (editStudent) {
       const { studentName, studentID, studentClass, studentSection, studentSchoolName } = editStudent;
       setStudentData({ studentName, studentID, studentClass, studentSection, studentSchoolName });
+      setLoadingStudents(true);
+      ipc.invoke("getStudentsBySection", {
+        studentSchoolName,
+        studentClass,
+        studentSection
+      }).then((students2) => {
+        setLoadingStudents(false);
+        setStudentsOfEditSection(students2);
+      }).catch(() => {
+        setLoadingStudents(false);
+      });
     } else {
+      setStudentsOfEditSection([]);
       setStudentData({
         studentName: "",
         studentID: 0,
@@ -31060,19 +31074,22 @@ const Students = () => {
         ]
       }
     ),
-    editStudent && /* @__PURE__ */ jsxRuntimeExports.jsx(
+    editStudent && /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
         className: `bg-white dark:bg-gray-700 rounded-lg flex-1 p-2 h-0 overflow-auto ${darkMode ? "overflow-y-auto-dark" : "overflow-y-auto-light"}`,
-        children: studentGroups?.schools[editStudent.studentSchoolName].classes[editStudent.studentClass][editStudent.studentSection].map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          StudentRow,
-          {
-            student,
-            reload: reloadData,
-            setEditStudent
-          },
-          index2
-        ))
+        children: [
+          loadingStudents && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Spinner, { "aria-label": "Center-aligned spinner example" }) }),
+          studentsOfEditSection.map((student, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            StudentRow,
+            {
+              student,
+              reload: reloadData,
+              setEditStudent
+            },
+            index2
+          ))
+        ]
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
