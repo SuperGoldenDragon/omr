@@ -473,6 +473,7 @@ class StudentController {
     student.studentName = arg.studentName;
     student.studentID = arg.studentID;
     await this.student.save(student);
+    _event.sender.send("saved_student", { mode: "insert", student });
     return student;
   };
   // update student
@@ -484,6 +485,7 @@ class StudentController {
     student.studentSection = arg.studentSection;
     student.studentName = arg.studentName;
     student.studentID = arg.studentID;
+    _event.sender.send("saved_student", { mode: "update", student });
     return this.student.save(student);
   };
   // delete student

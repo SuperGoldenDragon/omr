@@ -30086,23 +30086,34 @@ const SectionAccordion = ({
   const [collapse, setCollapse] = reactExports.useState(false);
   const darkMode = document.documentElement.classList.contains("dark");
   reactExports.useEffect(() => {
+    ipc.on("saved_student", (_event, args) => {
+      const student = args?.student;
+      if (!student)
+        return;
+      loadStudents();
+    });
+  }, []);
+  reactExports.useEffect(() => {
     if (collapse) {
-      setLoading(true);
-      ipc.invoke("getStudentsBySection", {
-        studentSchoolName: schoolName,
-        studentClass: classNameStr,
-        studentSection: sectionName
-      }).then((students22) => {
-        console.log(students22);
-        setLoading(false);
-        setStudents(students22);
-      }).catch(() => {
-        setLoading(false);
-      });
+      loadStudents();
     } else {
       setStudents([]);
     }
   }, [collapse]);
+  const loadStudents = () => {
+    setLoading(true);
+    ipc.invoke("getStudentsBySection", {
+      studentSchoolName: schoolName,
+      studentClass: classNameStr,
+      studentSection: sectionName
+    }).then((students22) => {
+      console.log(students22);
+      setLoading(false);
+      setStudents(students22);
+    }).catch(() => {
+      setLoading(false);
+    });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     loading2 && /* @__PURE__ */ jsxRuntimeExports.jsx(Loading, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
