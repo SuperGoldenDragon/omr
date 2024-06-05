@@ -24293,7 +24293,10 @@ const en = {
   record: record$1,
   randomly: randomly$1,
   "number-student-assign": "Number of Students and Assign Them to Committees",
-  loading: loading$1
+  loading: loading$1,
+  "delete-committee-message": "Are you sure you want to delete this committee?",
+  "deleted-committee-successfully": "Deleted a student successfully",
+  "delete-committee-failed": "Deleting a student is failed"
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24437,7 +24440,10 @@ const ar = {
   record,
   randomly,
   "number-student-assign": "عدد الطلاب وتوزيعهم على اللجان",
-  loading
+  loading,
+  "delete-committee-message": "هل أنت متأكد أنك تريد حذف هذه اللجنة؟",
+  "deleted-committee-successfully": "تم حذف الطالب بنجاح",
+  "delete-committee-failed": "فشل حذف الطالب"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -30345,14 +30351,27 @@ const SchoolAccordion = ({
   const ipc = window.electron.ipcRenderer;
   const darkMode = document.documentElement.classList.contains("dark");
   reactExports.useEffect(() => {
+    ipc.on("saved_student", (_event, args) => {
+      const student = args?.student;
+      if (!student)
+        return;
+      if (schoolName == student.studentSchoolName) {
+        loadClasses();
+      }
+    });
+  }, []);
+  reactExports.useEffect(() => {
     if (collapse) {
-      ipc.invoke("getClassesBySchool", schoolName).then((classes22) => {
-        setClasses(classes22);
-      });
+      loadClasses();
     } else {
       setClasses([]);
     }
   }, [collapse]);
+  const loadClasses = () => {
+    ipc.invoke("getClassesBySchool", schoolName).then((classes22) => {
+      setClasses(classes22);
+    });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-none border border-e-0 border-s-0 border-t-0 border-neutral-200 dark:border-neutral-600 dark:bg-body-dark", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-0 flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -31178,6 +31197,7 @@ const Committee = () => {
   const rtl = document.body.getAttribute("dir") == "rtl";
   const [openCreate, setOpenCreate] = reactExports.useState(false);
   const [openAssign, setOpenAssign] = reactExports.useState(false);
+  const [deleteCommittee, setDeleteCommittee] = reactExports.useState(null);
   const [noOfCommitte, setNoOfCommitte] = reactExports.useState(0);
   const [deletePrevious, setDeletePrevious] = reactExports.useState(false);
   const [distributeStudents, setDistributeStudents] = reactExports.useState(false);
@@ -31222,6 +31242,29 @@ const Committee = () => {
         severity: "error",
         summary: FM("failed"),
         detail: FM("create-committees-failed"),
+        life: 2e3
+      });
+    });
+  };
+  const deleteSelectedCommittee = () => {
+    if (deleteCommittee == null)
+      return;
+    setDeleteCommittee(null);
+    ipc.invoke("deleteCommittee", deleteCommittee.id).then(() => {
+      loadCommittees();
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(GoCheck, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "success",
+        summary: FM("success"),
+        detail: FM("deleted-committee-successfully"),
+        life: 2e3
+      });
+    }).catch(() => {
+      toastRef.current?.show({
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosCloseCircleOutline, { className: "mr-2 rtl:ml-3", size: 30 }),
+        severity: "error",
+        summary: FM("failed"),
+        detail: FM("delete-committee-failed"),
         life: 2e3
       });
     });
@@ -31284,8 +31327,16 @@ const Committee = () => {
   };
   const renderAssignStudentModal = () => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal, { theme: ModalTheme, show: openAssign, onClose: () => setOpenAssign(false), children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "p-3 cursor-pointer", onClick: () => setOpenAssign(false), children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24 }) }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "p-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "a",
+        {
+          href: "javascript:",
+          className: "px-3 py-2 cursor-pointer",
+          onClick: () => setOpenAssign(false),
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24 })
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "py-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3 border-b-2 border-gray-600 text-center text-xl font-bold", children: FM("start-seating-for-stages") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center py-1", children: "Starting  Seating Number for Stages" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-3 mb-1 px-4", children: [
@@ -31365,9 +31416,34 @@ const Committee = () => {
       ] })
     ] });
   };
+  const renderDeleteCommitteeModal = () => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal, { theme: ModalTheme, show: deleteCommittee != null, onClose: () => setDeleteCommittee(null), size: "sm", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Modal.Header, {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "pt-5 text-center", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center my-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(GoQuestion, { size: 80, className: "text-red-700" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "", children: FM("delete-committee-message") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4", children: deleteCommittee?.committeeName })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Footer, { className: "justify-center py-3 px-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button,
+          {
+            color: "failure",
+            className: "rtl:ml-2",
+            onClick: () => {
+              deleteSelectedCommittee();
+            },
+            children: FM("delete")
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "gray", onClick: () => setDeleteCommittee(null), children: FM("cancel") })
+      ] })
+    ] });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     renderCreateCommitteeModal(),
     renderAssignStudentModal(),
+    renderDeleteCommitteeModal(),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Toast, { ref: toastRef, position: rtl ? "top-left" : "top-right" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-screen p-2", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
@@ -31478,7 +31554,15 @@ const Committee = () => {
                   "Complete ",
                   43
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "a",
+                  {
+                    href: "javascript:",
+                    className: "cursor-pointer mx-2",
+                    onClick: () => setDeleteCommittee(committee2),
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" })
+                  }
+                ),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosArrowDown, { size: 24, className: "text-gray-700 dark:text-gray-200" }) })
               ] })
             ] }, index2))

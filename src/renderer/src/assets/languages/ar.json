@@ -107,5 +107,8 @@
   "record": "سِجِلّ",
   "randomly": "بشكل عشوائي",
   "number-student-assign": "عدد الطلاب وتوزيعهم على اللجان",
-  "loading" : "تحميل..."
+  "loading" : "تحميل...",
+  "delete-committee-message": "هل أنت متأكد أنك تريد حذف هذه اللجنة؟",
+  "deleted-committee-successfully": "تم حذف الطالب بنجاح",
+  "delete-committee-failed": "فشل حذف الطالب"
 }

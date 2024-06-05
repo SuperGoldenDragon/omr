@@ -110,5 +110,8 @@
   "record": "Record",
   "randomly": "Randomly",
   "number-student-assign": "Number of Students and Assign Them to Committees",
-  "loading" : "Loading..."
+  "loading" : "Loading...",
+  "delete-committee-message": "Are you sure you want to delete this committee?",
+  "deleted-committee-successfully": "Deleted a student successfully",
+  "delete-committee-failed": "Deleting a student is failed"
 }

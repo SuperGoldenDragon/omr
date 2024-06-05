@@ -10,7 +10,7 @@ import { IoCloseOutline } from 'react-icons/io5'
 import { IoIosArrowDown } from 'react-icons/io'
 import { Toast } from 'primereact/toast'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
-import { GoCheck } from 'react-icons/go'
+import { GoQuestion, GoCheck } from 'react-icons/go'
 
 const Committee = () => {
   const ipc = window.electron.ipcRenderer
@@ -19,6 +19,7 @@ const Committee = () => {
   const rtl = document.body.getAttribute('dir') == 'rtl'
   const [openCreate, setOpenCreate] = useState<boolean>(false)
   const [openAssign, setOpenAssign] = useState<boolean>(false)
+  const [deleteCommittee, setDeleteCommittee] = useState<any>(null)
   const [noOfCommitte, setNoOfCommitte] = useState<number>(0)
   const [deletePrevious, setDeletePrevious] = useState<boolean>(false)
   const [distributeStudents, setDistributeStudents] = useState<boolean>(false)
@@ -72,6 +73,32 @@ const Committee = () => {
           severity: 'error',
           summary: FM('failed'),
           detail: FM('create-committees-failed'),
+          life: 2000
+        })
+      })
+  }
+
+  const deleteSelectedCommittee = () => {
+    if (deleteCommittee == null) return
+    setDeleteCommittee(null)
+    ipc
+      .invoke('deleteCommittee', deleteCommittee.id)
+      .then(() => {
+        loadCommittees()
+        toastRef.current?.show({
+          icon: <GoCheck className="mr-2 rtl:ml-3" size={30} />,
+          severity: 'success',
+          summary: FM('success'),
+          detail: FM('deleted-committee-successfully'),
+          life: 2000
+        })
+      })
+      .catch(() => {
+        toastRef.current?.show({
+          icon: <IoIosCloseCircleOutline className="mr-2 rtl:ml-3" size={30} />,
+          severity: 'error',
+          summary: FM('failed'),
+          detail: FM('delete-committee-failed'),
           life: 2000
         })
       })
@@ -136,11 +163,15 @@ const Committee = () => {
     return (
       <Modal theme={ModalTheme} show={openAssign} onClose={() => setOpenAssign(false)}>
         <div className="flex justify-end">
-          <a href="javascript:" className="p-3 cursor-pointer" onClick={() => setOpenAssign(false)}>
+          <a
+            href="javascript:"
+            className="px-3 py-2 cursor-pointer"
+            onClick={() => setOpenAssign(false)}
+          >
             <IoCloseOutline size={24} />
           </a>
         </div>
-        <Modal.Body className="p-4">
+        <Modal.Body className="py-4">
           <div className="py-3 border-b-2 border-gray-600 text-center text-xl font-bold">
             {FM('start-seating-for-stages')}
           </div>
@@ -216,10 +247,46 @@ const Committee = () => {
     )
   }
 
+  const renderDeleteCommitteeModal = () => {
+    return (
+      <Modal
+        popup
+        theme={ModalTheme}
+        show={deleteCommittee != null}
+        onClose={() => setDeleteCommittee(null)}
+        size={'sm'}
+      >
+        <Modal.Header></Modal.Header>
+        <Modal.Body className="pt-5 text-center">
+          <div className="flex justify-center my-2">
+            <GoQuestion size={80} className="text-red-700" />
+          </div>
+          <div className="">{FM('delete-committee-message')}</div>
+          <p className="mt-4">{deleteCommittee?.committeeName}</p>
+        </Modal.Body>
+        <Modal.Footer className="justify-center py-3 px-4">
+          <Button
+            color={'failure'}
+            className="rtl:ml-2"
+            onClick={() => {
+              deleteSelectedCommittee()
+            }}
+          >
+            {FM('delete')}
+          </Button>
+          <Button color="gray" onClick={() => setDeleteCommittee(null)}>
+            {FM('cancel')}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    )
+  }
+
   return (
     <>
       {renderCreateCommitteeModal()}
       {renderAssignStudentModal()}
+      {renderDeleteCommitteeModal()}
       <Toast ref={toastRef} position={rtl ? 'top-left' : 'top-right'} />
       <div className="flex flex-col h-screen p-2">
         <div>
@@ -319,7 +386,11 @@ const Committee = () => {
                   <Button gradientDuoTone="greenToBlue" size="sm" className="mr-auto">
                     Complete {43}
                   </Button>
-                  <a href="javascript:" className="cursor-pointer mx-2">
+                  <a
+                    href="javascript:"
+                    className="cursor-pointer mx-2"
+                    onClick={() => setDeleteCommittee(committee)}
+                  >
                     <IoCloseOutline size={24} className="text-red-400" />
                   </a>
                   <a href="javascript:" className="cursor-pointer mx-2">
