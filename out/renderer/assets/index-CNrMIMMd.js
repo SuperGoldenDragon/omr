@@ -19128,6 +19128,39 @@ PaginationComponent.displayName = "Pagination";
 Object.assign(PaginationComponent, {
   Button: PaginationButton
 });
+const Progress = ({
+  className,
+  color = "cyan",
+  labelProgress = false,
+  labelText = false,
+  progress,
+  progressLabelPosition = "inside",
+  size = "md",
+  textLabel = "progressbar",
+  textLabelPosition = "inside",
+  theme: customTheme = {},
+  ...props
+}) => {
+  const id2 = reactExports.useId();
+  const theme2 = mergeDeep(getTheme().progress, customTheme);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: id2, "aria-label": textLabel, "aria-valuenow": progress, role: "progressbar", ...props, children: [
+    (textLabel && labelText && textLabelPosition === "outside" || progress > 0 && labelProgress && progressLabelPosition === "outside") && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: theme2.label, "data-testid": "flowbite-progress-outer-label-container", children: [
+      textLabel && labelText && textLabelPosition === "outside" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "data-testid": "flowbite-progress-outer-text-label", children: textLabel }),
+      labelProgress && progressLabelPosition === "outside" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { "data-testid": "flowbite-progress-outer-progress-label", children: [
+        progress,
+        "%"
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: twMerge(theme2.base, theme2.size[size], className), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { width: `${progress}%` }, className: twMerge(theme2.bar, theme2.color[color], theme2.size[size]), children: [
+      textLabel && labelText && textLabelPosition === "inside" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "data-testid": "flowbite-progress-inner-text-label", children: textLabel }),
+      progress > 0 && labelProgress && progressLabelPosition === "inside" && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { "data-testid": "flowbite-progress-inner-progress-label", children: [
+        progress,
+        "%"
+      ] })
+    ] }) })
+  ] }) });
+};
+Progress.displayName = "Progress";
 const Radio = reactExports.forwardRef(
   ({ className, theme: customTheme = {}, ...props }, ref) => {
     const theme2 = mergeDeep(getTheme().radio, customTheme);
@@ -24720,16 +24753,8 @@ const StudentsProvider = ({ children }) => {
     });
   };
   reactExports.useEffect(() => {
-    getStudentList();
   }, [page, perPage, className, order, searchBy]);
   reactExports.useEffect(() => {
-    ipc.on("import-students", (_event, { event: event2 }) => {
-      if (event2 === "imported") {
-        getStudentGroups();
-        setPage(1);
-      }
-    });
-    getStudentGroups();
   }, []);
   const setOrderBy = (order2, type) => {
     if (order2) {
@@ -24742,7 +24767,6 @@ const StudentsProvider = ({ children }) => {
     setPage(1);
     setOrderBy(void 0);
     getStudentGroups();
-    getStudentList();
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     StudentsContext.Provider,
@@ -30321,6 +30345,8 @@ const Students = () => {
   const [newFieldValues, setNewFieldValues] = reactExports.useState({});
   const [isCreateStudent, setIsCreateStudent] = reactExports.useState(false);
   const [editStudent, setEditStudent] = reactExports.useState(null);
+  const [totalLoadStudents, setTotalLoadStudents] = reactExports.useState(0);
+  const [currentLoadedStudents, setCurrentLoadedStudents] = reactExports.useState(0);
   reactExports.useEffect(() => {
     ipc.on("import-students", (_event, { event: event2 }) => {
       console.log("event", event2);
@@ -30328,10 +30354,19 @@ const Students = () => {
     ipc.on("xlsx-filename", (_event, filename) => {
       if (!filename)
         return;
-      ipc.invoke("loadStudentsFromXlsx", filename).then(() => {
-        reloadData();
+      ipc.invoke("loadStudentsFromXlsx", filename).then((students2) => {
       });
     });
+    ipc.on("import-progress", (_event, val) => {
+      if (val == totalLoadStudents) {
+        setCurrentLoadedStudents(val);
+        setTimeout(() => {
+          setCurrentLoadedStudents(0);
+          setTotalLoadStudents(0);
+        }, 1e3);
+      }
+    });
+    reloadData();
   }, []);
   reactExports.useEffect(() => {
     if (!createField)
@@ -30943,7 +30978,15 @@ const Students = () => {
         title: createTitle,
         label: createLabel
       }
-    )
+    ),
+    totalLoadStudents > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed bg-transparent flex justify-center items-center left-0 z-[100] h-screen w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-slate-800/80 rounded-lg w-[300px] px-4 py-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Progress, { progress: 45 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center pt-2", children: [
+        "Loading...(",
+        `${currentLoadedStudents}/${totalLoadStudents}`,
+        ")"
+      ] })
+    ] }) })
   ] });
 };
 const Flight1 = "" + new URL("flight-1-7Yf4RcSt.png", import.meta.url).href;

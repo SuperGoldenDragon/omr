@@ -3,6 +3,7 @@ const electron = require("electron");
 const index = require("./index.js");
 const ExcelJS = require("exceljs");
 const typeorm = require("typeorm");
+const worker_threads = require("worker_threads");
 const fs = require("fs");
 const xlsx = require("xlsx");
 class SettingController {
@@ -597,6 +598,15 @@ class StudentController {
       })
     );
   };
+  insertStudents = (_event, students) => {
+    const worker = new worker_threads.Worker("./src/main/workers/ImportExcelWorker.tsx", {
+      workerData: students
+      // Send data to the worker thread
+    });
+    worker.on("message", (message) => {
+      _event.sender.send("import-progress", message);
+    });
+  };
 }
 const StudentController$1 = new StudentController();
 class CommitteeController {
@@ -749,6 +759,7 @@ const CommitteeController$1 = new CommitteeController();
   electron.ipcMain.handle("deleteStudent", StudentController$1.deleteStudent),
   electron.ipcMain.handle("removeAllStudents", StudentController$1.removeAllStudents),
   electron.ipcMain.handle("loadStudentsFromXlsx", StudentController$1.loadStudentsFromXlsx),
+  electron.ipcMain.handle("insertStudents", StudentController$1.insertStudents),
   // committee
   electron.ipcMain.handle("getCommittees", CommitteeController$1.getCommittees),
   electron.ipcMain.handle("addCommittee", CommitteeController$1.createCommittee),

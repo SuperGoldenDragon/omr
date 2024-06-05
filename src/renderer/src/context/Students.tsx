@@ -73,18 +73,18 @@ export const StudentsProvider = ({ children }: { children: JSX.Element }) => {
 
   // fetch students data on mount
   useEffect(() => {
-    getStudentList()
+    // getStudentList()
   }, [page, perPage, className, order, searchBy])
 
   useEffect(() => {
-    ipc.on('import-students', (_event, { event }) => {
-      if (event === 'imported') {
-        getStudentGroups()
-        setPage(1)
-      }
-    })
+    // ipc.on('import-students', (_event, { event }) => {
+    //   if (event === 'imported') {
+    //     getStudentGroups()
+    //     setPage(1)
+    //   }
+    // })
 
-    getStudentGroups()
+    // getStudentGroups()
   }, [])
 
   const setOrderBy = (order?: string, type?: 'ASC' | 'DESC') => {
@@ -99,7 +99,7 @@ export const StudentsProvider = ({ children }: { children: JSX.Element }) => {
     setPage(1)
     setOrderBy(undefined)
     getStudentGroups()
-    getStudentList()
+    // getStudentList()
   }
 
   return (

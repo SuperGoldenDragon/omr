@@ -1,8 +1,8 @@
 import { useStudents } from '@renderer/context/Students'
 import { ModalTheme } from '@renderer/themes/ModalTheme'
 import { FM } from '@renderer/utils/i18helper'
-import { Button, Label, Modal, Select, TextInput } from 'flowbite-react'
-import { useEffect, useState, useRef } from 'react'
+import { Button, Label, Modal, Progress, Select, TextInput } from 'flowbite-react'
+import React, { useEffect, useState, useRef } from 'react'
 import PromptDialog from '@renderer/components/PromptDialog'
 import AddStudentIcon from '@renderer/assets/icons/add-student.svg'
 import ImportStudentIcon from '@renderer/assets/icons/import-student.svg'
@@ -32,7 +32,7 @@ const Students = () => {
   const ipc = window.electron.ipcRenderer
   const darkMode = document.documentElement.classList.contains('dark')
   const rtl: boolean = document.body.getAttribute('dir') == 'rtl'
-  const toastRef = useRef(null)
+  const toastRef: React.RefObject<Toast> = useRef(null)
   const {
     studentGroups,
     /* setPage,
@@ -65,8 +65,10 @@ const Students = () => {
   const [newFieldValues, setNewFieldValues] = useState<any>({})
 
   const [isCreateStudent, setIsCreateStudent] = useState<boolean>(false)
-
   const [editStudent, setEditStudent] = useState<any>(null)
+
+  const [totalLoadStudents, setTotalLoadStudents] = useState<number>(0)
+  const [currentLoadedStudents, setCurrentLoadedStudents] = useState<number>(0)
 
   useEffect(() => {
     ipc.on('import-students', (_event, { event }) => {
@@ -83,10 +85,20 @@ const Students = () => {
 
     ipc.on('xlsx-filename', (_event, filename: string) => {
       if (!filename) return
-      ipc.invoke('loadStudentsFromXlsx', filename).then(() => {
-        reloadData()
-      })
+      ipc.invoke('loadStudentsFromXlsx', filename)
     })
+
+    ipc.on('import-progress', (_event, val) => {
+      if (val == totalLoadStudents) {
+        setCurrentLoadedStudents(val)
+        setTimeout(() => {
+          setCurrentLoadedStudents(0)
+          setTotalLoadStudents(0)
+        }, 1000)
+      }
+    })
+
+    reloadData()
   }, [])
 
   useEffect(() => {
@@ -735,6 +747,16 @@ const Students = () => {
         title={createTitle}
         label={createLabel}
       />
+      {totalLoadStudents > 0 && (
+        <div className="fixed bg-transparent flex justify-center items-center left-0 z-[100] h-screen w-full">
+          <div className="bg-slate-800/80 rounded-lg w-[300px] px-4 py-3">
+            <Progress progress={45} />
+            <div className="text-center pt-2">
+              Loading...({`${currentLoadedStudents}/${totalLoadStudents}`})
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

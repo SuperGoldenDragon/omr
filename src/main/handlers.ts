@@ -20,6 +20,7 @@ export const handler = [
   ipcMain.handle('deleteStudent', StudentController.deleteStudent),
   ipcMain.handle('removeAllStudents', StudentController.removeAllStudents),
   ipcMain.handle('loadStudentsFromXlsx', StudentController.loadStudentsFromXlsx),
+  ipcMain.handle('insertStudents', StudentController.insertStudents),
 
   // committee
   ipcMain.handle('getCommittees', CommitteeController.getCommittees),

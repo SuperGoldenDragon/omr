@@ -17,7 +17,7 @@ const StudentRow = ({
   reload: any
 }) => {
   const ipc = window.electron.ipcRenderer
-  const toastRef = useRef(null)
+  const toastRef: React.RefObject<Toast> = useRef(null)
   const [showDelete, setShowDelete] = useState<boolean>(false)
   const rtl: boolean = document.body.getAttribute('dir') == 'rtl'
 

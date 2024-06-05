@@ -8,8 +8,8 @@ import Students from './screen/Students'
 import License from './screen/License'
 import { StudentsProvider } from './context/Students'
 import Committee from './screen/Committee'
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
-import Tailwind from 'primereact/passthrough/tailwind';
+import { PrimeReactProvider } from 'primereact/api'
+import Tailwind from 'primereact/passthrough/tailwind'
 
 function App(): JSX.Element {
   useEffect(() => {
