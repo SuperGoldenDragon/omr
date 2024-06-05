@@ -92,5 +92,11 @@
   "delete-student-failed": "فشل حذف الطالب",
   "edit-student": "تحرير الطالب",
   "saved-student-successfully" : "تم إنقاذ الطالب بنجاح",
-  "save-student-failed": "فشل إنقاذ الطالب"
+  "save-student-failed": "فشل إنقاذ الطالب",
+  "add-committees": "إضافة لجان",
+  "number-committees": "عدد اللجان",
+  "start-by-deleting-previous": "البدء من جديد بحذف اللجان السابقة",
+  "distribute-student-committee": "توزيع أعداد الطلاب على اللجان",
+  "classrooms-committees": "الفصول الدراسية هي لجان",
+  "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد"
 }

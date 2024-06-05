@@ -24274,7 +24274,13 @@ const en = {
   "edit-student": "Edit Student",
   "saved-student-successfully": "Saved a student successfully",
   "save-student-failed": "Saving a student is failed",
-  "examination-committees": "Examination Committees"
+  "examination-committees": "Examination Committees",
+  "add-committees": "Add Committees",
+  "number-committees": "Number of Committees",
+  "start-by-deleting-previous": "Start Over by Deleting Previous Committees",
+  "distribute-student-committee": "Distribute the number of students among committees",
+  "classrooms-committees": "classrooms are committees",
+  "add-committees-description": "A set of committees can be added, taking a sequential number, and the numbering continues from the last committee when adding more"
 };
 const exams = "الامتحانات";
 const committees = "اللجان";
@@ -24399,7 +24405,13 @@ const ar = {
   "delete-student-failed": "فشل حذف الطالب",
   "edit-student": "تحرير الطالب",
   "saved-student-successfully": "تم إنقاذ الطالب بنجاح",
-  "save-student-failed": "فشل إنقاذ الطالب"
+  "save-student-failed": "فشل إنقاذ الطالب",
+  "add-committees": "إضافة لجان",
+  "number-committees": "عدد اللجان",
+  "start-by-deleting-previous": "البدء من جديد بحذف اللجان السابقة",
+  "distribute-student-committee": "توزيع أعداد الطلاب على اللجان",
+  "classrooms-committees": "الفصول الدراسية هي لجان",
+  "add-committees-description": "يمكن إضافة مجموعة من اللجان بأخذ رقم تسلسلي ويستمر الترقيم من آخر لجنة عند إضافة المزيد"
 };
 instance.use(initReactI18next).init({
   fallbackLng: "en",
@@ -31036,115 +31048,153 @@ function IoCloseOutline(props) {
   return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 512 512" }, "child": [{ "tag": "path", "attr": { "fill": "none", "strokeLinecap": "round", "strokeLinejoin": "round", "strokeWidth": "32", "d": "M368 368 144 144m224 0L144 368" }, "child": [] }] })(props);
 }
 const Committee = () => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-screen p-2", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "items-center py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-700 dark:text-white font-semibold", children: FM("examination-committees") }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center grow", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "a",
+  const [openCreate, setOpenCreate] = reactExports.useState(false);
+  const renderCreateCommitteeModal = () => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Modal, { theme: ModalTheme, show: openCreate, onClose: () => setOpenCreate(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Modal.Body, { className: "px-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-3 border-b-2 border-gray-600 dark:border-gray-200 text-center text-xl font-bold", children: FM("examination-committees") }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center gap-2 items-center mb-2 py-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: FM("number-committees") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
           {
-            href: "javascript:",
-            className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CreateIcon }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("add-committee") })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "a",
-          {
-            href: "javascript:",
-            className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: StudentGroupIcon }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("assign-students") })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "a",
-          {
-            href: "javascript:",
-            className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ExportIcon }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("export") })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "a",
-          {
-            href: "javascript:",
-            className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("edit") })
-            ]
+            type: "number",
+            className: "outline-none focus:outline-none border-0 ring-0 focus:ring-0 focus:border-0 bg-gray-300 dark:bg-gray-600 rounded-lg w-20 py-1 text-sm text-center",
+            min: 0
           }
         )
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2 rounded-lg bg-white dark:bg-gray-700 p-3", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 px-1", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-md font-bold text-gray-900 dark:text-gray-100 mb-1", children: "Total" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-md font-bold text-gray-900 dark:text-gray-100", children: "422" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "القول المتوسط" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
-            "Complete (",
-            140,
-            ")"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "الثاني المتوسط" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
-            "Complete (",
-            140,
-            ")"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "الأحد المتوسط" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
-            "Complete (",
-            140,
-            ")"
-          ] })
-        ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-500 flex p-1 my-1`, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon, className: "object-none mx-3" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200", children: "Committee 1" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { gradientDuoTone: "greenToBlue", size: "sm", className: "mr-auto", children: [
-            "Complete ",
-            43
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "deleting-previous", children: FM("start-by-deleting-previous") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Checkbox, { id: "deleting-previous" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "distribute-student", children: FM("distribute-student-committee") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Checkbox, { id: "distribute-student" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 justify-between mb-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "classroom-committee", children: FM("classrooms-committees") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Checkbox, { id: "classroom-committee" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-end  py-2 border-b-2 border-gray-600 dark:border-gray-200", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "sm", className: "rtl:ml-2 mr-2", children: FM("add-committees") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { color: "failure", size: "sm", onClick: () => setOpenCreate(false), children: FM("cancel") })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3", children: FM("add-committees-description") })
+    ] }) });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    renderCreateCommitteeModal(),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-screen p-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex py-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "items-center py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-700 dark:text-white font-semibold", children: FM("examination-committees") }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center grow", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              onClick: () => setOpenCreate(true),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CreateIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("add-committee") })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: StudentGroupIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("assign-students") })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: ExportIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("export") })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "a",
+            {
+              href: "javascript:",
+              className: "hover:bg-gray-200 rounded mr-4 px-3 py-2 dark:hover:bg-gray-700",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-2 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: FM("edit") })
+              ]
+            }
+          )
+        ] })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2 rounded-lg bg-white dark:bg-gray-700 p-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 px-1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-md font-bold text-gray-900 dark:text-gray-100 mb-1", children: "Total" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-md font-bold text-gray-900 dark:text-gray-100", children: "422" })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosArrowDown, { size: 24, className: "text-gray-700" }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "القول المتوسط" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
+              "Complete (",
+              140,
+              ")"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "الثاني المتوسط" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
+              "Complete (",
+              140,
+              ")"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-bold mb-1", children: "الأحد المتوسط" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center font-bold", children: [
+              "Complete (",
+              140,
+              ")"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `rounded-lg bg-gray-200 dark:bg-gray-600 flex p-1 my-1`, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: EditIcon, className: "object-none mx-3" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-l px-2 font-bold border-gray-700 dark:border-gray-200 flex h-full items-center", children: "Committee 1" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "assecf fklsefef" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-center font-semibold", children: "14 from" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "basis-1/5 flex items-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { gradientDuoTone: "greenToBlue", size: "sm", className: "mr-auto", children: [
+              "Complete ",
+              43
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoCloseOutline, { size: 24, className: "text-red-400" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "javascript:", className: "cursor-pointer mx-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IoIosArrowDown, { size: 24, className: "text-gray-700 dark:text-gray-200" }) })
+          ] })
         ] })
       ] })
     ] })
-  ] }) });
+  ] });
 };
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr))
